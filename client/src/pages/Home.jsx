@@ -3,6 +3,7 @@ function Home() {
     <div>
       Home
       <p>try 2</p>
+      <p>another p</p>
     </div>
   );
 }
