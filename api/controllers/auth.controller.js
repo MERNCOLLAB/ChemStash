@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import brcyptjs from "bcryptjs";
+import bcryptjs from "bcryptjs";
 import { errorHanlder } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
@@ -65,7 +65,7 @@ export const google = async (req, res, next) => {
           // displaynamerandom1234
           req.body.name.split(' ').join('').toLowerCase() +
           Math.random().toString(36).slice(-8),
-        
+
         email: req.body.email,
         password: hashedPassword,
         profilePicture: req.body.photo,
