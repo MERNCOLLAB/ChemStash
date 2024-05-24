@@ -7,14 +7,24 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { useDispatch } from "react-redux";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} from "../redux/user/userSlice";
 
 function Profile() {
+  const dispatch = useDispatch();
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
-  const { currentUser, loading } = useSelector((state) => state.user);
+  const [updateSuccess, setUpdateSucess] = useState(false);
+
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
@@ -42,10 +52,42 @@ function Profile() {
       }
     );
   };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data));
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setUpdateSucess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error));
+    }
+  };
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-bold my-7">Profile</h1>
-      <form action="" className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} action="" className="flex flex-col gap-4">
         <input
           type="file"
           ref={fileRef}
@@ -88,6 +130,7 @@ function Profile() {
           id="username"
           placeholder="Username"
           defaultValue={currentUser.username}
+          onChange={handleChange}
         />
         <input
           className="bg-slate-900 p-3 border"
@@ -95,12 +138,14 @@ function Profile() {
           id="email"
           placeholder="Email"
           defaultValue={currentUser.email}
+          onChange={handleChange}
         />
         <input
           className="bg-slate-900 p-3 border"
           type="password"
           placeholder="Password"
           id="password"
+          onChange={handleChange}
         />
 
         <button
@@ -118,6 +163,13 @@ function Profile() {
           Sign Out
         </span>
       </div>
+      {console.log(error)}
+      <p className="text-red-700 mt-4">
+        {error.success && "Something went wrong"}
+      </p>
+      <p className="text-emerald-700 mt-4">
+        {updateSuccess && "User is updated successfully"}
+      </p>
     </div>
   );
 }
