@@ -59,7 +59,7 @@ function Profile() {
         >
           <img
             className="h-24 w-24 group-hover:opacity-20 self-center cursor-pointer rounded-full object-cover"
-            src={currentUser.profilePicture}
+            src={formData.profilePicture || currentUser.profilePicture}
             alt="profile"
           />
           <p className="opacity-0 group-hover:opacity-100 cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
