@@ -16,7 +16,7 @@ mongoose
   });
 const __dirname = path.resolve();
 const app = express();
-app.use(express.static(path.join(__dirname, "client/dist")));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 app.get("*", (req, res) => {
   req.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
