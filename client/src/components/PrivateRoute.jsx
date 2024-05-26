@@ -1,8 +1,14 @@
 import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
-function PrivateRoute() {
+
+// eslint-disable-next-line react/prop-types
+function PrivateRoute({ role }) {
   const { currentUser } = useSelector((state) => state.user);
-  return currentUser ? <Outlet /> : <Navigate to="/sign-in/" />;
+  return currentUser && currentUser.role === role ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" />
+  );
 }
 
 export default PrivateRoute;
