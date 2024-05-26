@@ -4,17 +4,20 @@ function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <div className="mx-auto border">
-      <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
+      <div className="flex justify-between items-center  mx-auto p-3">
         <Link to="/">
-          <h1 className="font-bold">Auth App</h1>
+          <h1 className="font-bold">Chemstack</h1>
         </Link>
         <ul className="flex gap-4 items-center">
-          <Link to="/">
+          <Link to="/home">
             <li>Home</li>
           </Link>
           <Link to="/about">
             <li>About</li>
-          </Link>{" "}
+          </Link>
+          <Link to="/inventory">
+            <li>Dashboard</li>
+          </Link>
           <Link to={currentUser ? "/profile" : "/sign-in"}>
             {currentUser ? (
               <img
