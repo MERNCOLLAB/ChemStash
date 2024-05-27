@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import OAuth from "../ui/OAuth";
 import Button from "../components/Button";
 import { Linker } from "../components/Linker";
@@ -8,7 +8,14 @@ function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState(null);
+
+  const roles = ["admin", "chemist", "controller"];
+  const handleChangeRole = (event) => {
+    setSelectedRole(event.target.value);
+    setFormData({ ...formData, role: event.target.value });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -34,7 +41,9 @@ function SignUp() {
         setError(true);
         return;
       }
-      navigate("/sign-in");
+      // navigate("/sign-in");
+      alert("user created");
+      setFormData({});
     } catch (error) {
       setLoading(false);
       setError(true);
@@ -66,6 +75,21 @@ function SignUp() {
           id="password"
           onChange={handleChange}
         />
+
+        <select
+          className="bg-slate-900 p-3 border cursor-pointer text-slate-400"
+          value={selectedRole}
+          onChange={handleChangeRole}
+        >
+          <option value="" disabled selected className="">
+            Select Role
+          </option>
+          {roles.map((role, index) => (
+            <option className="cursor-pointer" key={index} value={role}>
+              {role.charAt(0).toUpperCase() + role.slice(1)}
+            </option>
+          ))}
+        </select>
         <Button loading={loading}>{loading ? "Loading" : "Sign Up"}</Button>
         <OAuth />
       </form>

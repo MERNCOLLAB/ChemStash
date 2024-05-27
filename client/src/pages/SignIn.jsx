@@ -40,9 +40,9 @@ function SignIn() {
 
       data.role === "admin"
         ? navigate("/manager/inventory")
-        : data.role === "chem"
-          ? navigate("/chemist")
-          : navigate("/controller");
+        : data.role === "chemist"
+        ? navigate("/chemist")
+        : navigate("/controller");
     } catch (error) {
       dispatch(signInFailure(error));
     }
