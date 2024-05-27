@@ -4,9 +4,9 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import About from "./pages/About";
 import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
-import AppLayout from "./components/AppLayout";
+import Header from "./ui/Header";
+import PrivateRoute from "./ui/PrivateRoute";
+import AppLayout from "./ui/AppLayout";
 import Inventory from "./pages/Inventory";
 import PageNotFound from "./pages/PageNotFound";
 

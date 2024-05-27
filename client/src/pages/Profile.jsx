@@ -17,6 +17,7 @@ import {
   deleteUserFailure,
   signOut,
 } from "../redux/user/userSlice";
+import Button from "../components/Button";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ function Profile() {
       },
       (error) => {
         setImageError(true);
+        console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
@@ -177,12 +179,7 @@ function Profile() {
           onChange={handleChange}
         />
 
-        <button
-          disabled={loading}
-          className="bg-slate-700 p-3 uppercase hover:opacity-60 border"
-        >
-          {loading ? "Loading" : "Update"}
-        </button>
+        <Button loading={loading}>{loading ? "Loading" : "Update"}</Button>
       </form>
       <div className="flex justify-between items-center mt-4 text-sm">
         <span
