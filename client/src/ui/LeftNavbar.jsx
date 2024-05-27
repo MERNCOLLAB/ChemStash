@@ -1,19 +1,19 @@
-import { Link } from "react-router-dom";
+import { Linker } from "../components/Linker";
 
 function LeftNavbar() {
   return (
     <ul className="flex flex-col gap-4">
       <li>
-        <Link to="inventory">Inventory</Link>
+        <Linker to="inventory">Inventory</Linker>
       </li>
       <li>
-        <Link to="link-1">Link 1</Link>
+        <Linker to="link-1">Linker 1</Linker>
       </li>
       <li>
-        <Link to="link-2">Link 2</Link>
+        <Linker to="link-2">Linker 2</Linker>
       </li>
       <li>
-        <Link to="link-3">Link 2</Link>
+        <Linker to="link-3">Linker 3</Linker>
       </li>
     </ul>
   );

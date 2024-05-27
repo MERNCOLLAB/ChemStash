@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { Linker } from "../components/Linker";
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
-  const getLinkPath = () => {
+  const getLinkerPath = () => {
     if (!currentUser) return "/sign-in";
     switch (currentUser.role) {
       case "admin":
@@ -19,18 +18,17 @@ function Header() {
   return (
     <div className="mx-auto border">
       <div className="flex justify-between items-center  mx-auto p-3">
-        <Link to="/">
+        <Linker to="/">
           <h1 className="font-bold">Chemstack</h1>
-        </Link>
+        </Linker>
         <ul className="flex gap-4 items-center">
-          <Link to="/">
+          <Linker to="/">
             <li>Home</li>
-          </Link>
-          <Link to="/about">
+          </Linker>
+          <Linker to="/about">
             <li>About</li>
-          </Link>
-
-          <Link to={getLinkPath()}>
+          </Linker>
+          <Linker to={getLinkerPath()}>
             {currentUser ? (
               <img
                 className="border rounded-full h-10 w-10 object-cover"
@@ -40,7 +38,7 @@ function Header() {
             ) : (
               <li>Sign In</li>
             )}
-          </Link>
+          </Linker>
         </ul>
       </div>
     </div>

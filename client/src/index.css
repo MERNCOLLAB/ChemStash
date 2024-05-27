@@ -5,3 +5,8 @@
 body {
   @apply bg-slate-950 text-slate-300;
 }
+
+/* For Active Links */
+.active{
+  @apply text-sky-400;
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   signInStart,
   signInFailure,
@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../ui/OAuth";
 import Button from "../components/Button";
+import { Linker } from "../components/Linker";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -40,8 +41,8 @@ function SignIn() {
       data.role === "admin"
         ? navigate("/manager/inventory")
         : data.role === "chem"
-        ? navigate("/chemist")
-        : navigate("/controller");
+          ? navigate("/chemist")
+          : navigate("/controller");
     } catch (error) {
       dispatch(signInFailure(error));
     }
@@ -71,9 +72,9 @@ function SignIn() {
       <div className="flex gap-2 mt-5">
         <p>Don&#39;t have an account?</p>
 
-        <Link to="/sign-up/">
+        <Linker to="/sign-up/">
           <span className="text-sky-500">Sign up</span>
-        </Link>
+        </Linker>
       </div>
       <p className="text-red-700">
         {error ? error.message || "Something went wrong!" : ""}

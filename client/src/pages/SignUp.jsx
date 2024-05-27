@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import OAuth from "../ui/OAuth";
 import Button from "../components/Button";
+import { Linker } from "../components/Linker";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -71,9 +72,9 @@ function SignUp() {
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
 
-        <Link to="/sign-in/">
+        <Linker to="/sign-in/">
           <span className="text-sky-500">Sign in</span>
-        </Link>
+        </Linker>
       </div>
       <p className="text-red-700">{error && "Something went wrong!"}</p>
     </div>
