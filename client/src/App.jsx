@@ -30,8 +30,8 @@ function App() {
           </Route>
         </Route>
         {/* chemist */}
-        <Route element={<PrivateRoute role="chem" />}>
-          <Route path="/chem-profile" element={<Profile />} />
+        <Route element={<PrivateRoute role="chemist" />}>
+          <Route path="/chemist-profile" element={<Profile />} />
           <Route path="/chemist" element={<div>Chemist</div>} />
         </Route>
         {/* polution controler */}

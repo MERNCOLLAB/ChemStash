@@ -7,8 +7,8 @@ function Header() {
     switch (currentUser.role) {
       case "admin":
         return "/profile";
-      case "chem":
-        return "/chem-profile";
+      case "chemist":
+        return "/chemist-profile";
       case "controller":
         return "/controller-profile";
       default:
