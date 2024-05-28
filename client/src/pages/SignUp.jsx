@@ -3,6 +3,7 @@ import { useState } from "react";
 import OAuth from "../ui/OAuth";
 import Button from "../components/Button";
 import { Linker } from "../components/Linker";
+import { Input } from "../components/Input";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -54,26 +55,28 @@ function SignUp() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-bold my-7">Sign Up</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          className="bg-slate-900 p-3 border"
+        <Input
+          id="username"
           type="text"
           placeholder="Username"
-          id="username"
           onChange={handleChange}
+          classStyle="authForm"
         />
-        <input
-          className="bg-slate-900 p-3 border"
+
+        <Input
+          id="email"
           type="email"
           placeholder="Email"
-          id="email"
           onChange={handleChange}
+          classStyle="authForm"
         />
-        <input
-          className="bg-slate-900 p-3 border"
+
+        <Input
+          id="password"
           type="password"
           placeholder="Password"
-          id="password"
           onChange={handleChange}
+          classStyle="authForm"
         />
 
         <select

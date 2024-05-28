@@ -17,6 +17,7 @@ import {
   deleteUserFailure,
   signOut,
 } from "../redux/user/userSlice";
+import { Input } from "../components/Input";
 import Button from "../components/Button";
 
 function Profile() {
@@ -155,29 +156,34 @@ function Profile() {
             ""
           )}
         </p>
-        <input
-          className="bg-slate-900 p-3 border"
-          type="text"
+        
+        <Input
           id="username"
+          type="text"
           placeholder="Username"
           defaultValue={currentUser.username}
           onChange={handleChange}
+          classStyle="authForm"
         />
-        <input
-          className="bg-slate-900 p-3 border"
-          type="email"
+
+        <Input
           id="email"
+          type="email"
           placeholder="Email"
           defaultValue={currentUser.email}
           onChange={handleChange}
+          classStyle="authForm"
         />
-        <input
-          className="bg-slate-900 p-3 border"
+
+        <Input
+          id="password"
           type="password"
           placeholder="Password"
-          id="password"
+          defaultValue={currentUser.password}
           onChange={handleChange}
+          classStyle="authForm"
         />
+        
 
         <Button loading={loading}>{loading ? "Loading" : "Update"}</Button>
       </form>
