@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import OAuth from "../ui/OAuth";
 import Button from "../components/Button";
+import {Input }from "../components/Input";
 import { Linker } from "../components/Linker";
 
 function SignIn() {
@@ -52,20 +53,19 @@ function SignIn() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-bold my-7">Sign In</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          className="bg-slate-900 p-3 border"
-          type="email"
-          placeholder="Email"
+        <Input
           id="email"
+          type="email"
+          placeholder="Enter your email"
           onChange={handleChange}
         />
-        <input
-          className="bg-slate-900 p-3 border"
-          type="password"
-          placeholder="Password"
+        <Input
           id="password"
+          type="password"
+          placeholder="Enter password"
           onChange={handleChange}
         />
+
         <Button loading={loading}>{loading ? "Loading" : "Sign In"}</Button>
         <OAuth />
       </form>
