@@ -7,7 +7,7 @@ function LeftNavbar() {
         <Linker to="inventory">Inventory</Linker>
       </li>
       <li>
-        <Linker to="link-1">Linker 1</Linker>
+        <Linker to="users">List of Users</Linker>
       </li>
       <li>
         <Linker to="link-2">Linker 2</Linker>

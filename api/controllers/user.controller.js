@@ -50,3 +50,12 @@ export const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllUser = async (req, res, next) => {
+  try {
+    const users = await User.find({}, 'username email role profilePicture');
+    res.json(users);
+  } catch (err) {
+    next(errorHandler(500, 'Server Error'));
+  }
+};
