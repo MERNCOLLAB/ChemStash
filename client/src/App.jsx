@@ -10,6 +10,7 @@ import PrivateRoute from "./ui/PrivateRoute";
 import AppLayout from "./ui/AppLayout";
 import Inventory from "./pages/Inventory";
 import PageNotFound from "./pages/PageNotFound";
+import Chemical from "./pages/Chemical";
 
 function App() {
   return (
@@ -25,8 +26,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
-            <Route path="users" element={<UserList/>} />
-            <Route path="link-2" element={<div>Another Page 2</div>} />
+            <Route path="users" element={<UserList />} />
+            <Route path="chemical" element={<Chemical />} />
             <Route path="link-3" element={<div>Another Page 3</div>} />
           </Route>
         </Route>
