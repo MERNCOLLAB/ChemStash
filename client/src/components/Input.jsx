@@ -1,6 +1,6 @@
 
 
-export function Input({ classStyle,
+export function Input({ 
     type, placeholder, id, onChange, defaultValue}) {
   return (
       <input
@@ -9,10 +9,7 @@ export function Input({ classStyle,
           placeholder={placeholder}
           defaultValue={defaultValue}
           onChange={onChange}
-          className={
-              `${!classStyle ? "bg-sky-800 text-white/50" :
-                  classStyle === "authForm" ? "bg-slate-900" :
-                    ""} p-3 border`}
+          className="bg-slate-900 p-2"
       />
   )
 }

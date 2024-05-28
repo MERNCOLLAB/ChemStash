@@ -60,7 +60,6 @@ function SignUp() {
           type="text"
           placeholder="Username"
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <Input
@@ -68,7 +67,6 @@ function SignUp() {
           type="email"
           placeholder="Email"
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <Input
@@ -76,7 +74,6 @@ function SignUp() {
           type="password"
           placeholder="Password"
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <select

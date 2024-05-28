@@ -58,14 +58,12 @@ function SignIn() {
           type="email"
           placeholder="Enter your email"
           onChange={handleChange}
-          classStyle="authForm"
         />
         <Input
           id="password"
           type="password"
           placeholder="Enter password"
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <Button loading={loading}>{loading ? "Loading" : "Sign In"}</Button>

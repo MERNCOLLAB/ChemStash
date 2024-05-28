@@ -163,7 +163,6 @@ function Profile() {
           placeholder="Username"
           defaultValue={currentUser.username}
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <Input
@@ -172,7 +171,6 @@ function Profile() {
           placeholder="Email"
           defaultValue={currentUser.email}
           onChange={handleChange}
-          classStyle="authForm"
         />
 
         <Input
@@ -181,7 +179,6 @@ function Profile() {
           placeholder="Password"
           defaultValue={currentUser.password}
           onChange={handleChange}
-          classStyle="authForm"
         />
         
 
