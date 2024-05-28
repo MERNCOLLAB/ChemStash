@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import About from "./pages/About";
+import UserList from "./pages/UserList";
 import Profile from "./pages/Profile";
 import Header from "./ui/Header";
 import PrivateRoute from "./ui/PrivateRoute";
@@ -24,7 +25,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
-            <Route path="link-1" element={<div>Another Page 1</div>} />
+            <Route path="users" element={<UserList/>} />
             <Route path="link-2" element={<div>Another Page 2</div>} />
             <Route path="link-3" element={<div>Another Page 3</div>} />
           </Route>
