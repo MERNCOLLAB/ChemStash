@@ -21,3 +21,13 @@ export const createChemical = async (req, res, next) => {
     console.log("chemical error");
   }
 };
+
+// chemical list
+export const chemicalList = async (req, res, next) => {
+  try {
+    const chemicals = await Chemical.find();
+    res.json(chemicals);
+  } catch (err) {
+    next(errorHandler(500, "Server Error"));
+  }
+};

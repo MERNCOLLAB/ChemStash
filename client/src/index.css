@@ -7,6 +7,10 @@ body {
 }
 
 /* For Active Links */
-.active{
+.active {
   @apply text-sky-400;
+}
+
+tr {
+  @apply border-b border-slate-700;
 }
