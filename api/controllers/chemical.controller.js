@@ -31,3 +31,14 @@ export const chemicalList = async (req, res, next) => {
     next(errorHandler(500, "Server Error"));
   }
 };
+
+// delete chemical
+
+export const deleteChemical = async (req, res, next) => {
+  try {
+    await Chemical.findByIdAndDelete(req.params.id);
+    res.status(200).json("chemical has been deleted...");
+  } catch (error) {
+    next(error);
+  }
+};
