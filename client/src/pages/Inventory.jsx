@@ -12,7 +12,8 @@ function Inventory() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [itemDelete, setItemToDelete] = useState([]);
+  const [isUpdateMode, setUpdateMode] = useState(false);
+  const [currentItem, setCurrentItem] = useState({});
   // const columns = [
   //   "name",
   //   "casNumber",
@@ -22,15 +23,22 @@ function Inventory() {
   //   "supplier",
   // ];
 
-  const handleDelete = (id) => {
-    const itemToDelete = lists.find((item) => item._id === id);
-    setItemToDelete(itemToDelete);
-
+  const handleUpdate = (id) => {
     toggleDrawer();
+    const itemToUpdate = lists.find((item) => item._id === id);
+    setCurrentItem(itemToUpdate);
+  
+  };
+  const handleDelete = (id) => {
+    toggleDrawer();
+    const itemToDelete = lists.find((item) => item._id === id);
+    setCurrentItem(itemToDelete);
+
   };
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
+  
   };
 
   const fetchList = async () => {
@@ -62,7 +70,7 @@ function Inventory() {
         method: "DELETE",
       });
       const data = await res.json();
-      toggleDrawer();
+     
       setLoading(false);
       if (data.success === false) {
         return;
@@ -74,6 +82,38 @@ function Inventory() {
       setError(error);
     }
   };
+
+  const updateItem = async (currentItem) => {
+  
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/chemical/update/${currentItem._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(currentItem),
+    
+      });
+
+      const data = await res.json();
+     
+      if (data.success === false) {
+        setLoading(false);
+        return;
+      }
+
+      fetchList();
+   
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+
+
 
   const columns = [
     {
@@ -131,7 +171,9 @@ function Inventory() {
               className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52"
             >
               <li className="flex gap-2">
-                <p>
+                <p onClick={() =>{setUpdateMode(true);  handleUpdate(value)}
+                }
+                  >
                   <span>
                     <CiEdit />
                   </span>
@@ -139,7 +181,10 @@ function Inventory() {
                 </p>
               </li>
               <li>
-                <p onClick={() => handleDelete(value)}>
+                <p onClick={() =>
+                  {  setUpdateMode(false);  handleDelete(value)}
+                  }
+                  >
                   <span>
                     <MdDeleteOutline />
                   </span>
@@ -207,13 +252,17 @@ function Inventory() {
       },
     });
 
+
+
   return (
     <div className="flex flex-col  ">
       <Drawer
         isOpen={isDrawerOpen}
         toggleDrawer={toggleDrawer}
-        itemDelete={itemDelete}
-        deleteItem={deleteChemical}
+        item={currentItem}
+        onDelete={deleteChemical}
+        onUpdate={updateItem}
+        isUpdate={isUpdateMode}
       />
       {loading ? (
         <div>Loading...</div>

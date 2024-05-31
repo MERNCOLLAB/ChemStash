@@ -42,3 +42,30 @@ export const deleteChemical = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
+export const updateChemical = async (req, res, next) => {
+
+
+  try {
+    const updateChemical = await Chemical.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          name:req.body.name,
+          casNumber:req.body.casNumber,
+          molecularFormula:req.body.molecularFormula,
+          purity: req.body.purity,
+          location:req.body.location,
+          supplier:req.body.supplier
+        },
+      },
+      { new: true }
+    );
+    // const { password, ...rest } = updatedUser._doc;
+    res.status(200).json({data:updateChemical,message:"Item successfully updated"});
+  } catch (error) {
+    next(error);
+  }
+};
