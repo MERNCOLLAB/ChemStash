@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    role: { type: String, default: "admin" },
+    role: { type: String, default: null },
     email: {
       type: String,
       required: true,
