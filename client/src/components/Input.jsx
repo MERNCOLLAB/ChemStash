@@ -1,8 +1,9 @@
-export function Input({ type, placeholder, id, onChange, defaultValue }) {
+export function Input({ type, value, placeholder, id, onChange, defaultValue }) {
   return (
     <input
       id={id}
       type={type}
+      value={value}
       placeholder={placeholder}
       defaultValue={defaultValue}
       onChange={onChange}
