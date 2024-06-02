@@ -10,7 +10,36 @@ function Chemical() {
     purity: '',
     location: '',
     supplier: '',
+    quantity: '',
+    unit: '',
+    purchaseDate: '',
+    expiryDate: '',
+    sds: '',
+    hazardClassification: '',
+    remarks: '',
   });
+
+  const location = [
+    'Flammable Storage Cabinet',
+    'Corrosive Storage Cabinet',
+    'Refrigerator/Freezer',
+    'General Storage Shelf',
+    'Oxidizer Storage Shelf',
+    'Gas Cylinder Storage',
+    'Others',
+  ];
+  const hazardClassifications = [
+    'Not Applicable',
+    'Explosives',
+    'Flammable',
+    'Oxidizing',
+    'Corrosive',
+    'Toxic',
+    'Health Hazard',
+    'Environmental Hazard',
+    'Gases Under Pressure',
+  ];
+
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -91,14 +120,23 @@ function Chemical() {
           placeholder="Purity"
           onChange={handleChange}
         />
-        <Input
-          disable={loading}
-          value={formData.location}
+
+        <select
           id="location"
-          type="text"
-          placeholder="Location"
+          className="bg-slate-900 p-3 border"
           onChange={handleChange}
-        />
+          value={formData.location}
+        >
+          <option value="" disabled selected className="">
+            Select Location
+          </option>
+          {location.map((loc, index) => (
+            <option className="cursor-pointer" key={index}>
+              {loc}
+            </option>
+          ))}
+        </select>
+
         <Input
           disable={loading}
           value={formData.supplier}
@@ -107,6 +145,72 @@ function Chemical() {
           placeholder="Supplier"
           onChange={handleChange}
         />
+        <Input
+          disable={loading}
+          value={formData.quantity}
+          id="quantity"
+          type="number"
+          placeholder="Chemical Quantity"
+          onChange={handleChange}
+        />
+        <Input
+          disable={loading}
+          value={formData.unit}
+          id="unit"
+          type="text"
+          placeholder="Unit for the Quantity"
+          onChange={handleChange}
+        />
+
+        <div className="flex items-center gap-2">
+          <label>Date of Purchase: </label>
+          <Input
+            disable={loading}
+            value={formData.purchaseDate}
+            id="purchaseDate"
+            type="date"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label>Expiry Date: </label>
+          <Input disable={loading} value={formData.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
+        </div>
+
+        <Input
+          disable={loading}
+          value={formData.sds}
+          id="sds"
+          type="text"
+          placeholder="Safety Data Sheet URL"
+          onChange={handleChange}
+        />
+
+        <select
+          id="hazardClassification"
+          className="bg-slate-900 p-3 border"
+          value={formData.hazardClassification}
+          onChange={handleChange}
+        >
+          <option value="" disabled selected className="">
+            Select Hazard Classification
+          </option>
+          {hazardClassifications.map((hazard, index) => (
+            <option className="cursor-pointer" key={index}>
+              {hazard}
+            </option>
+          ))}
+        </select>
+        <Input
+          disable={loading}
+          value={formData.remarks}
+          id="remarks"
+          type="text"
+          placeholder="Remarks"
+          onChange={handleChange}
+        />
+
         <div className="flex justify-between">
           <span></span>
           <Button disable={loading}>Add Chemical</Button>
