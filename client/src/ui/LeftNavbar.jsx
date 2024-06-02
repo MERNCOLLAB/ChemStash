@@ -1,8 +1,8 @@
-import { Linker } from "../components/Linker";
+import { Linker } from '../components/Linker';
 
 function LeftNavbar() {
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="flex  gap-4">
       <li>
         <Linker to="inventory">Inventory</Linker>
       </li>

@@ -132,20 +132,20 @@ function Inventory() {
       options: {
         customBodyRender: (value) => (
           <p
-            className={`capitalize px-3 py-1 inline-block rounded-full text-slate-950 ${
+            className={`capitalize px-3 py-1 inline-block rounded-full text-slate-300   ${
               value === 'Flammable Storage Cabinet'
-                ? 'bg-rose-500'
+                ? 'bg-rose-800'
                 : value === 'Corrosive Storage Cabinet'
-                  ? 'bg-teal-500'
+                  ? 'bg-teal-800'
                   : value === 'Refrigerator/Freezer'
-                    ? 'bg-sky-500'
+                    ? 'bg-sky-800'
                     : value === 'General Storage Shelf'
-                      ? 'bg-emerald-500'
+                      ? 'bg-indigo-800'
                       : value === 'Oxidizer Storage Shelf'
-                        ? 'bg-amber-500'
+                        ? 'bg-amber-800'
                         : value === 'Gas Cylinder Storage'
-                          ? 'bg-zinc-500'
-                          : 'bg-fuchsia-500'
+                          ? 'bg-slate-800'
+                          : 'bg-fuchsia-800'
             }`}
           >
             {value}
@@ -252,12 +252,13 @@ function Inventory() {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: '10px 3px',
+              padding: '0px 3px',
               color: '#94a3b8',
             },
             body: {
-              padding: '5px 15px',
+              padding: ' 8px',
               color: '#94a3b8',
+              fontSize: '12px',
             },
           },
         },
@@ -283,6 +284,13 @@ function Inventory() {
             },
           },
         },
+        MUIDataTableHeadCell: {
+          styleOverrides: {
+            data: {
+              whiteSpace: 'pre',
+            },
+          },
+        },
       },
     });
 
@@ -303,7 +311,7 @@ function Inventory() {
       ) : (
         <ThemeProvider theme={getMuiTheme()}>
           <MUIDataTable
-            className="text-slate-300 "
+            className="text-slate-300  "
             title={'Chemical List'}
             data={lists}
             columns={columns}
