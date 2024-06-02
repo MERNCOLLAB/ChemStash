@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import MUIDataTable from "mui-datatables";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { GoGear } from "react-icons/go";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
-import Drawer from "../ui/Drawer";
+import { useEffect } from 'react';
+import { useState } from 'react';
+import MUIDataTable from 'mui-datatables';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { GoGear } from 'react-icons/go';
+import { CiEdit } from 'react-icons/ci';
+import { GoLink } from 'react-icons/go';
+import { MdDeleteOutline } from 'react-icons/md';
+import Drawer from '../ui/Drawer';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
@@ -27,31 +28,33 @@ function Inventory() {
     toggleDrawer();
     const itemToUpdate = lists.find((item) => item._id === id);
     setCurrentItem(itemToUpdate);
-  
   };
   const handleDelete = (id) => {
     toggleDrawer();
     const itemToDelete = lists.find((item) => item._id === id);
     setCurrentItem(itemToDelete);
-
   };
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
-  
   };
 
   const fetchList = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/chemical/list", {
-        method: "GET",
+      const response = await fetch('/api/chemical/list', {
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       const data = await response.json();
-      setLists(data);
+      const transformedData = data.map((item) => ({
+        ...item,
+        purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
+        expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
+      }));
+      setLists(transformedData);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -67,10 +70,10 @@ function Inventory() {
     try {
       setLoading(true);
       const res = await fetch(`/api/chemical/delete/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
       const data = await res.json();
-     
+
       setLoading(false);
       if (data.success === false) {
         return;
@@ -84,65 +87,65 @@ function Inventory() {
   };
 
   const updateItem = async (currentItem) => {
-  
     try {
       setLoading(true);
       const res = await fetch(`/api/chemical/update/${currentItem._id}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
 
         body: JSON.stringify(currentItem),
-    
       });
 
       const data = await res.json();
-     
+
       if (data.success === false) {
         setLoading(false);
         return;
       }
 
       fetchList();
-   
     } catch (error) {
       setLoading(false);
       setError(error);
     }
   };
 
-
-
-
   const columns = [
     {
-      name: "name",
+      name: 'name',
     },
     {
-      name: "casNumber",
+      name: 'casNumber',
+      label: 'Cas Number',
     },
     {
-      name: "molecularFormula",
+      name: 'molecularFormula',
+      label: 'Molecular Formula',
     },
     {
-      name: "purity",
+      name: 'purity',
     },
     {
-      name: "location",
+      name: 'location',
       options: {
         customBodyRender: (value) => (
           <p
             className={`capitalize px-3 py-1 inline-block rounded-full text-slate-950 ${
-              value === "A1"
-                ? "bg-sky-500"
-                : value === "B1"
-                ? "bg-amber-500"
-                : value === "C1"
-                ? "bg-emerald-500"
-                : value === "D1"
-                ? "bg-indigo-500"
-                : "bg-rose-500"
+              value === 'Flammable Storage Cabinet'
+                ? 'bg-rose-500'
+                : value === 'Corrosive Storage Cabinet'
+                  ? 'bg-teal-500'
+                  : value === 'Refrigerator/Freezer'
+                    ? 'bg-sky-500'
+                    : value === 'General Storage Shelf'
+                      ? 'bg-emerald-500'
+                      : value === 'Oxidizer Storage Shelf'
+                        ? 'bg-amber-500'
+                        : value === 'Gas Cylinder Storage'
+                          ? 'bg-zinc-500'
+                          : 'bg-fuchsia-500'
             }`}
           >
             {value}
@@ -151,29 +154,58 @@ function Inventory() {
       },
     },
     {
-      name: "supplier",
+      name: 'supplier',
     },
     {
-      name: "_id",
-      label: "Action",
+      name: 'quantity',
+    },
+    {
+      name: 'unit',
+    },
+    {
+      name: 'purchaseDate',
+      label: 'Purchase Date',
+    },
+    {
+      name: 'expiryDate',
+      label: 'Expiry Date',
+    },
+    {
+      name: 'hazardClassification',
+      label: 'Hazards',
+    },
+    {
+      name: 'sds',
+      options: {
+        customBodyRender: (value) => (
+          <div className="btn btn-sm  bg-slate-800 hover:bg-slate-700">
+            <a href={value}>
+              <GoLink />
+            </a>
+          </div>
+        ),
+      },
+    },
+    {
+      name: 'remarks',
+    },
+    {
+      name: '_id',
+      label: 'Action',
       options: {
         customBodyRender: (value) => (
           <div className="dropdown dropdown-end ">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-sm  bg-slate-800 hover:bg-slate-700 "
-            >
+            <div tabIndex={0} role="button" className="btn btn-sm  bg-slate-800 hover:bg-slate-700 ">
               <GoGear />
             </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52"
-            >
+            <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52">
               <li className="flex gap-2">
-                <p onClick={() =>{setUpdateMode(true);  handleUpdate(value)}
-                }
-                  >
+                <p
+                  onClick={() => {
+                    setUpdateMode(true);
+                    handleUpdate(value);
+                  }}
+                >
                   <span>
                     <CiEdit />
                   </span>
@@ -181,10 +213,12 @@ function Inventory() {
                 </p>
               </li>
               <li>
-                <p onClick={() =>
-                  {  setUpdateMode(false);  handleDelete(value)}
-                  }
-                  >
+                <p
+                  onClick={() => {
+                    setUpdateMode(false);
+                    handleDelete(value);
+                  }}
+                >
                   <span>
                     <MdDeleteOutline />
                   </span>
@@ -199,7 +233,7 @@ function Inventory() {
   ];
 
   const options = {
-    selectableRows: "none",
+    selectableRows: 'none',
     elevation: 0,
     rowsPerPage: 12,
     rowsPerPageOptions: [12, 20, 30],
@@ -209,28 +243,28 @@ function Inventory() {
     createTheme({
       palette: {
         background: {
-          paper: "#0f172a",
-          default: "#ffffff",
+          paper: '#0f172a',
+          default: '#ffffff',
         },
-        mode: "dark",
+        mode: 'dark',
       },
       components: {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: "10px 3px",
-              color: "#94a3b8",
+              padding: '10px 3px',
+              color: '#94a3b8',
             },
             body: {
-              padding: "5px 15px",
-              color: "#94a3b8",
+              padding: '5px 15px',
+              color: '#94a3b8',
             },
           },
         },
         MUIDataTableFilter: {
           styleOverrides: {
             root: {
-              backgroundColor: "#1e293b",
+              backgroundColor: '#1e293b',
             },
           },
         },
@@ -238,21 +272,19 @@ function Inventory() {
         MuiFormControl: {
           styleOverrides: {
             root: {
-              padding: "10px",
+              padding: '10px',
             },
           },
         },
         MUIDataTable: {
           styleOverrides: {
             root: {
-              border: "1px solid #fff",
+              border: '1px solid #fff',
             },
           },
         },
       },
     });
-
-
 
   return (
     <div className="flex flex-col  ">
@@ -272,7 +304,7 @@ function Inventory() {
         <ThemeProvider theme={getMuiTheme()}>
           <MUIDataTable
             className="text-slate-300 "
-            title={"Chemical List"}
+            title={'Chemical List'}
             data={lists}
             columns={columns}
             options={options}
