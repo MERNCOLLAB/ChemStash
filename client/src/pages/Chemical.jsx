@@ -121,12 +121,7 @@ function Chemical() {
           onChange={handleChange}
         />
 
-        <select
-          id="location"
-          className="bg-slate-900 p-3 border"
-          onChange={handleChange}
-          value={formData.location}
-        >
+        <select id="location" className="bg-slate-900 p-3 border" onChange={handleChange} value={formData.location}>
           <option value="" disabled selected className="">
             Select Location
           </option>
