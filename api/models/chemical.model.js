@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const chemicalSchema = new mongoose.Schema(
   {
@@ -28,10 +28,42 @@ const chemicalSchema = new mongoose.Schema(
       required: true,
       default: null,
     },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    unit: {
+      type: String,
+      required: true,
+      default: 'Bottle',
+    },
+    purchaseDate: {
+      type: Date,
+      required: true,
+    },
+    expiryDate: {
+      type: Date,
+      required: true,
+    },
+    sds: {
+      type: String,
+      required: true,
+    },
+    hazardClassification: {
+      type: String,
+      required: true,
+      default: null,
+    },
+    remarks: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
-const Chemical = mongoose.model("Chemical", chemicalSchema);
+const Chemical = mongoose.model('Chemical', chemicalSchema);
 
 export default Chemical;
