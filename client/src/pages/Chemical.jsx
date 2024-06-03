@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, Input } from '../components';
+import { Button, Input, Select } from '../components';
+import { location, hazardClassifications } from '../constants';
 
 function Chemical() {
   const [formData, setFormData] = useState({
@@ -17,27 +18,6 @@ function Chemical() {
     hazardClassification: '',
     remarks: '',
   });
-
-  const location = [
-    'Flammable Storage Cabinet',
-    'Corrosive Storage Cabinet',
-    'Refrigerator/Freezer',
-    'General Storage Shelf',
-    'Oxidizer Storage Shelf',
-    'Gas Cylinder Storage',
-    'Others',
-  ];
-  const hazardClassifications = [
-    'Not Applicable',
-    'Explosives',
-    'Flammable',
-    'Oxidizing',
-    'Corrosive',
-    'Toxic',
-    'Health Hazard',
-    'Environmental Hazard',
-    'Gases Under Pressure',
-  ];
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -76,6 +56,13 @@ function Chemical() {
         purity: '',
         location: '',
         supplier: '',
+        quantity: '',
+        unit: '',
+        purchaseDate: '',
+        expiryDate: '',
+        sds: '',
+        hazardClassification: '',
+        remarks: '',
       });
       alert('Chemical successfully created');
     } catch (error) {
@@ -83,7 +70,7 @@ function Chemical() {
       setError(error);
     }
   };
-  console.log(formData);
+
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -120,16 +107,13 @@ function Chemical() {
           onChange={handleChange}
         />
 
-        <select id="location" className="bg-slate-900 p-3 border" onChange={handleChange} value={formData.location}>
-          <option value="" disabled selected className="">
-            Select Location
-          </option>
-          {location.map((loc, index) => (
-            <option className="cursor-pointer" key={index}>
-              {loc}
-            </option>
-          ))}
-        </select>
+        <Select
+          id="location"
+          value={formData.location}
+          onChange={handleChange}
+          disabledValue="Select your storage location"
+          options={location}
+        />
 
         <Input
           disable={loading}
@@ -181,21 +165,13 @@ function Chemical() {
           onChange={handleChange}
         />
 
-        <select
+        <Select
           id="hazardClassification"
-          className="bg-slate-900 p-3 border"
           value={formData.hazardClassification}
           onChange={handleChange}
-        >
-          <option value="" disabled selected className="">
-            Select Hazard Classification
-          </option>
-          {hazardClassifications.map((hazard, index) => (
-            <option className="cursor-pointer" key={index}>
-              {hazard}
-            </option>
-          ))}
-        </select>
+          disabledValue="Select the Hazard Classification"
+          options={hazardClassifications}
+        />
         <Input
           disable={loading}
           value={formData.remarks}
