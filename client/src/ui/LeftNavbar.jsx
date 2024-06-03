@@ -1,4 +1,4 @@
-import { Linker } from '../components/Linker';
+import { Linker } from '../components';
 
 function LeftNavbar() {
   return (

@@ -1,16 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import About from "./pages/About";
-import UserList from "./pages/UserList";
-import Profile from "./pages/Profile";
-import Header from "./ui/Header";
-import PrivateRoute from "./ui/PrivateRoute";
-import AppLayout from "./ui/AppLayout";
-import Inventory from "./pages/Inventory";
-import PageNotFound from "./pages/PageNotFound";
-import Chemical from "./pages/Chemical";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Chemical } from './pages';
+import { Header, PrivateRoute, AppLayout } from './ui';
 
 function App() {
   return (
