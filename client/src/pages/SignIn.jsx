@@ -1,15 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  signInStart,
-  signInFailure,
-  signInSuccess,
-} from "../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import OAuth from "../ui/OAuth";
-import Button from "../components/Button";
-import {Input }from "../components/Input";
-import { Linker } from "../components/Linker";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInStart, signInFailure, signInSuccess } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import OAuth from '../ui/OAuth';
+import { Button, Input, Linker } from '../components';
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -24,10 +18,10 @@ function SignIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
+      const res = await fetch('/api/auth/signin', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -39,11 +33,11 @@ function SignIn() {
       }
       dispatch(signInSuccess(data));
 
-      data.role === "admin"
-        ? navigate("/manager/inventory")
-        : data.role === "chemist"
-        ? navigate("/chemist")
-        : navigate("/controller");
+      data.role === 'admin'
+        ? navigate('/manager/inventory')
+        : data.role === 'chemist'
+          ? navigate('/chemist')
+          : navigate('/controller');
     } catch (error) {
       dispatch(signInFailure(error));
     }
@@ -53,20 +47,10 @@ function SignIn() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-bold my-7">Sign In</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <Input
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          onChange={handleChange}
-        />
-        <Input
-          id="password"
-          type="password"
-          placeholder="Enter password"
-          onChange={handleChange}
-        />
+        <Input id="email" type="email" placeholder="Enter your email" onChange={handleChange} />
+        <Input id="password" type="password" placeholder="Enter password" onChange={handleChange} />
 
-        <Button loading={loading}>{loading ? "Loading" : "Sign In"}</Button>
+        <Button loading={loading}>{loading ? 'Loading' : 'Sign In'}</Button>
         <OAuth />
       </form>
       <div className="flex gap-2 mt-5">
@@ -76,9 +60,7 @@ function SignIn() {
           <span className="text-sky-500">Sign up</span>
         </Linker>
       </div>
-      <p className="text-red-700">
-        {error ? error.message || "Something went wrong!" : ""}
-      </p>
+      <p className="text-red-700">{error ? error.message || 'Something went wrong!' : ''}</p>
     </div>
   );
 }

@@ -1,18 +1,18 @@
-import { useSelector } from "react-redux";
-import { Linker } from "../components/Linker";
+import { useSelector } from 'react-redux';
+import { Linker } from '../components';
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const getLinkerPath = () => {
-    if (!currentUser) return "/sign-in";
+    if (!currentUser) return '/sign-in';
     switch (currentUser.role) {
-      case "admin":
-        return "/profile";
-      case "chemist":
-        return "/chemist-profile";
-      case "controller":
-        return "/controller-profile";
+      case 'admin':
+        return '/profile';
+      case 'chemist':
+        return '/chemist-profile';
+      case 'controller':
+        return '/controller-profile';
       default:
-        return "/";
+        return '/';
     }
   };
   return (

@@ -24,8 +24,6 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
     }));
   };
 
-  console.log(updatedItem);
-
   const handleUpdate = (e) => {
     e.preventDefault();
     onUpdate(updatedItem);
