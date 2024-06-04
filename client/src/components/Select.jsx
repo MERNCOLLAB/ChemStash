@@ -3,13 +3,13 @@ const Select = ({ id, onChange, disabledValue, options }) => {
     switch (id) {
       case 'role':
         return options.map((opt, index) => (
-          <option key={index} value={opt}>
+          <option className="bg-slate-900" key={index} value={opt}>
             {opt.charAt(0).toUpperCase() + opt.slice(1)}
           </option>
         ));
       default:
         return options.map((opt, index) => (
-          <option key={index} value={opt}>
+          <option className="bg-slate-900" key={index} value={opt}>
             {opt}
           </option>
         ));
@@ -23,7 +23,7 @@ const Select = ({ id, onChange, disabledValue, options }) => {
       defaultValue=""
       onChange={onChange}
     >
-      <option value="" disabled>
+      <option className="bg-slate-900" value="" disabled>
         {disabledValue}
       </option>
       {renderOptions()}
