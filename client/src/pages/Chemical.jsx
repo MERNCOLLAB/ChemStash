@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button, Input, Select } from '../components';
 import { location, hazardClassifications } from '../constants';
+import useSubSup from '../hooks/useSubSup';
+import { MdSuperscript, MdSubscript } from 'react-icons/md';
 
 function Chemical() {
   const [formData, setFormData] = useState({
@@ -29,7 +31,7 @@ function Chemical() {
       [id]: type === 'number' ? Number(value) : value,
     });
   };
-
+  const { pRef, showButton, handleFocus, handleBlur, toggleSuperscript, toggleSubscript } = useSubSup(handleChange);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -90,14 +92,36 @@ function Chemical() {
           placeholder="CAS Number"
           onChange={handleChange}
         />
-        <Input
-          disable={loading}
-          value={formData.molecularFormula}
-          id="molecularFormula"
-          type="text"
-          placeholder="Molecular Formula"
-          onChange={handleChange}
-        />
+        <label htmlFor="molecularFormula">Molecular Formula</label>
+        <div className="flex">
+          <p
+            id="molecularFormula"
+            ref={pRef}
+            contentEditable
+            className="bg-slate-900 p-3 border outline-none flex-grow"
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          ></p>
+          {showButton && (
+            <div className="flex items-center gap-2 p-2">
+              <button
+                className="rounded-xl bg-slate-500 p-2"
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={toggleSuperscript}
+              >
+                <MdSuperscript />
+              </button>
+              <button
+                className="rounded-xl bg-slate-500 p-2"
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={toggleSubscript}
+              >
+                <MdSubscript />
+              </button>
+            </div>
+          )}
+        </div>
+
         <Input
           disable={loading}
           value={formData.purity}
