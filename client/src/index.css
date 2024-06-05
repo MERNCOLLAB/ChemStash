@@ -17,7 +17,7 @@
   @apply no-scrollbar;
 }
 body {
-  @apply bg-slate-950 text-slate-300 overflow-hidden no-scrollbar;
+  @apply bg-slate-950 text-slate-300 overflow-y-scroll  no-scrollbar;
 }
 
 /* For Active Links */

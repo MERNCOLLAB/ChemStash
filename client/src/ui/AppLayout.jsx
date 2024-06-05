@@ -7,7 +7,7 @@ function AppLayout() {
       <div className="border p-4  ">
         <LeftNavbar />
       </div>
-      <div className="border p-4 w-full  h-[calc(100vh-84px)]  overflow-y-scroll no-scrollbar ">
+      <div className="border p-4 w-full   overflow-y-scroll no-scrollbar ">
         <Outlet />
       </div>
     </div>
