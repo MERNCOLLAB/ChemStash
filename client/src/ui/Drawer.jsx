@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { formatDate } from '../helpers/FormatDate';
 import { Select, Input } from '../components';
 import { hazardClassifications, location } from '../constants';
+import useSubSup from '../hooks/useSubSup';
+import { MdSubscript, MdSuperscript } from 'react-icons/md';
+
 function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
   const [open, setOpen] = useState(isOpen);
   const [updatedItem, setUpdatedItem] = useState({ ...item });
@@ -25,7 +28,7 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
       [id]: value,
     }));
   };
-
+  const { pRef, showButton, handleFocus, handleBlur, toggleSuperscript, toggleSubscript } = useSubSup(handleChange);
   const handleUpdate = (e) => {
     e.preventDefault();
     onUpdate(updatedItem);
@@ -74,13 +77,34 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
                 </li>
                 <li>
                   <label>Molecular Formula</label>
-                  <Input
-                    value={updatedItem.molecularFormula}
-                    id="molecularFormula"
-                    type="text"
-                    placeholder="Molecular Formula"
-                    onChange={handleChange}
-                  />
+                  <div className="flex">
+                    <p
+                      id="molecularFormula"
+                      ref={pRef}
+                      contentEditable
+                      className="bg-slate-900 p-3 border outline-none flex-grow"
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                    ></p>
+                    {showButton && (
+                      <div className="flex items-center gap-2 p-2">
+                        <button
+                          className="rounded-xl bg-slate-500 p-2"
+                          onMouseDown={(event) => event.preventDefault()}
+                          onClick={toggleSuperscript}
+                        >
+                          <MdSuperscript />
+                        </button>
+                        <button
+                          className="rounded-xl bg-slate-500 p-2"
+                          onMouseDown={(event) => event.preventDefault()}
+                          onClick={toggleSubscript}
+                        >
+                          <MdSubscript />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </li>
                 <li>
                   <label>Purity</label>

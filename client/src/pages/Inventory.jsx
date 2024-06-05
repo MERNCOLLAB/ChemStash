@@ -7,6 +7,7 @@ import { CiEdit } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import Drawer from '../ui/Drawer';
+import FormatFormula from '../helpers/FormatFormula';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
@@ -123,6 +124,9 @@ function Inventory() {
     {
       name: 'molecularFormula',
       label: 'Molecular Formula',
+      options: {
+        customBodyRender: (value) => <FormatFormula value={value} />,
+      },
     },
     {
       name: 'purity',
