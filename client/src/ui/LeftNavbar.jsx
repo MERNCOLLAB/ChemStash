@@ -13,7 +13,7 @@ function LeftNavbar() {
         <Linker to="chemical">Add Chemical</Linker>
       </li>
       <li>
-        <Linker to="link-3">Linker 3</Linker>
+        <Linker to="map">Map</Linker>
       </li>
     </ul>
   );

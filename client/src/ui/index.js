@@ -4,5 +4,6 @@ import Header from './Header';
 import LeftNavbar from './LeftNavbar';
 import OAuth from './OAuth';
 import PrivateRoute from './PrivateRoute';
+import Map from './Map';
 
-export { AppLayout, Drawer, Header, LeftNavbar, OAuth, PrivateRoute };
+export { AppLayout, Drawer, Header, LeftNavbar, OAuth, PrivateRoute, Map };

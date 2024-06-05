@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Chemical } from './pages';
-import { Header, PrivateRoute, AppLayout } from './ui';
+import { Header, PrivateRoute, AppLayout, Map } from './ui';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
             <Route path="inventory" index element={<Inventory />} />
             <Route path="users" element={<UserList />} />
             <Route path="chemical" element={<Chemical />} />
-            <Route path="link-3" element={<div>Another Page 3</div>} />
+            <Route path="map" element={<Map />} />
           </Route>
         </Route>
         {/* chemist */}
