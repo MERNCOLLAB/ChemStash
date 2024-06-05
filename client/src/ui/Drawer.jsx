@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { formatDate } from '../helpers/FormatDate';
+import { Select, Input } from '../components';
+import { hazardClassifications, location } from '../constants';
 function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
   const [open, setOpen] = useState(isOpen);
   const [updatedItem, setUpdatedItem] = useState({ ...item });
@@ -17,10 +19,10 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
   }, [isOpen]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
     setUpdatedItem((prevItem) => ({
       ...prevItem,
-      [name]: value,
+      [id]: value,
     }));
   };
 
@@ -57,134 +59,116 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
             <>
               <ul>
                 <li>
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    defaultValue={updatedItem.name}
-                    onChange={handleChange}
-                    className="input input-bordered"
-                  />
+                  <label>Chemical Name</label>
+                  <Input value={updatedItem.name} id="name" type="text" placeholder="Name" onChange={handleChange} />
                 </li>
                 <li>
                   <label>CAS Number</label>
-                  <input
+                  <Input
+                    value={updatedItem.casNumber}
+                    id="casNumber"
                     type="number"
-                    name="casNumber"
-                    defaultValue={updatedItem.casNumber}
+                    placeholder="CAS Number"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Molecular Formula</label>
-                  <input
+                  <Input
+                    value={updatedItem.molecularFormula}
+                    id="molecularFormula"
                     type="text"
-                    name="molecularFormula"
-                    defaultValue={updatedItem.molecularFormula}
+                    placeholder="Molecular Formula"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Purity</label>
-                  <input
+                  <Input
+                    value={updatedItem.purity}
+                    id="purity"
                     type="text"
-                    name="purity"
-                    defaultValue={updatedItem.purity}
+                    placeholder="Purity"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Location</label>
-                  <input
-                    type="text"
-                    name="location"
-                    defaultValue={updatedItem.location}
+                  <Select
+                    id="location"
+                    value={updatedItem.location}
                     onChange={handleChange}
-                    className="input input-bordered"
+                    disabledValue="Select your storage location"
+                    options={location}
                   />
                 </li>
                 <li>
                   <label>Supplier</label>
-                  <input
+                  <Input
+                    value={updatedItem.supplier}
+                    id="supplier"
                     type="text"
-                    name="supplier"
-                    defaultValue={updatedItem.supplier}
+                    placeholder="Supplier"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Quantity</label>
-                  <input
+                  <Input
+                    value={updatedItem.quantity}
+                    id="quantity"
                     type="number"
-                    name="quantity"
-                    defaultValue={updatedItem.quantity}
+                    placeholder="Chemical Quantity"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Unit</label>
-                  <input
+                  <Input
+                    value={updatedItem.unit}
+                    id="unit"
                     type="text"
-                    name="unit"
-                    defaultValue={updatedItem.unit}
+                    placeholder="Unit for the Quantity"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Purchase Date</label>
-                  <input
-                    type="date"
-                    name="purchaseDate"
-                    defaultValue={updatedItem.purchaseDate}
-                    onChange={handleChange}
-                    className="input input-bordered"
-                  />
+                  <Input value={updatedItem.purchaseDate} id="purchaseDate" type="date" onChange={handleChange} />
                 </li>
                 <li>
                   <label>Expiry Date</label>
-                  <input
-                    type="date"
-                    name="expiryDate"
-                    defaultValue={updatedItem.expiryDate}
-                    onChange={handleChange}
-                    className="input input-bordered"
-                  />
+                  <Input value={updatedItem.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
                 </li>
 
                 <li>
                   <label>Hazard Classification</label>
-                  <input
-                    type="text"
-                    name="hazardClassification"
-                    defaultValue={updatedItem.hazardClassification}
+                  <Select
+                    id="hazardClassification"
+                    value={updatedItem.hazardClassification}
                     onChange={handleChange}
-                    className="input input-bordered"
+                    disabledValue="Select the Hazard Classification"
+                    options={hazardClassifications}
                   />
                 </li>
                 <li>
                   <label>SDS</label>
-                  <input
+                  <Input
+                    value={updatedItem.sds}
+                    id="sds"
                     type="text"
-                    name="sds"
-                    defaultValue={updatedItem.sds}
+                    placeholder="Safety Data Sheet URL"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
                 <li>
                   <label>Remarks</label>
-                  <input
+                  <Input
+                    value={updatedItem.remarks}
+                    id="remarks"
                     type="text"
-                    name="remarks"
-                    defaultValue={updatedItem.remarks}
+                    placeholder="Remarks"
                     onChange={handleChange}
-                    className="input input-bordered"
                   />
                 </li>
               </ul>
@@ -196,12 +180,18 @@ function Drawer({ isOpen, toggleDrawer, item, onDelete, onUpdate, isUpdate }) {
           ) : (
             <>
               <ul>
-                <li>{item.name}</li>
-                <li>{item.casNumber}</li>
-                <li>{item.molecularFormula}</li>
-                <li>{item.purity}</li>
-                <li>{item.location}</li>
-                <li>{item.supplier}</li>
+                <li>Name: {item.name}</li>
+                <li>CAS Number: {item.casNumber}</li>
+                <li>Molecular Formula: {item.molecularFormula}</li>
+                <li>Purity: {item.purity}</li>
+                <li>Location: {item.location}</li>
+                <li>Supplier: {item.supplier}</li>
+                <li>Quantity: {item.quantity}</li>
+                <li>Unit: {item.unit}</li>
+                <li>Purchase Date: {item.purchaseDate}</li>
+                <li>Expiry Date: {item.expiryDate}</li>
+                <li>Hazard: {item.hazardClassification}</li>
+                <li>Remarks: {item.remarks}</li>
               </ul>
               <button type="button" className="btn btn-danger mt-4" onClick={() => onDelete(item._id)}>
                 Delete
