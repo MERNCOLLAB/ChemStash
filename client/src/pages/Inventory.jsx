@@ -8,36 +8,34 @@ import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import Drawer from '../ui/Drawer';
 import FormatFormula from '../helpers/FormatFormula';
+import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [isUpdateMode, setUpdateMode] = useState(false);
   const [currentItem, setCurrentItem] = useState({});
-  // const columns = [
-  //   "name",
-  //   "casNumber",
-  //   "molecularFormula",
-  //   "purity",
-  //   "location",
-  //   "supplier",
-  // ];
+  const [drawerType, setDrawerType] = useState('');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleUpdate = (id) => {
-    toggleDrawer();
+    handleDrawerOpen('update');
     const itemToUpdate = lists.find((item) => item._id === id);
     setCurrentItem(itemToUpdate);
   };
   const handleDelete = (id) => {
-    toggleDrawer();
+    handleDrawerOpen('delete');
     const itemToDelete = lists.find((item) => item._id === id);
     setCurrentItem(itemToDelete);
   };
 
-  const toggleDrawer = () => {
-    setDrawerOpen(!isDrawerOpen);
+  const handleDrawerOpen = (type) => {
+    setDrawerType(type);
+    setDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
   };
 
   const fetchList = async () => {
@@ -203,10 +201,9 @@ function Inventory() {
               <GoGear />
             </div>
             <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52">
-              <li className="flex gap-2">
+              <li className="flex gap-2 hover:bg-slate-700">
                 <p
                   onClick={() => {
-                    setUpdateMode(true);
                     handleUpdate(value);
                   }}
                 >
@@ -216,10 +213,9 @@ function Inventory() {
                   <span>Edit </span>
                 </p>
               </li>
-              <li>
+              <li className="flex gap-2 hover:bg-slate-700">
                 <p
                   onClick={() => {
-                    setUpdateMode(false);
                     handleDelete(value);
                   }}
                 >
@@ -300,14 +296,13 @@ function Inventory() {
 
   return (
     <div className="flex flex-col  ">
-      <Drawer
-        isOpen={isDrawerOpen}
-        toggleDrawer={toggleDrawer}
-        item={currentItem}
-        onDelete={deleteChemical}
-        onUpdate={updateItem}
-        isUpdate={isUpdateMode}
-      />
+      <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
+        {drawerType === 'update' ? (
+          <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} />
+        ) : drawerType === 'delete' ? (
+          <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} />
+        ) : null}
+      </Drawer>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
