@@ -25,11 +25,13 @@ function App() {
         <Route element={<PrivateRoute role="chemist" />}>
           <Route path="/chemist-profile" element={<Profile />} />
           <Route path="/chemist" element={<div>Chemist</div>} />
+          <Route path="/chemist/map" element={<Map />} />
         </Route>
         {/* polution controler */}
         <Route element={<PrivateRoute role="controller" />}>
           <Route path="/controller-profile" element={<Profile />} />
           <Route path="/controller" element={<div>Controller</div>} />
+          <Route path="/controller/map" element={<Map />} />
         </Route>
 
         <Route path="*" element={<PageNotFound />} />

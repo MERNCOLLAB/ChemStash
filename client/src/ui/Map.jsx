@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
-
+import { useSelector } from 'react-redux';
 function Map() {
+  const { currentUser } = useSelector((state) => state.user);
   const fileRef = useRef(null);
   const [image, setImage] = useState(undefined);
   const [imagePercent, setImagePercent] = useState(0);
@@ -108,24 +109,35 @@ function Map() {
     setUploadedImageURL(URL.createObjectURL(e.target.files[0]));
   };
 
+  console.log(currentUser.role);
+
   return (
     <div className="">
       <h1 className="text-3xl font-bold my-7">Map</h1>
       <form onSubmit={handleSubmit}>
-        <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChange} />
-        <div
-          onClick={() => fileRef.current.click()}
-          className="group relative mx-auto w-full rounded-full cursor-pointer"
-          style={{
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <img className=" w-full " src={uploadedImageURL || map[0]} alt="Map" />{' '}
-          <p className="opacity-0 group-hover:opacity-100 cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded">
-            Change
-          </p>
-        </div>
+        {currentUser.role === 'admin' ? (
+          <>
+            <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChange} />
+            <div
+              onClick={() => fileRef.current.click()}
+              className="group relative mx-auto w-full rounded-full cursor-pointer"
+              style={{
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <img className=" w-full " src={uploadedImageURL || map[0]} alt="Map" />
+              <p className="opacity-0 group-hover:opacity-100 cursor-pointer absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded">
+                Change
+              </p>
+            </div>
+          </>
+        ) : (
+          <div className='className="group relative mx-auto w-full rounded-full cursor-pointer"'>
+            <img className=" w-full " src={map[0]} alt="Map" />{' '}
+          </div>
+        )}
+
         <p className="text-center text-sm mt-4">
           {imageError ? (
             <span className="text-red-700">Error uploading image</span>
@@ -137,9 +149,13 @@ function Map() {
             ''
           )}
         </p>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Submit
-        </button>
+        {currentUser.role === 'admin' ? (
+          <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+          </button>
+        ) : (
+          ''
+        )}
       </form>
 
       {error && <p className="text-rose-700 mt-4">Error</p>}
