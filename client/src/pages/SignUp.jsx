@@ -48,9 +48,9 @@ function SignUp() {
   };
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="p-3 bg-slate-800 h-full max-w-2xl w-full">
       <h1 className="text-3xl text-center font-bold my-7">Sign Up</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
         <Input id="username" type="text" placeholder="Username" onChange={handleChange} />
 
         <Input id="email" type="email" placeholder="Email" onChange={handleChange} />

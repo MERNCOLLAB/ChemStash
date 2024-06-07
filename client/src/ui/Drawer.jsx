@@ -20,7 +20,8 @@ function Drawer({ isOpen, children, onClose }) {
         <label htmlFor="my-drawer-4" className="drawer-button btn btn-primary hidden" onClick={onClose}></label>
       </div>
       <div className="drawer-side">
-        <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay" onClick={onClose}></label>
+        <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay " onClick={onClose}></label>
+
         {children}
       </div>
     </div>
