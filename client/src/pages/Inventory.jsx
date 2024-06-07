@@ -128,6 +128,9 @@ function Inventory() {
     },
     {
       name: 'purity',
+      options: {
+        filter: false,
+      },
     },
     {
       name: 'location',
@@ -157,6 +160,9 @@ function Inventory() {
     },
     {
       name: 'supplier',
+      options: {
+        filter: false,
+      },
     },
     {
       name: 'quantity',
@@ -186,10 +192,14 @@ function Inventory() {
             </a>
           </div>
         ),
+        filter: false,
       },
     },
     {
       name: 'remarks',
+      options: {
+        filter: false,
+      },
     },
     {
       name: '_id',
@@ -228,6 +238,8 @@ function Inventory() {
             </ul>
           </div>
         ),
+
+        filter: false,
       },
     },
   ];
