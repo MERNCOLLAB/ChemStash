@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import { Button, Input, Select } from '../components';
+import { Button, Input, Select, FormulaInput } from '../components';
 import { location, hazardClassifications } from '../constants';
-import useSubSup from '../hooks/useSubSup';
-import { MdSuperscript, MdSubscript } from 'react-icons/md';
 
 function Chemical() {
   const [formData, setFormData] = useState({
     name: '',
     casNumber: '',
-    molecularFormula: '',
     purity: '',
     location: '',
     supplier: '',
@@ -28,10 +25,11 @@ function Chemical() {
     const { id, value, type } = e.target;
     setFormData({
       ...formData,
+      [e.target.id]: e.target.value,
       [id]: type === 'number' ? Number(value) : value,
     });
   };
-  const { pRef, showButton, handleFocus, handleBlur, toggleSuperscript, toggleSubscript } = useSubSup(handleChange);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,7 +70,7 @@ function Chemical() {
       setError(error);
     }
   };
-
+  console.log(formData.molecularFormula);
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -93,34 +91,11 @@ function Chemical() {
           onChange={handleChange}
         />
         <label htmlFor="molecularFormula">Molecular Formula</label>
-        <div className="flex">
-          <p
-            id="molecularFormula"
-            ref={pRef}
-            contentEditable
-            className="bg-slate-900 p-3 border outline-none flex-grow"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          ></p>
-          {showButton && (
-            <div className="flex items-center gap-2 p-2">
-              <button
-                className="rounded-xl bg-slate-500 p-2"
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={toggleSuperscript}
-              >
-                <MdSuperscript />
-              </button>
-              <button
-                className="rounded-xl bg-slate-500 p-2"
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={toggleSubscript}
-              >
-                <MdSubscript />
-              </button>
-            </div>
-          )}
-        </div>
+        <FormulaInput
+          id="molecularFormula"
+          value={formData.molecularFormula}
+          onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
+        />
 
         <Input
           disable={loading}
@@ -130,7 +105,6 @@ function Chemical() {
           placeholder="Purity"
           onChange={handleChange}
         />
-
         <Select
           id="location"
           value={formData.location}
@@ -138,7 +112,6 @@ function Chemical() {
           disabledValue="Select your storage location"
           options={location}
         />
-
         <Input
           disable={loading}
           value={formData.supplier}
@@ -163,7 +136,6 @@ function Chemical() {
           placeholder="Unit for the Quantity"
           onChange={handleChange}
         />
-
         <div className="flex items-center gap-2">
           <label>Date of Purchase: </label>
           <Input
@@ -174,12 +146,10 @@ function Chemical() {
             onChange={handleChange}
           />
         </div>
-
         <div className="flex items-center gap-2">
           <label>Expiry Date: </label>
           <Input disable={loading} value={formData.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
         </div>
-
         <Input
           disable={loading}
           value={formData.sds}
@@ -188,7 +158,6 @@ function Chemical() {
           placeholder="Safety Data Sheet URL"
           onChange={handleChange}
         />
-
         <Select
           id="hazardClassification"
           value={formData.hazardClassification}
@@ -204,7 +173,6 @@ function Chemical() {
           placeholder="Remarks"
           onChange={handleChange}
         />
-
         <div className="flex justify-between">
           <span></span>
           <Button disable={loading}>Add Chemical</Button>

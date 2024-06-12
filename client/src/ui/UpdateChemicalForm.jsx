@@ -1,4 +1,4 @@
-import { Input, Select } from '../components';
+import { Input, Select, FormulaInput } from '../components';
 import { hazardClassifications, location } from '../constants';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../helpers/FormatDate';
@@ -58,6 +58,14 @@ function UpdateChemicalForm({ item, handleUpdate }) {
             type="number"
             placeholder="CAS Number"
             onChange={handleChange}
+          />
+        </li>
+        <li>
+          <label htmlFor="molecularFormula">Molecular Formula</label>
+          <FormulaInput
+            id="molecularFormula"
+            value={updatedItem.molecularFormula}
+            onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
           />
         </li>
         <li>

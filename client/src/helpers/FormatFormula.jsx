@@ -1,13 +1,18 @@
-const FormatFormula = ({ value }) => {
-  const parts = value.split(/(<sub>.*?<\/sub>|<br\s*\/>)/);
+const FormatFormula = ({ formula }) => {
+  const parts = formula.replace(/<\/?p>/g, '').split(/(<sub>.*?<\/sub>|<br\s*\/>)/);
+
   return (
     <span>
-      {parts.map((part, index) => {
+      {parts.map((part, idx) => {
         if (part.startsWith('<sub>') && part.endsWith('</sub>')) {
           const subPart = part.slice(5, -6);
-          return <sub key={index}>{subPart}</sub>;
+          return (
+            <sub key={idx} className=" p-[0.15em] leading-none">
+              {subPart}
+            </sub>
+          );
         } else if (part === '<br>' || part === '<br />') {
-          return <br key={index} />;
+          return <br key={idx} />;
         }
         return part;
       })}

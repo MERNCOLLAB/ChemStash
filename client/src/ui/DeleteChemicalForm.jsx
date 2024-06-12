@@ -1,10 +1,13 @@
+import FormatFormula from '../helpers/FormatFormula';
 function DeleteChemicalForm({ item, onDelete }) {
   return (
     <div className="menu p-4 w-80 min-h-full text-base-content bg-slate-800">
       <ul>
         <li>Name: {item.name}</li>
         <li>CAS Number: {item.casNumber}</li>
-        <li>Molecular Formula: {item.molecularFormula}</li>
+        <li>
+          Molecular Formula: <FormatFormula formula={item.molecularFormula} />
+        </li>
         <li>Purity: {item.purity}</li>
         <li>Location: {item.location}</li>
         <li>Supplier: {item.supplier}</li>
