@@ -22,6 +22,7 @@ function Header() {
           <h1 className="font-bold">Chemstack</h1>
         </Linker>
         <ul className="flex gap-4 items-center">
+          {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
           <Linker to="/">
             <li>Home</li>
           </Linker>
