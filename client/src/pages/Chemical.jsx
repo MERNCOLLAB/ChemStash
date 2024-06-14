@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { Button, Input, Select, FormulaInput } from '../components';
+import Select from 'react-select';
+import { selectStyle } from '../helpers/selectStyle';
+import { Button, Input, FormulaInput } from '../components';
 import { location, hazardClassifications } from '../constants';
+import { transformArrayToOptions } from '../helpers/transformArray';
 
 function Chemical() {
+  const locationOptions = transformArrayToOptions(location);
+  const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
   const [formData, setFormData] = useState({
     name: '',
     casNumber: '',
@@ -27,6 +32,13 @@ function Chemical() {
       ...formData,
       [e.target.id]: e.target.value,
       [id]: type === 'number' ? Number(value) : value,
+    });
+  };
+
+  const handleChangeOption = (selectedOption, field) => {
+    setFormData({
+      ...formData,
+      [field]: selectedOption ? selectedOption.value : '',
     });
   };
 
@@ -70,7 +82,7 @@ function Chemical() {
       setError(error);
     }
   };
-  console.log(formData.molecularFormula);
+
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -105,13 +117,16 @@ function Chemical() {
           placeholder="Purity"
           onChange={handleChange}
         />
+
         <Select
-          id="location"
-          value={formData.location}
-          onChange={handleChange}
-          disabledValue="Select your storage location"
-          options={location}
+          placeholder="Select a location"
+          value={locationOptions.find((opt) => opt.value === formData.location)}
+          options={locationOptions}
+          onChange={(selectedLocation) => handleChangeOption(selectedLocation, 'location')}
+          styles={selectStyle}
+          isClearable
         />
+
         <Input
           disable={loading}
           value={formData.supplier}
@@ -158,13 +173,16 @@ function Chemical() {
           placeholder="Safety Data Sheet URL"
           onChange={handleChange}
         />
+
         <Select
-          id="hazardClassification"
-          value={formData.hazardClassification}
-          onChange={handleChange}
-          disabledValue="Select the Hazard Classification"
-          options={hazardClassifications}
+          placeholder="Select a Hazard Classification"
+          value={hazardClassificationOptions.find((opt) => opt.value === formData.hazardClassification)}
+          options={hazardClassificationOptions}
+          onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
+          styles={selectStyle}
+          isClearable
         />
+
         <Input
           disable={loading}
           value={formData.remarks}
