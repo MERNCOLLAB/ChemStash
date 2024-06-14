@@ -1,9 +1,14 @@
-import { Input, Select, FormulaInput } from '../components';
-import { hazardClassifications, location } from '../constants';
+import { Input, FormulaInput } from '../components';
+import Select from 'react-select';
+import { location, hazardClassifications } from '../constants';
+import { transformArrayToOptions } from '../helpers/transformArray';
+import { selectStyle } from '../helpers/selectStyle';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../helpers/FormatDate';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
+  const locationOptions = transformArrayToOptions(location);
+  const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
   const [updatedItem, setUpdatedItem] = useState({
     name: '',
     casNumber: '',
@@ -38,11 +43,18 @@ function UpdateChemicalForm({ item, handleUpdate }) {
     }));
   };
 
+  const handleChangeOption = (selectedOption, field) => {
+    setUpdatedItem({
+      ...updatedItem,
+      [field]: selectedOption ? selectedOption.value : '',
+    });
+  };
+
   const onUpdate = (e) => {
     e.preventDefault();
     handleUpdate(updatedItem);
   };
-
+  console.log(updatedItem);
   return (
     <form className="menu p-4 w-80 min-h-full text-base-content bg-slate-800" onSubmit={onUpdate}>
       <ul>
@@ -75,11 +87,12 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         <li>
           <label>Location</label>
           <Select
-            id="location"
-            value={updatedItem.location}
-            onChange={handleChange}
-            disabledValue="Select your storage location"
-            options={location}
+            placeholder="Select a location"
+            value={locationOptions.find((opt) => opt.value === updatedItem.location)}
+            options={locationOptions}
+            onChange={(selectedLocation) => handleChangeOption(selectedLocation, 'location')}
+            styles={selectStyle}
+            isClearable
           />
         </li>
         <li>
@@ -123,11 +136,12 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         <li>
           <label>Hazard Classification</label>
           <Select
-            id="hazardClassification"
-            value={updatedItem.hazardClassification}
-            onChange={handleChange}
-            disabledValue="Select the Hazard Classification"
-            options={hazardClassifications}
+            placeholder="Select a Hazard Classification"
+            value={hazardClassificationOptions.find((opt) => opt.value === updatedItem.hazardClassification)}
+            options={hazardClassificationOptions}
+            onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
+            styles={selectStyle}
+            isClearable
           />
         </li>
         <li>
