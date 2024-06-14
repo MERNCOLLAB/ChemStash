@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { roles } from '../constants';
+import Select from 'react-select';
+import { selectStyle } from '../helpers/selectStyle';
+import { roleOptions } from '../constants';
 import OAuth from '../ui/OAuth';
-import { Button, Input, Linker, Select } from '../components';
+import { Button, Input, Linker } from '../components';
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -9,9 +11,9 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
 
-  const handleChangeRole = (event) => {
-    setSelectedRole(event.target.value);
-    setFormData({ ...formData, role: event.target.value });
+  const handleChangeRole = (selectedOption) => {
+    setSelectedRole(selectedOption);
+    setFormData({ ...formData, role: selectedOption ? selectedOption.value : '' });
   };
 
   const handleChange = (e) => {
@@ -58,11 +60,12 @@ function SignUp() {
         <Input id="password" type="password" placeholder="Password" onChange={handleChange} />
 
         <Select
-          id="role"
+          placeholder="Select a role"
           value={selectedRole}
+          options={roleOptions}
           onChange={handleChangeRole}
-          disabledValue="Select Role"
-          options={roles}
+          styles={selectStyle}
+          isClearable
         />
 
         <Button loading={loading}>{loading ? 'Loading' : 'Sign Up'}</Button>

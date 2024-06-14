@@ -1,4 +1,4 @@
 import { location, hazardClassifications } from './chemicals';
-import { roles } from './roles';
+import { roleOptions } from './roles';
 
-export { location, hazardClassifications, roles };
+export { location, hazardClassifications, roleOptions };
