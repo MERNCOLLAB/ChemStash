@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PlusIcon from '../icons/PlusIcon';
 import ColumnContainer from '../ui/ColumnContainer';
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -6,95 +6,12 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 
-const defaultCols = [
-  {
-    id: 'todo',
-    title: 'Todo',
-  },
-  {
-    id: 'doing',
-    title: 'Work in progress',
-  },
-  {
-    id: 'done',
-    title: 'Done',
-  },
-];
-
-const defaultTasks = [
-  {
-    id: '1',
-    columnId: 'todo',
-    content: 'List admin APIs for dashboard',
-  },
-  {
-    id: '2',
-    columnId: 'todo',
-    content:
-      'Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation',
-  },
-  {
-    id: '3',
-    columnId: 'doing',
-    content: 'Conduct security testing',
-  },
-  {
-    id: '4',
-    columnId: 'doing',
-    content: 'Analyze competitors',
-  },
-  {
-    id: '5',
-    columnId: 'done',
-    content: 'Create UI kit documentation',
-  },
-  {
-    id: '6',
-    columnId: 'done',
-    content: 'Dev meeting',
-  },
-  {
-    id: '7',
-    columnId: 'done',
-    content: 'Deliver dashboard prototype',
-  },
-  {
-    id: '8',
-    columnId: 'todo',
-    content: 'Optimize application performance',
-  },
-  {
-    id: '9',
-    columnId: 'todo',
-    content: 'Implement data validation',
-  },
-  {
-    id: '10',
-    columnId: 'todo',
-    content: 'Design database schema',
-  },
-  {
-    id: '11',
-    columnId: 'todo',
-    content: 'Integrate SSL web certificates into workflow',
-  },
-  {
-    id: '12',
-    columnId: 'doing',
-    content: 'Implement error logging and monitoring',
-  },
-  {
-    id: '13',
-    columnId: 'doing',
-    content: 'Design and implement responsive UI',
-  },
-];
-
 function Board() {
-  const [columns, setColumns] = useState(defaultCols);
+  const [columns, setColumns] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-  const [tasks, setTasks] = useState(defaultTasks);
-
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
 
@@ -106,7 +23,91 @@ function Board() {
       },
     })
   );
+  const fetchColumnList = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/board/column/list', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
 
+      setColumns(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchColumnList();
+  }, []);
+  // create column
+  const createNewColumn = async () => {
+    const columnToAdd = {
+      id: generateId(),
+      title: `Column ${columns.length + 1}`,
+    };
+
+    try {
+      setLoading(true);
+      setError(false);
+      const response = await fetch('/api/board/column/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(columnToAdd),
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (data.success === false) {
+        return;
+      }
+
+      fetchColumnList();
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  // function deleteColumn(id) {
+
+  //   const newTasks = columns.filter((col) => col.id !== id);
+  //   setColumns(newTasks);
+
+  //   const deleteTask = tasks.filter((task) => task.id !== id);
+  //   setTasks(deleteTask);
+  // }
+
+  // delete column
+  const deleteColumn = async (id) => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/board/column/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      setLoading(false);
+      if (data.success === false) {
+        return;
+      }
+
+      fetchColumnList();
+    } catch (error) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  console.log(error);
+  console.log(loading);
   return (
     <div className="border p-2 flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden ">
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
@@ -158,22 +159,22 @@ function Board() {
     </div>
   );
 
-  function createNewColumn() {
-    const columnToAdd = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-    };
+  // function createNewColumn() {
+  //   const columnToAdd = {
+  //     id: generateId(),
+  //     title: `Column ${columns.length + 1}`,
+  //   };
 
-    setColumns([...columns, columnToAdd]);
-  }
+  //   setColumns([...columns, columnToAdd]);
+  // }
 
-  function deleteColumn(id) {
-    const newTasks = columns.filter((col) => col.id !== id);
-    setColumns(newTasks);
+  // function deleteColumn(id) {
+  //   const newTasks = columns.filter((col) => col.id !== id);
+  //   setColumns(newTasks);
 
-    const deleteTask = tasks.filter((task) => task.id !== id);
-    setTasks(deleteTask);
-  }
+  //   const deleteTask = tasks.filter((task) => task.id !== id);
+  //   setTasks(deleteTask);
+  // }
 
   function deleteTask(taskId) {
     const filteredTask = tasks.filter((task) => task.id !== taskId);

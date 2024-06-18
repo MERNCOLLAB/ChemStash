@@ -5,6 +5,8 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import chemicalRoutes from './routes/chemical.route.js';
 import mapRoutes from './routes/map.route.js';
+import boardColumn from './routes/boardColumn.route.js';
+
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
@@ -29,6 +31,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/chemical', chemicalRoutes);
 app.use('/api/map', mapRoutes);
+app.use('/api/board', boardColumn);
 
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
@@ -48,6 +51,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
