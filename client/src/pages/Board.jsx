@@ -28,6 +28,10 @@ function Board() {
     socket.on('columnOrderUpdated', (updatedColumns) => {
       setColumns(updatedColumns);
     });
+
+    socket.on('columnTitleUpdated', (updatedColumn) => {
+      setColumns((prevColumns) => prevColumns.map((col) => (col.id === updatedColumn.id ? updatedColumn : col)));
+    });
     return () => {
       socket.disconnect();
     };
@@ -129,6 +133,30 @@ function Board() {
     }
   };
 
+  const updateColumn = async (id, title) => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/board/column/updateTitle', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, title }),
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update column title');
+      }
+
+      setColumns((prevColumns) => prevColumns.map((col) => (col.id === id ? { ...col, title } : col)));
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to update column title');
+    }
+  };
+
   console.log(error);
   console.log(loading);
   return (
@@ -212,13 +240,15 @@ function Board() {
     setTasks(updateTask);
   }
 
-  function updateColumn(id, title) {
-    const newColumns = columns.map((col) => {
-      if (col.id !== id) return col;
-      return { ...col, title };
-    });
-    setColumns(newColumns);
-  }
+  // function updateColumn(id, title) {
+  //   const newColumns = columns.map((col) => {
+  //     if (col.id !== id) return col;
+  //     return { ...col, title };
+  //   });
+  //   setColumns(newColumns);
+  // }
+
+  // update column
 
   function createTask(columnId) {
     const newTask = {

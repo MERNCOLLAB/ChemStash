@@ -52,7 +52,7 @@ export const columnList = async (req, res, next) => {
     next(err); // Pass the error to the next middleware
   }
 };
-
+// column order
 export const updateColumnOrder = async (req, res, next) => {
   const updatedColumns = req.body;
   try {
@@ -62,6 +62,26 @@ export const updateColumnOrder = async (req, res, next) => {
     }
     io.emit('columnOrderUpdated', updatedColumns); // Emit event to all connected clients
     res.status(200).json({ message: 'Columns order updated successfully' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// update column title
+
+export const updateColumnTitle = async (req, res, next) => {
+  const { id, title } = req.body;
+
+  try {
+    const updatedColumn = await ColumnBoard.findOneAndUpdate({ id }, { title }, { new: true });
+
+    if (!updatedColumn) {
+      return res.status(404).json({ message: 'Column not found' });
+    }
+
+    io.emit('columnTitleUpdated', updatedColumn); // Emit event to all connected clients
+
+    res.status(200).json({ message: 'Column title updated successfully', updatedColumn });
   } catch (error) {
     next(error);
   }
