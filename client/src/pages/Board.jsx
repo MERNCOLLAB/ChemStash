@@ -16,7 +16,7 @@ function Board() {
   const [activeTask, setActiveTask] = useState(null);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io('https://mern-with-auth-rba5.onrender.com');
 
     socket.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
