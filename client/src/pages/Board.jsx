@@ -5,7 +5,7 @@ import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
-
+import io from 'socket.io-client';
 function Board() {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -14,6 +14,21 @@ function Board() {
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
+
+  useEffect(() => {
+    const socket = io('http://localhost:3000');
+
+    socket.on('columnAdded', (newColumn) => {
+      setColumns((prevColumns) => [...prevColumns, newColumn]);
+    });
+
+    socket.on('columnDeleted', (deletedColumn) => {
+      setColumns((prevColumns) => prevColumns.filter((col) => col.id !== deletedColumn.id));
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   // activate delete column function
   const sensors = useSensors(

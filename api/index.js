@@ -6,9 +6,10 @@ import authRoutes from './routes/auth.route.js';
 import chemicalRoutes from './routes/chemical.route.js';
 import mapRoutes from './routes/map.route.js';
 import boardColumn from './routes/boardColumn.route.js';
-
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import { Server } from 'socket.io';
+import http from 'http';
 
 dotenv.config();
 
@@ -23,6 +24,14 @@ mongoose
 
 const __dirname = path.resolve();
 const app = express();
+
+// Create HTTP server and integrate Socket.IO
+const server = http.createServer(app);
+export const io = new Server(server, {
+  cors: {
+    origin: '*', // Adjust this as needed for your setup
+  },
+});
 
 app.use(express.json());
 app.use(cookieParser());
@@ -52,6 +61,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
