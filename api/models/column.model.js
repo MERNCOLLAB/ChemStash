@@ -11,6 +11,7 @@ const boardColumnSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    order: { type: Number, required: true }, // Add this field
   },
   { timestamps: true }
 );

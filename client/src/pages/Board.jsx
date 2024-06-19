@@ -16,7 +16,7 @@ function Board() {
   const [activeTask, setActiveTask] = useState(null);
 
   useEffect(() => {
-    const socket = io('https://mern-with-auth-rba5.onrender.com');
+    const socket = io('http://localhost:3000');
 
     socket.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
@@ -24,6 +24,9 @@ function Board() {
 
     socket.on('columnDeleted', (deletedColumn) => {
       setColumns((prevColumns) => prevColumns.filter((col) => col.id !== deletedColumn.id));
+    });
+    socket.on('columnOrderUpdated', (updatedColumns) => {
+      setColumns(updatedColumns);
     });
     return () => {
       socket.disconnect();
@@ -49,11 +52,15 @@ function Board() {
       });
       const data = await response.json();
 
-      setColumns(data);
       setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch columns');
+      }
+
+      setColumns(data);
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setError(error.message || 'Failed to fetch columns');
     }
   };
 
@@ -63,8 +70,9 @@ function Board() {
   // create column
   const createNewColumn = async () => {
     const columnToAdd = {
-      id: generateId(),
+      id: generateId(), // Assuming generateId() generates a unique ID
       title: `Column ${columns.length + 1}`,
+      order: columns.length + 1, // Assuming you maintain an order based on the number of columns
     };
 
     try {
@@ -80,14 +88,14 @@ function Board() {
       const data = await response.json();
 
       setLoading(false);
-      if (data.success === false) {
-        return;
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to add column');
       }
 
       fetchColumnList();
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setError(error.message || 'Failed to add column');
     }
   };
 
@@ -110,14 +118,14 @@ function Board() {
       const data = await res.json();
 
       setLoading(false);
-      if (data.success === false) {
-        return;
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to delete column');
       }
 
       fetchColumnList();
     } catch (error) {
       setLoading(false);
-      setError(error);
+      setError(error.message || 'Failed to delete column');
     }
   };
 
@@ -223,7 +231,6 @@ function Board() {
   }
 
   function onDragStart(event) {
-    // console.log("Drag Start", event);
     if (event.active.data.current?.type === 'Column') {
       setActiveColumn(event.active.data.current?.column);
       return;
@@ -234,8 +241,7 @@ function Board() {
     }
   }
 
-  // array move or swap
-  function onDragEnd(event) {
+  async function onDragEnd(event) {
     setActiveColumn(null);
     setActiveTask(null);
     const { active, over } = event;
@@ -253,11 +259,22 @@ function Board() {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+      const updatedColumns = arrayMove(columns, activeColumnIndex, overColumnIndex);
+
+      // Update columns order in backend
+      fetch('/api/board/column/updateOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedColumns),
+      });
+
+      return updatedColumns;
     });
   }
 
-  function onDragOver(event) {
+  async function onDragOver(event) {
     const { active, over } = event;
 
     if (!over) return;
@@ -276,11 +293,12 @@ function Board() {
         const activeIndex = tasks.findIndex((task) => task.id === activeId);
         const overIndex = tasks.findIndex((task) => task.id === overId);
 
-        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
-          // Fix introduced after video recording
+        if (tasks[activeIndex].columnId !== tasks[overIndex].columnId) {
           tasks[activeIndex].columnId = tasks[overIndex].columnId;
+
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
+
         return arrayMove(tasks, activeIndex, overIndex);
       });
     }
