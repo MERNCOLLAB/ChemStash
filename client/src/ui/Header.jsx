@@ -22,13 +22,20 @@ function Header() {
           <h1 className="font-bold">Chemstack</h1>
         </Linker>
         <ul className="flex gap-4 items-center">
+          <Linker to="/dashboard">
+            <li>Dashboard</li>
+          </Linker>
+          <Linker to="/manager/inventory">
+            <li>Inventory</li>
+          </Linker>
           {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
-          <Linker to="/">
+          {/* <Linker to="/">
             <li>Home</li>
           </Linker>
           <Linker to="/about">
             <li>About</li>
-          </Linker>
+          </Linker> */}
+
           <Linker to={getLinkerPath()}>
             {currentUser ? (
               <img

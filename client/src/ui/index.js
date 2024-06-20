@@ -7,5 +7,22 @@ import PrivateRoute from './PrivateRoute';
 import Map from './Map';
 import UpdateChemicalForm from './UpdateChemicalForm';
 import DeleteChemicalForm from './DeleteChemicalForm';
-
-export { AppLayout, Drawer, Header, LeftNavbar, OAuth, PrivateRoute, Map, UpdateChemicalForm, DeleteChemicalForm };
+import SampleLineChart from './SampleLineChart';
+import SampleBarChart from './SampleBarChart';
+import SamplePieChart from './SamplePieChart';
+import SampleRadarChart from './SampleRadarChart';
+export {
+  AppLayout,
+  Drawer,
+  Header,
+  LeftNavbar,
+  OAuth,
+  PrivateRoute,
+  Map,
+  UpdateChemicalForm,
+  DeleteChemicalForm,
+  SampleLineChart,
+  SampleBarChart,
+  SamplePieChart,
+  SampleRadarChart,
+};

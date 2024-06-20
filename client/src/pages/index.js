@@ -7,5 +7,6 @@ import Profile from './Profile';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import UserList from './UserList';
+import Dashboard from './Dashboard';
 
-export { About, Chemical, Home, Inventory, PageNotFound, Profile, SignIn, SignUp, UserList };
+export { About, Chemical, Home, Inventory, PageNotFound, Profile, SignIn, SignUp, UserList, Dashboard };

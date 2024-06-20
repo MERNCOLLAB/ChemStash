@@ -1,0 +1,74 @@
+import { RiBox1Line } from 'react-icons/ri';
+import { BsBoxes } from 'react-icons/bs';
+import { PiCodesandboxLogoLight } from 'react-icons/pi';
+import { LuBox } from 'react-icons/lu';
+import { SampleBarChart, SampleLineChart, SamplePieChart, SampleRadarChart } from '../ui';
+
+function Dashboard() {
+  return (
+    <div className="w-full border p-2 h-[calc(100vh-66px)] mt-2">
+      <div className="flex flex-wrap justify-between gap-2 ">
+        <div className="border p-3 flex items-center gap-2  flex-grow">
+          <div className="text-4xl">
+            <BsBoxes />
+          </div>
+
+          <div className="flex-1">
+            <p>Total Chemicals</p>
+            <p className="font-bold text-4xl">12</p>
+          </div>
+        </div>
+
+        <div className="border p-3 flex items-center gap-2 flex-grow ">
+          <div className="text-4xl">
+            <RiBox1Line />
+          </div>
+
+          <div className="flex-1">
+            <p>Chemicals Running Low</p>
+            <p className="font-bold text-4xl">7</p>
+          </div>
+        </div>
+        <div className="border p-3 flex items-center gap-2  flex-grow">
+          <div className="text-4xl">
+            <LuBox />
+          </div>
+
+          <div className="flex-1">
+            <p>Out of Stock</p>
+            <p className="font-bold text-4xl">1</p>
+          </div>
+        </div>
+        <div className="border p-3 flex items-center gap-2  flex-grow">
+          <div className="text-4xl">
+            <PiCodesandboxLogoLight />
+          </div>
+
+          <div className="flex-1">
+            <p>Expired Chemicals</p>
+            <p className="font-bold text-4xl">6</p>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-12  gap-2">
+        <div className=" h-[300px] mt-2 p-3 border col-span-4  ">
+          <SampleLineChart />
+        </div>
+
+        <div className=" h-[300px] mt-2 p-3 border flex-grow  col-span-4">
+          <SamplePieChart />
+        </div>
+        <div className=" h-[300px] mt-2 p-3 border  col-span-4 ">
+          <SampleRadarChart />
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <div className=" h-[400px] mt-2 p-3 border flex-grow  ">
+          <SampleBarChart />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Dashboard;
