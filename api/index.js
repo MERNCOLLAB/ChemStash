@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import chemicalRoutes from './routes/chemical.route.js';
 import mapRoutes from './routes/map.route.js';
 import boardColumn from './routes/boardColumn.route.js';
+import task from './routes/task.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import { Server } from 'socket.io';
@@ -41,6 +42,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chemical', chemicalRoutes);
 app.use('/api/map', mapRoutes);
 app.use('/api/board', boardColumn);
+app.use('/api/taskBoard', task);
 
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
