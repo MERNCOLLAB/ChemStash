@@ -408,25 +408,32 @@ function Board() {
   async function onDragEnd(event) {
     setActiveColumn(null);
     setActiveTask(null);
+
     const { active, over } = event;
 
     if (!over) return;
+
     const activeId = active.id;
     const overId = over.id;
 
     if (activeId === overId) return;
 
     const isActiveAColumn = active.data.current?.type === 'Column';
+
     if (!isActiveAColumn) return;
 
-    setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
-      const overColumnIndex = columns.findIndex((col) => col.id === overId);
+    const activeIndex = columns.findIndex((col) => col.id === activeId);
+    const overIndex = columns.findIndex((col) => col.id === overId);
 
-      const updatedColumns = arrayMove(columns, activeColumnIndex, overColumnIndex);
+    if (activeIndex === -1 || overIndex === -1) return;
 
-      // Update columns order in backend
-      fetch('/api/board/column/updateOrder', {
+    const updatedColumns = arrayMove([...columns], activeIndex, overIndex).map((col, index) => ({
+      ...col,
+      order: index,
+    }));
+
+    try {
+      const response = await fetch('/api/board/column/updateOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -434,10 +441,23 @@ function Board() {
         body: JSON.stringify(updatedColumns),
       });
 
-      return updatedColumns;
-    });
-  }
+      if (!response.ok) {
+        throw new Error('Failed to update columns order');
+      }
 
+      // Update columns order in backend
+      setColumns((prevColumns) => {
+        // Check if the updatedColumns are different from current state to prevent unnecessary re-renders
+        if (JSON.stringify(prevColumns) !== JSON.stringify(updatedColumns)) {
+          return updatedColumns;
+        }
+        return prevColumns;
+      });
+    } catch (error) {
+      console.error('Error updating columns order:', error);
+      // Handle error state or display an error message to the user
+    }
+  }
   async function onDragOver(event) {
     const { active, over } = event;
 
