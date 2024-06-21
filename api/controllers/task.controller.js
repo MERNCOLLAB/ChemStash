@@ -78,3 +78,25 @@ export const updateTask = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateTaskColumnAndOrder = async (req, res, next) => {
+  const { id } = req.params;
+  const { columnId, order } = req.body;
+
+  if (!id || columnId === undefined || order === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const updatedTask = await Task.findOneAndUpdate({ id }, { columnId, order }, { new: true });
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    io.emit('taskUpdated', updatedTask);
+    res.status(200).json({ message: 'Task updated successfully', updatedTask });
+  } catch (error) {
+    next(error);
+  }
+};
