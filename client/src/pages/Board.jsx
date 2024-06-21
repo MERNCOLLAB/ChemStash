@@ -6,6 +6,7 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 import io from 'socket.io-client';
+
 function Board() {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -24,6 +25,7 @@ function Board() {
 
     socket.on('columnDeleted', (deletedColumn) => {
       setColumns((prevColumns) => prevColumns.filter((col) => col.id !== deletedColumn.id));
+      setTasks((prevTasks) => prevTasks.filter((task) => task.columnId !== deletedColumn.id));
     });
     socket.on('columnOrderUpdated', (updatedColumns) => {
       setColumns(updatedColumns);
@@ -38,8 +40,6 @@ function Board() {
     });
     socket.on('taskDeleted', (taskId) => {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId.id));
-
-      // filteredTask = tasks.filter((task) => task.id !== taskId);
     });
 
     return () => {
@@ -159,7 +159,7 @@ function Board() {
       if (!res.ok) {
         throw new Error(data.message || 'Failed to delete column');
       }
-
+      fetchTaskList();
       fetchColumnList();
     } catch (error) {
       setLoading(false);

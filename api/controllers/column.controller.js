@@ -1,5 +1,6 @@
 import ColumnBoard from '../models/column.model.js';
 import { io } from '../index.js';
+import Task from '../models/task.model.js';
 export const test = (req, res) => {
   res.json({
     message: 'APi is working',
@@ -30,18 +31,24 @@ export const createColumn = async (req, res, next) => {
 // delete column
 export const deleteColumn = async (req, res, next) => {
   try {
+    // Find the column to be deleted
     const deletedColumn = await ColumnBoard.findOneAndDelete({ id: req.params.id });
     if (!deletedColumn) {
       return res.status(404).json({ message: 'Column not found' });
     }
 
-    io.emit('columnDeleted', deletedColumn); // Emit event to all connected clients
-    res.status(200).json({ message: 'Column has been deleted', deletedColumn });
+    // Delete all tasks associated with the deleted column
+    await Task.deleteMany({ columnId: req.params.id });
+
+    // Emit events to all connected clients
+    io.emit('columnDeleted', deletedColumn);
+    io.emit('tasksDeleted', { columnId: req.params.id });
+
+    res.status(200).json({ message: 'Column and associated tasks have been deleted', deletedColumn });
   } catch (error) {
     next(error);
   }
 };
-
 // column list
 export const columnList = async (req, res, next) => {
   try {
