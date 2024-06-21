@@ -36,6 +36,11 @@ function Board() {
     socket.on('createTask', (newTask) => {
       setTasks((prevTasks) => [...prevTasks, newTask]);
     });
+    socket.on('taskDeleted', (taskId) => {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId.id));
+
+      // filteredTask = tasks.filter((task) => task.id !== taskId);
+    });
 
     return () => {
       socket.disconnect();
@@ -230,6 +235,31 @@ function Board() {
     }
   };
 
+  // function deleteTask(taskId) {
+  //   const filteredTask = tasks.filter((task) => task.id !== taskId);
+  //   setTasks(filteredTask);
+  // }
+
+  const deleteTask = async (id) => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/board/task/delete/${id}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+
+      setLoading(false);
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to delete column');
+      }
+
+      fetchTaskList();
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to delete column');
+    }
+  };
+
   console.log(error);
   console.log(loading);
   return (
@@ -299,11 +329,6 @@ function Board() {
   //   const deleteTask = tasks.filter((task) => task.id !== id);
   //   setTasks(deleteTask);
   // }
-
-  function deleteTask(taskId) {
-    const filteredTask = tasks.filter((task) => task.id !== taskId);
-    setTasks(filteredTask);
-  }
 
   function updateTask(taskId, content) {
     const updateTask = tasks.map((task) => {
