@@ -41,7 +41,9 @@ function Board() {
     socket.on('taskDeleted', (taskId) => {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId.id));
     });
-
+    socket.on('taskUpdated', (updatedTask) => {
+      setTasks((prevTasks) => prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
+    });
     return () => {
       socket.disconnect();
     };
@@ -183,8 +185,7 @@ function Board() {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to update column title');
       }
-
-      setColumns((prevColumns) => prevColumns.map((col) => (col.id === id ? { ...col, title } : col)));
+      fetchColumnList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update column title');
@@ -260,6 +261,41 @@ function Board() {
     }
   };
 
+  // Update task function
+
+  // function updateTask(taskId, content) {
+  //   const updateTask = tasks.map((task) => {
+  //     if (task.id !== taskId) return task;
+  //     return { ...task, content };
+  //   });
+  //   setTasks(updateTask);
+  // }
+
+  const updateTask = async (taskId, content) => {
+    try {
+      setLoading(true);
+      setError(false);
+      const response = await fetch(`/api/board/task/update/${taskId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content }),
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to update task');
+      }
+
+      fetchTaskList();
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to update task');
+    }
+  };
+
   console.log(error);
   console.log(loading);
   return (
@@ -330,13 +366,13 @@ function Board() {
   //   setTasks(deleteTask);
   // }
 
-  function updateTask(taskId, content) {
-    const updateTask = tasks.map((task) => {
-      if (task.id !== taskId) return task;
-      return { ...task, content };
-    });
-    setTasks(updateTask);
-  }
+  // function updateTask(taskId, content) {
+  //   const updateTask = tasks.map((task) => {
+  //     if (task.id !== taskId) return task;
+  //     return { ...task, content };
+  //   });
+  //   setTasks(updateTask);
+  // }
 
   // function updateColumn(id, title) {
   //   const newColumns = columns.map((col) => {

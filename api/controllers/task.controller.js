@@ -41,26 +41,6 @@ export const createTask = async (req, res, next) => {
   }
 };
 
-export const updateTask = async (req, res, next) => {
-  const { id } = req.params;
-  const { content, order } = req.body;
-
-  try {
-    const updatedTask = await Task.findOneAndUpdate({ _id: id }, { content, order }, { new: true });
-
-    if (!updatedTask) {
-      return res.status(404).json({ error: 'Task is not found' });
-    }
-
-    io.emit('taskUpdated', updatedTask);
-
-    res.status(200).json({ message: 'Task has been updated', updatedTask });
-  } catch (error) {
-    console.error('Error updating the task', error.message);
-    next(error);
-  }
-};
-
 export const deleteTask = async (req, res, next) => {
   try {
     const deletedTask = await Task.findOneAndDelete({ id: req.params.id });
@@ -73,6 +53,28 @@ export const deleteTask = async (req, res, next) => {
     res.status(200).json({ message: 'Task has been succesfully deleted', deletedTask });
   } catch (error) {
     console.error('Error deleting the task', error.message);
+    next(error);
+  }
+};
+
+export const updateTask = async (req, res, next) => {
+  const { id } = req.params;
+  const { content } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const updatedTask = await Task.findOneAndUpdate({ id }, { content }, { new: true });
+
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    io.emit('taskUpdated', updatedTask);
+    res.status(200).json({ message: 'Task updated successfully', updatedTask });
+  } catch (error) {
     next(error);
   }
 };
