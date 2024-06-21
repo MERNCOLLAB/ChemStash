@@ -73,9 +73,32 @@ function Board() {
     }
   };
 
+  const fetchTaskList = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/board/task/list', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch tasks');
+      }
+
+      setTasks(data);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to fetch tasks');
+    }
+  };
+
   useEffect(() => {
     fetchColumnList();
-    TaskList();
+    fetchTaskList();
   }, []);
   // create column
   const createNewColumn = async () => {
@@ -200,33 +223,10 @@ function Board() {
         throw new Error(data.message || 'Failed to add task');
       }
 
-      TaskList();
+      fetchTaskList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to add task');
-    }
-  };
-
-  const TaskList = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/board/task/list', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch tasks');
-      }
-
-      setTasks(data);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to fetch tasks');
     }
   };
 

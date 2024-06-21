@@ -5,6 +5,7 @@ export const taskList = async (req, res, next) => {
   try {
     const tasks = await Task.find().sort({ order: 1 });
     io.emit('taskListUpdated', tasks);
+    res.json(tasks);
   } catch (err) {
     next(err);
   }
