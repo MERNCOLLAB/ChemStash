@@ -32,6 +32,11 @@ function Board() {
     socket.on('columnTitleUpdated', (updatedColumn) => {
       setColumns((prevColumns) => prevColumns.map((col) => (col.id === updatedColumn.id ? updatedColumn : col)));
     });
+
+    socket.on('createTask', (newTask) => {
+      setTasks((prevTasks) => [...prevTasks, newTask]);
+    });
+
     return () => {
       socket.disconnect();
     };
@@ -70,13 +75,14 @@ function Board() {
 
   useEffect(() => {
     fetchColumnList();
+    TaskList();
   }, []);
   // create column
   const createNewColumn = async () => {
     const columnToAdd = {
-      id: generateId(), // Assuming generateId() generates a unique ID
+      id: generateId(),
       title: `Column ${columns.length + 1}`,
-      order: columns.length + 1, // Assuming you maintain an order based on the number of columns
+      order: columns.length + 1,
     };
 
     try {
@@ -154,6 +160,73 @@ function Board() {
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update column title');
+    }
+  };
+
+  // create Task
+
+  // function createTask(columnId) {
+  //   const newTask = {
+  //     id: generateId(),
+  //     columnId,
+  //     content: `Task ${tasks.length + 1}`,
+  //   };
+
+  //   setTasks([...tasks, newTask]);
+  // }
+  const createTask = async (columnId) => {
+    const newTask = {
+      id: generateId(),
+      columnId,
+      content: `Task ${tasks.length + 1}`,
+      order: tasks.length + 1,
+    };
+
+    try {
+      setLoading(true);
+      setError(false);
+      const response = await fetch('/api/board/task/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTask),
+      });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to add task');
+      }
+
+      TaskList();
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to add task');
+    }
+  };
+
+  const TaskList = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/board/task/list', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch tasks');
+      }
+
+      setTasks(data);
+    } catch (error) {
+      setLoading(false);
+      setError(error.message || 'Failed to fetch tasks');
     }
   };
 
@@ -250,15 +323,15 @@ function Board() {
 
   // update column
 
-  function createTask(columnId) {
-    const newTask = {
-      id: generateId(),
-      columnId,
-      content: `Task ${tasks.length + 1}`,
-    };
+  // function createTask(columnId) {
+  //   const newTask = {
+  //     id: generateId(),
+  //     columnId,
+  //     content: `Task ${tasks.length + 1}`,
+  //   };
 
-    setTasks([...tasks, newTask]);
-  }
+  //   setTasks([...tasks, newTask]);
+  // }
 
   function onDragStart(event) {
     if (event.active.data.current?.type === 'Column') {

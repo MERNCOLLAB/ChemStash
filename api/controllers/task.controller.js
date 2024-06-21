@@ -1,24 +1,38 @@
 import Task from '../models/task.model.js';
 import { io } from '../index.js';
 
+export const taskList = async (req, res, next) => {
+  try {
+    const tasks = await Task.find().sort({ order: 1 });
+    io.emit('taskListUpdated', tasks);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const createTask = async (req, res, next) => {
-  const { id, content, order } = req.body;
+  const { id, columnId, content, order } = req.body;
+
+  if (!id || !columnId || !content || order === undefined) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
 
   const taskId = Number(id);
-
   if (isNaN(taskId)) {
     return res.status(400).json({ message: 'Invalid task id' });
   }
-  const newTask = new Task({
-    id,
-    content,
-    order,
-  });
+
   try {
+    const newTask = new Task({
+      id,
+      columnId,
+      content,
+      order,
+    });
+
     await newTask.save();
 
-    io.emit('taskAdded', newTask);
-
+    io.emit('createTask', newTask);
     res.status(201).json({ message: 'Task has been created', newTask });
   } catch (error) {
     next(error);

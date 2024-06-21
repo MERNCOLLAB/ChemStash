@@ -42,7 +42,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chemical', chemicalRoutes);
 app.use('/api/map', mapRoutes);
 app.use('/api/board', boardColumn);
-app.use('/api/taskBoard', task);
+app.use('/api/board', task);
 
 app.use(express.static(path.join(__dirname, 'client/dist')));
 

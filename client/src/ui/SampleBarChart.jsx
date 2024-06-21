@@ -66,7 +66,7 @@ export default class Example extends PureComponent {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip cursor={{ fill: '#111827' }} />
           <Legend />
           <Bar dataKey="pv" stackId="a" fill="#8884d8" />
           <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
