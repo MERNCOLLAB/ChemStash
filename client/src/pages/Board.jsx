@@ -467,23 +467,25 @@ function Board() {
         return updatedTasks;
       });
 
-      // Send a request to update the task order in the backend
-      try {
-        const response = await fetch(`/api/board/task/updateOrder/${activeId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ order: newOrder }),
-        });
+      // Send a request to update the task order in the backend only if overTask exists
+      if (overTask) {
+        try {
+          const response = await fetch(`/api/board/task/updateOrder/${activeId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ order: newOrder }),
+          });
 
-        if (!response.ok) {
-          throw new Error('Failed to update task order');
+          if (!response.ok) {
+            throw new Error('Failed to update task order');
+          }
+
+          fetchTaskList(); // Refresh tasks after updating order
+        } catch (error) {
+          console.error('Error updating task order:', error);
         }
-
-        fetchTaskList(); // Refresh tasks after updating order
-      } catch (error) {
-        console.error('Error updating task order:', error);
       }
     }
   }
