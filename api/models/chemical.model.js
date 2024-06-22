@@ -7,7 +7,7 @@ const chemicalSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    casNumber: {
+    lotNumber: {
       type: Number,
       required: true,
     },
@@ -23,12 +23,12 @@ const chemicalSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    supplier: {
+    brand: {
       type: String,
       required: true,
       default: null,
     },
-    quantity: {
+    supply: {
       type: Number,
       required: true,
       default: 0,
@@ -45,6 +45,11 @@ const chemicalSchema = new mongoose.Schema(
     expiryDate: {
       type: Date,
       required: true,
+    },
+    status: {
+      type: String,
+      enum: ['New', 'Open', 'Near Expiry', 'Expired', 'Out of Stock'],
+      default: 'New',
     },
     sds: {
       type: String,
