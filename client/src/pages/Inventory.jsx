@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import MUIDataTable from 'mui-datatables';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import MUIDataTable from 'mui-datatables';
+import { createTheme } from '@mui/material/styles';
 import { GoGear } from 'react-icons/go';
 import { CiEdit } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
@@ -9,6 +9,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import Drawer from '../ui/Drawer';
 import FormatFormula from '../helpers/FormatFormula';
 import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
+import { MTable } from '../components';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
@@ -320,15 +321,7 @@ function Inventory() {
       ) : error ? (
         <div>Something went wrong, {error.message}</div>
       ) : (
-        <ThemeProvider theme={getMuiTheme()}>
-          <MUIDataTable
-            className="text-slate-300  "
-            title={'Chemical List'}
-            data={lists}
-            columns={columns}
-            options={options}
-          />
-        </ThemeProvider>
+        <MTable className="text-slate-300 " data={lists} columns={columns} options={options} />
       )}
     </div>
   );

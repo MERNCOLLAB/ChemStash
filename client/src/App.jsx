@@ -1,5 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Chemical, Dashboard } from './pages';
+import {
+  Home,
+  SignIn,
+  SignUp,
+  About,
+  UserList,
+  Profile,
+  Inventory,
+  PageNotFound,
+  Chemical,
+  Dashboard,
+  PurchaseRequest,
+} from './pages';
 import { Header, PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
 
@@ -30,7 +42,7 @@ function App() {
           <Route path="/chemist-profile" element={<Profile />} />
           <Route path="/chemist" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
-            <Route path="purchase" index element={<div>purchase page</div>} />
+            <Route path="purchase" index element={<PurchaseRequest />} />
             <Route path="chemical" element={<Chemical />} />
             <Route path="map" element={<Map />} />
           </Route>
