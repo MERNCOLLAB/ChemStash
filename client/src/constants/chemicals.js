@@ -19,3 +19,20 @@ export const hazardClassifications = [
   'Environmental Hazard',
   'Gases Under Pressure',
 ];
+
+export const chemicalFormInitialValue = {
+  name: '',
+  lotNumber: '',
+  molecularFormula: '',
+  purity: '',
+  location: '',
+  brand: '',
+  supply: '',
+  unit: 'Bottle',
+  purchaseDate: '',
+  expiryDate: '',
+  status: '',
+  sds: '',
+  hazardClassification: '',
+  remarks: '',
+};

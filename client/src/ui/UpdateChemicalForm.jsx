@@ -1,4 +1,4 @@
-import { Input, FormulaInput } from '../components';
+import { Input } from '../components';
 import Select from 'react-select';
 import { location, hazardClassifications } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
@@ -74,11 +74,11 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         </li>
         <li>
           <label htmlFor="molecularFormula">Molecular Formula</label>
-          <FormulaInput
+          {/* <FormulaInput
             id="molecularFormula"
             value={updatedItem.molecularFormula}
             onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
-          />
+          /> */}
         </li>
         <li>
           <label>Purity</label>

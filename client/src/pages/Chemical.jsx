@@ -1,27 +1,15 @@
 import { useState } from 'react';
 import Select from 'react-select';
 import { selectStyle } from '../helpers/selectStyle';
-import { Button, Input, FormulaInput } from '../components';
+import { Button, Input } from '../components';
 import { location, hazardClassifications } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
+import { chemicalFormInitialValue } from '../constants/chemicals';
 
 function Chemical() {
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const [formData, setFormData] = useState({
-    name: '',
-    casNumber: '',
-    purity: '',
-    location: '',
-    supplier: '',
-    quantity: '',
-    unit: '',
-    purchaseDate: '',
-    expiryDate: '',
-    sds: '',
-    hazardClassification: '',
-    remarks: '',
-  });
+  const [formData, setFormData] = useState(chemicalFormInitialValue);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,21 +49,7 @@ function Chemical() {
       if (data.success === false) {
         return;
       }
-      setFormData({
-        name: '',
-        casNumber: '',
-        molecularFormula: '',
-        purity: '',
-        location: '',
-        supplier: '',
-        quantity: '',
-        unit: '',
-        purchaseDate: '',
-        expiryDate: '',
-        sds: '',
-        hazardClassification: '',
-        remarks: '',
-      });
+      setFormData(chemicalFormInitialValue);
       alert('Chemical successfully created');
     } catch (error) {
       setLoading(false);
@@ -96,18 +70,18 @@ function Chemical() {
         />
         <Input
           disable={loading}
-          value={formData.casNumber}
-          id="casNumber"
+          value={formData.lotNumber}
+          id="lotNumber"
           type="number"
-          placeholder="CAS Number"
+          placeholder="Lot Number"
           onChange={handleChange}
         />
         <label htmlFor="molecularFormula">Molecular Formula</label>
-        <FormulaInput
+        {/* <FormulaInput
           id="molecularFormula"
           value={formData.molecularFormula}
           onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
-        />
+        /> */}
 
         <Input
           disable={loading}
@@ -129,18 +103,18 @@ function Chemical() {
 
         <Input
           disable={loading}
-          value={formData.supplier}
-          id="supplier"
+          value={formData.brand}
+          id="brand"
           type="text"
-          placeholder="Supplier"
+          placeholder="Brand"
           onChange={handleChange}
         />
         <Input
           disable={loading}
-          value={formData.quantity}
-          id="quantity"
+          value={formData.supply}
+          id="supply"
           type="number"
-          placeholder="Chemical Quantity"
+          placeholder="Supply"
           onChange={handleChange}
         />
         <Input
@@ -148,7 +122,7 @@ function Chemical() {
           value={formData.unit}
           id="unit"
           type="text"
-          placeholder="Unit for the Quantity"
+          placeholder="How many bottles?"
           onChange={handleChange}
         />
         <div className="flex items-center gap-2">
@@ -171,6 +145,15 @@ function Chemical() {
           id="sds"
           type="text"
           placeholder="Safety Data Sheet URL"
+          onChange={handleChange}
+        />
+
+        <Input
+          disable={loading}
+          value={formData.status}
+          id="status"
+          type="text"
+          placeholder="Status"
           onChange={handleChange}
         />
 

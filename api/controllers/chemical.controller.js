@@ -38,7 +38,7 @@ export const createChemical = async (req, res, next) => {
     res.status(201).json({ message: 'chemical create successfully' });
   } catch (error) {
     next(error);
-    console.log('chemical error');
+    console.log('chemical error', error.message);
   }
 };
 
@@ -75,12 +75,12 @@ export const updateChemical = async (req, res, next) => {
           purity: req.body.purity,
           location: req.body.location,
           supplier: req.body.supplier,
-          quantity:req.body.quantity,
+          quantity: req.body.quantity,
           unit: req.body.unit,
           purchaseDate: req.body.purchaseDate,
           expiryDate: req.body.expiryDate,
           sds: req.body.sds,
-          hazardClassification:req.body.hazardClassification,
+          hazardClassification: req.body.hazardClassification,
           remarks: req.body.remarks,
         },
       },
