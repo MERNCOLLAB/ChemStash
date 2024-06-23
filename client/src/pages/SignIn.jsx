@@ -37,7 +37,7 @@ function SignIn() {
         ? navigate('/manager/inventory')
         : data.role === 'chemist'
           ? navigate('/chemist')
-          : navigate('/controller');
+          : navigate('/purchacer');
     } catch (error) {
       dispatch(signInFailure(error));
     }

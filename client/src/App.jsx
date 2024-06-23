@@ -31,12 +31,20 @@ function App() {
           <Route path="/chemist" element={<div>Chemist</div>} />
           <Route path="/chemist/map" element={<Map />} />
         </Route>
-        {/* polution controler */}
-        <Route element={<PrivateRoute role="controller" />}>
-          <Route path="/controller/board" element={<Board />} />
-          <Route path="/controller-profile" element={<Profile />} />
-          <Route path="/controller" element={<div>Controller</div>} />
-          <Route path="/controller/map" element={<Map />} />
+
+        {/* team leader */}
+        <Route element={<PrivateRoute role="tl" />}>
+          <Route path="/tl/board" element={<Board />} />
+          <Route path="/tl-profile" element={<Profile />} />
+          <Route path="/tl" element={<div>Team leader</div>} />
+          <Route path="/tl/map" element={<Map />} />
+        </Route>
+        {/* purchacer */}
+        <Route element={<PrivateRoute role="purchacer" />}>
+          <Route path="/purchacer/board" element={<Board />} />
+          <Route path="/purchacer-profile" element={<Profile />} />
+          <Route path="/purchacer" element={<div>purchacer</div>} />
+          <Route path="/purchacer/map" element={<Map />} />
         </Route>
 
         <Route path="*" element={<PageNotFound />} />

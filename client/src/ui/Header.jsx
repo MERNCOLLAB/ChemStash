@@ -9,8 +9,10 @@ function Header() {
         return '/profile';
       case 'chemist':
         return '/chemist-profile';
-      case 'controller':
-        return '/controller-profile';
+      case 'purchacer':
+        return '/purchacer-profile';
+      case 'tl':
+        return '/tl-profile';
       default:
         return '/';
     }
