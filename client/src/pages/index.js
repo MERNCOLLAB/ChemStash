@@ -8,5 +8,17 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import UserList from './UserList';
 import Dashboard from './Dashboard';
-
-export { About, Chemical, Home, Inventory, PageNotFound, Profile, SignIn, SignUp, UserList, Dashboard };
+import PurchaseRequest from './PurchaseRequest';
+export {
+  About,
+  Chemical,
+  Home,
+  Inventory,
+  PageNotFound,
+  Profile,
+  SignIn,
+  SignUp,
+  UserList,
+  Dashboard,
+  PurchaseRequest,
+};
