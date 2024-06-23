@@ -28,8 +28,11 @@ function App() {
         <Route element={<PrivateRoute role="chemist" />}>
           <Route path="/chemist/board" element={<Board />} />
           <Route path="/chemist-profile" element={<Profile />} />
-          <Route path="/chemist" element={<div>Chemist</div>} />
-          <Route path="/chemist/map" element={<Map />} />
+          <Route path="/chemist" element={<AppLayout />}>
+            <Route path="inventory" index element={<Inventory />} />
+            <Route path="chemical" element={<Chemical />} />
+            <Route path="map" element={<Map />} />
+          </Route>
         </Route>
 
         {/* team leader */}

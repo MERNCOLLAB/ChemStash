@@ -27,7 +27,7 @@ function Header() {
           <Linker to="/dashboard">
             <li>Dashboard</li>
           </Linker>
-          <Linker to="/manager/inventory">
+          <Linker to={`${currentUser?.role}/inventory`}>
             <li>Inventory</li>
           </Linker>
           {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}

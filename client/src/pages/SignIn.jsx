@@ -33,11 +33,7 @@ function SignIn() {
       }
       dispatch(signInSuccess(data));
 
-      data.role === 'manager'
-        ? navigate('/manager/inventory')
-        : data.role === 'chemist'
-          ? navigate('/chemist')
-          : navigate('/purchacer');
+      data.role ? navigate(`/${data.role}/inventory`) : '';
     } catch (error) {
       dispatch(signInFailure(error));
     }
