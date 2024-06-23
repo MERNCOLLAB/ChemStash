@@ -31,6 +31,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
+            <Route path="purchase" index element={<PurchaseRequest />} />
             <Route path="users" element={<UserList />} />
             <Route path="chemical" element={<Chemical />} />
             <Route path="map" element={<Map />} />
