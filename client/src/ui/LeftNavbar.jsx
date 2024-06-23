@@ -16,6 +16,9 @@ function LeftNavbar() {
         <Linker to="chemical">Add Chemical</Linker>
       </li>
       <li>
+        <Linker to="purchase">Purchase</Linker>
+      </li>
+      <li>
         <Linker to="map">Map</Linker>
       </li>
     </ul>

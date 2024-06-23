@@ -30,6 +30,7 @@ function App() {
           <Route path="/chemist-profile" element={<Profile />} />
           <Route path="/chemist" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
+            <Route path="purchase" index element={<div>purchase page</div>} />
             <Route path="chemical" element={<Chemical />} />
             <Route path="map" element={<Map />} />
           </Route>
