@@ -5,7 +5,7 @@ function Header() {
   const getLinkerPath = () => {
     if (!currentUser) return '/sign-in';
     switch (currentUser.role) {
-      case 'admin':
+      case 'manager':
         return '/profile';
       case 'chemist':
         return '/chemist-profile';

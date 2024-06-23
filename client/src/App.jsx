@@ -12,9 +12,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
         {/* manager */}
-        <Route element={<PrivateRoute role="admin" />}>
+        <Route element={<PrivateRoute role="manager" />}>
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/admin/board" element={<Board />} />
+          <Route path="/manager/board" element={<Board />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>

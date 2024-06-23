@@ -1,4 +1,4 @@
-const roles = ['admin', 'chemist', 'controller'];
+const roles = ['chemist', 'tl', 'manager', 'purchacer'];
 
 export const roleOptions = roles.map((role) => ({
   value: role,

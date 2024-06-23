@@ -33,7 +33,7 @@ function SignIn() {
       }
       dispatch(signInSuccess(data));
 
-      data.role === 'admin'
+      data.role === 'manager'
         ? navigate('/manager/inventory')
         : data.role === 'chemist'
           ? navigate('/chemist')

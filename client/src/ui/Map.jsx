@@ -115,7 +115,7 @@ function Map() {
     <div className="">
       <h1 className="text-3xl font-bold my-7">Map</h1>
       <form onSubmit={handleSubmit}>
-        {currentUser.role === 'admin' ? (
+        {currentUser.role === 'manager' ? (
           <>
             <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChange} />
             <div
@@ -149,7 +149,7 @@ function Map() {
             ''
           )}
         </p>
-        {currentUser.role === 'admin' ? (
+        {currentUser.role === 'manager' ? (
           <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit
           </button>
