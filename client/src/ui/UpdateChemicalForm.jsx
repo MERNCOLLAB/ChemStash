@@ -5,26 +5,14 @@ import { transformArrayToOptions } from '../helpers/transformArray';
 import { selectStyle } from '../helpers/selectStyle';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../helpers/FormatDate';
+import { initialChemicals } from '../constants';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const [updatedItem, setUpdatedItem] = useState({
-    name: '',
-    casNumber: '',
-    molecularFormula: '',
-    purity: '',
-    location: '',
-    supplier: '',
-    quantity: '',
-    unit: '',
-    purchaseDate: '',
-    expiryDate: '',
-    hazardClassification: '',
-    sds: '',
-    remarks: '',
-    ...item,
-  });
+  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
+
+  const [updatedItem, setUpdatedItem] = useState({ ...initialChemicals, ...item });
 
   useEffect(() => {
     setUpdatedItem((prevItem) => ({
@@ -62,24 +50,27 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           <label>Chemical Name</label>
           <Input value={updatedItem.name} id="name" type="text" placeholder="Name" onChange={handleChange} />
         </li>
-        <li>
-          <label>CAS Number</label>
-          <Input
-            value={updatedItem.casNumber}
-            id="casNumber"
-            type="number"
-            placeholder="CAS Number"
-            onChange={handleChange}
-          />
-        </li>
-        <li>
-          <label htmlFor="molecularFormula">Molecular Formula</label>
+
+        <li className="flex items-center gap-2">
+          <label className="flex-1 text-center">Molecular Formula</label>
           <FormulaInput
             id="molecularFormula"
-            value={updatedItem.molecularFormula}
+            value={formData.molecularFormula}
             onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
           />
         </li>
+
+        <li>
+          <label>Lot Number</label>
+          <Input
+            value={updatedItem.lotNumber}
+            id="lotNumber"
+            type="number"
+            placeholder="Lot Number"
+            onChange={handleChange}
+          />
+        </li>
+
         <li>
           <label>Purity</label>
           <Input value={updatedItem.purity} id="purity" type="text" placeholder="Purity" onChange={handleChange} />
@@ -96,35 +87,26 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           />
         </li>
         <li>
-          <label>Supplier</label>
-          <Input
-            value={updatedItem.supplier}
-            id="supplier"
-            type="text"
-            placeholder="Supplier"
-            onChange={handleChange}
-          />
+          <label>Brand</label>
+          <Input value={updatedItem.brand} id="supplier" type="text" placeholder="Supplier" onChange={handleChange} />
         </li>
+
         <li>
-          <label>Quantity</label>
-          <Input
-            value={updatedItem.quantity}
-            id="quantity"
-            type="number"
-            placeholder="Chemical Quantity"
-            onChange={handleChange}
-          />
+          <label>Supply</label>
+          <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
         </li>
+
         <li>
           <label>Unit</label>
           <Input
             value={updatedItem.unit}
             id="unit"
             type="text"
-            placeholder="Unit for the Quantity"
+            placeholder="Unit (eg. Bottle)"
             onChange={handleChange}
           />
         </li>
+
         <li>
           <label>Purchase Date</label>
           <Input value={updatedItem.purchaseDate} id="purchaseDate" type="date" onChange={handleChange} />
@@ -133,6 +115,19 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           <label>Expiry Date</label>
           <Input value={updatedItem.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
         </li>
+
+        <li>
+          <label>Status</label>
+          <Select
+            placeholder="Status"
+            value={chemicalStatusOptions.find((opt) => opt.value === formData.status)}
+            options={chemicalStatusOptions}
+            onChange={(selectedStatus) => handleChangeOption(selectedStatus, 'status')}
+            styles={selectStyle}
+            isClearable
+          />
+        </li>
+
         <li>
           <label>Hazard Classification</label>
           <Select
@@ -144,6 +139,7 @@ function UpdateChemicalForm({ item, handleUpdate }) {
             isClearable
           />
         </li>
+
         <li>
           <label>SDS</label>
           <Input
