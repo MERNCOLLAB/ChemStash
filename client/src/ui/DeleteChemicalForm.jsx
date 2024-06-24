@@ -24,18 +24,18 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
               <TableCell>{item.name}</TableCell>
             </TableRow>
 
-            {/* CAS Number */}
-            <TableRow>
-              <TableCell>CAS Number</TableCell>
-              <TableCell>{item.casNumber}</TableCell>
-            </TableRow>
-
             {/* Molecular Formula */}
             <TableRow>
               <TableCell>Molecular Formula</TableCell>
               <TableCell>
                 <FormatFormula formula={item.molecularFormula} />
               </TableCell>
+            </TableRow>
+
+            {/*Lot Number */}
+            <TableRow>
+              <TableCell>Lot Number</TableCell>
+              <TableCell>{item.lotNumber}</TableCell>
             </TableRow>
 
             {/* Purity */}
@@ -50,17 +50,17 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
               <TableCell>{item.location}</TableCell>
             </TableRow>
 
-            {/* Supplier */}
+            {/* Brand */}
             <TableRow>
-              <TableCell>Supplier</TableCell>
-              <TableCell>{item.supplier}</TableCell>
+              <TableCell>Brand</TableCell>
+              <TableCell>{item.brand}</TableCell>
             </TableRow>
 
-            {/* Quantity  */}
+            {/* Supply  */}
             <TableRow>
-              <TableCell>Quantity</TableCell>
+              <TableCell>Supply</TableCell>
               <TableCell>
-                {item.quantity} &nbsp; {item.unit}
+                {item.supply} &nbsp; {item.unit}
               </TableCell>
             </TableRow>
 
@@ -74,6 +74,12 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
             <TableRow>
               <TableCell>Expiry Date</TableCell>
               <TableCell>{item.expiryDate}</TableCell>
+            </TableRow>
+
+            {/* Status */}
+            <TableRow>
+              <TableCell>Status</TableCell>
+              <TableCell>{item.status}</TableCell>
             </TableRow>
 
             {/* Hazard Classification */}

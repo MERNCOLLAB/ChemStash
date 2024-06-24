@@ -1,30 +1,18 @@
 import { Input, FormulaInput } from '../components';
 import Select from 'react-select';
-import { location, hazardClassifications } from '../constants';
+import { location, hazardClassifications, chemicalStatus } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
 import { selectStyle } from '../helpers/selectStyle';
 import { useEffect, useState } from 'react';
 import { formatDate } from '../helpers/FormatDate';
+import { initialChemicals } from '../constants';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const [updatedItem, setUpdatedItem] = useState({
-    name: '',
-    casNumber: '',
-    molecularFormula: '',
-    purity: '',
-    location: '',
-    supplier: '',
-    quantity: '',
-    unit: '',
-    purchaseDate: '',
-    expiryDate: '',
-    hazardClassification: '',
-    sds: '',
-    remarks: '',
-    ...item,
-  });
+  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
+
+  const [updatedItem, setUpdatedItem] = useState({ ...initialChemicals, ...item });
 
   useEffect(() => {
     setUpdatedItem((prevItem) => ({
@@ -105,23 +93,19 @@ function UpdateChemicalForm({ item, handleUpdate }) {
             onChange={handleChange}
           />
         </li>
+
         <li>
-          <label>Quantity</label>
-          <Input
-            value={updatedItem.quantity}
-            id="quantity"
-            type="number"
-            placeholder="Chemical Quantity"
-            onChange={handleChange}
-          />
+          <label>Supply</label>
+          <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
         </li>
+
         <li>
           <label>Unit</label>
           <Input
             value={updatedItem.unit}
             id="unit"
             type="text"
-            placeholder="Unit for the Quantity"
+            placeholder="Unit (eg. Bottle)"
             onChange={handleChange}
           />
         </li>
