@@ -7,7 +7,7 @@ function Input({ type, value, placeholder, id, onChange, defaultValue }) {
       placeholder={placeholder}
       defaultValue={defaultValue}
       onChange={onChange}
-      className="bg-slate-900 p-3 border"
+      className="flex-1 w-full bg-slate-900 p-3 border"
     />
   );
 }
