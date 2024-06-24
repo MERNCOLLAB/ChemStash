@@ -48,13 +48,13 @@ function Inventory() {
         },
       });
       const data = await response.json();
+      setLoading(false);
       const transformedData = data.map((item) => ({
         ...item,
         purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
         expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
       }));
       setLists(transformedData);
-      setLoading(false);
     } catch (error) {
       setLoading(false);
       setError(error);

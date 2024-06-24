@@ -48,7 +48,7 @@ export const chemicalList = async (req, res, next) => {
     const chemicals = await Chemical.find();
     res.json(chemicals);
   } catch (err) {
-    next(errorHandler(500, 'Server Error'));
+    next(err);
   }
 };
 
@@ -75,12 +75,12 @@ export const updateChemical = async (req, res, next) => {
           purity: req.body.purity,
           location: req.body.location,
           supplier: req.body.supplier,
-          quantity:req.body.quantity,
+          quantity: req.body.quantity,
           unit: req.body.unit,
           purchaseDate: req.body.purchaseDate,
           expiryDate: req.body.expiryDate,
           sds: req.body.sds,
-          hazardClassification:req.body.hazardClassification,
+          hazardClassification: req.body.hazardClassification,
           remarks: req.body.remarks,
         },
       },
