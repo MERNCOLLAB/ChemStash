@@ -116,10 +116,7 @@ function Inventory() {
     {
       name: 'name',
     },
-    {
-      name: 'casNumber',
-      label: 'Cas Number',
-    },
+
     {
       name: 'molecularFormula',
       label: 'Molecular Formula',
@@ -127,6 +124,12 @@ function Inventory() {
         customBodyRender: (value) => <FormatFormula formula={value} />,
       },
     },
+
+    {
+      name: 'lotNumber',
+      label: 'Lot Number',
+    },
+
     {
       name: 'purity',
       options: {
@@ -160,13 +163,13 @@ function Inventory() {
       },
     },
     {
-      name: 'supplier',
+      name: 'brand',
       options: {
         filter: false,
       },
     },
     {
-      name: 'quantity',
+      name: 'supply',
     },
     {
       name: 'unit',
@@ -178,6 +181,9 @@ function Inventory() {
     {
       name: 'expiryDate',
       label: 'Expiry Date',
+    },
+    {
+      name: 'status',
     },
     {
       name: 'hazardClassification',
