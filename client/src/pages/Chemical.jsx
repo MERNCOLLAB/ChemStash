@@ -2,26 +2,15 @@ import { useState } from 'react';
 import Select from 'react-select';
 import { selectStyle } from '../helpers/selectStyle';
 import { Button, Input, FormulaInput } from '../components';
-import { location, hazardClassifications } from '../constants';
+import { location, hazardClassifications, initialChemicals, chemicalStatus } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
 
 function Chemical() {
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const [formData, setFormData] = useState({
-    name: '',
-    casNumber: '',
-    purity: '',
-    location: '',
-    supplier: '',
-    quantity: '',
-    unit: '',
-    purchaseDate: '',
-    expiryDate: '',
-    sds: '',
-    hazardClassification: '',
-    remarks: '',
-  });
+  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
+
+  const [formData, setFormData] = useState(initialChemicals);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,21 +50,7 @@ function Chemical() {
       if (data.success === false) {
         return;
       }
-      setFormData({
-        name: '',
-        casNumber: '',
-        molecularFormula: '',
-        purity: '',
-        location: '',
-        supplier: '',
-        quantity: '',
-        unit: '',
-        purchaseDate: '',
-        expiryDate: '',
-        sds: '',
-        hazardClassification: '',
-        remarks: '',
-      });
+      setFormData(initialChemicals);
       alert('Chemical successfully created');
     } catch (error) {
       setLoading(false);
@@ -94,19 +69,23 @@ function Chemical() {
           placeholder="Name"
           onChange={handleChange}
         />
+
+        <div className="flex items-center gap-2">
+          <label className="flex-1 text-center">Molecular Formula</label>
+          <FormulaInput
+            id="molecularFormula"
+            value={formData.molecularFormula}
+            onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
+          />
+        </div>
+
         <Input
           disable={loading}
-          value={formData.casNumber}
-          id="casNumber"
+          value={formData.lotNumber}
+          id="lotNumber"
           type="number"
-          placeholder="CAS Number"
+          placeholder="Lot Number"
           onChange={handleChange}
-        />
-        <label htmlFor="molecularFormula">Molecular Formula</label>
-        <FormulaInput
-          id="molecularFormula"
-          value={formData.molecularFormula}
-          onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
         />
 
         <Input
@@ -129,30 +108,32 @@ function Chemical() {
 
         <Input
           disable={loading}
-          value={formData.supplier}
-          id="supplier"
+          value={formData.brand}
+          id="brand"
           type="text"
-          placeholder="Supplier"
+          placeholder="Brand"
           onChange={handleChange}
         />
+
         <Input
           disable={loading}
-          value={formData.quantity}
-          id="quantity"
+          value={formData.supply}
+          id="supply"
           type="number"
-          placeholder="Chemical Quantity"
+          placeholder="Supply"
           onChange={handleChange}
         />
+
         <Input
           disable={loading}
           value={formData.unit}
           id="unit"
           type="text"
-          placeholder="Unit for the Quantity"
+          placeholder="Unit (eg. Bottle)"
           onChange={handleChange}
         />
         <div className="flex items-center gap-2">
-          <label>Date of Purchase: </label>
+          <label className="flex-2">Date of Purchase: </label>
           <Input
             disable={loading}
             value={formData.purchaseDate}
@@ -162,16 +143,17 @@ function Chemical() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <label>Expiry Date: </label>
+          <label className="flex-2">Expiry Date: </label>
           <Input disable={loading} value={formData.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
         </div>
-        <Input
-          disable={loading}
-          value={formData.sds}
-          id="sds"
-          type="text"
-          placeholder="Safety Data Sheet URL"
-          onChange={handleChange}
+
+        <Select
+          placeholder="Status"
+          value={chemicalStatusOptions.find((opt) => opt.value === formData.status)}
+          options={chemicalStatusOptions}
+          onChange={(selectedStatus) => handleChangeOption(selectedStatus, 'status')}
+          styles={selectStyle}
+          isClearable
         />
 
         <Select
@@ -181,6 +163,15 @@ function Chemical() {
           onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
           styles={selectStyle}
           isClearable
+        />
+
+        <Input
+          disable={loading}
+          value={formData.sds}
+          id="sds"
+          type="text"
+          placeholder="Safety Data Sheet URL"
+          onChange={handleChange}
         />
 
         <Input

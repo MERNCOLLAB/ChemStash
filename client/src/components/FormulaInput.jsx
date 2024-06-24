@@ -6,7 +6,7 @@ const FormulaInput = ({ value, onChange }) => {
   const formats = ['script'];
 
   return (
-    <div className="flex gap-1 items-center">
+    <div className="w-full gap-1 flex items-center">
       <div className="flex-[2]">
         <ReactQuill
           theme="snow"

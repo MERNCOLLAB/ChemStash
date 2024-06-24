@@ -19,3 +19,22 @@ export const hazardClassifications = [
   'Environmental Hazard',
   'Gases Under Pressure',
 ];
+
+export const chemicalStatus = ['New', 'Open', 'Near Expiry', 'Expired', 'Out of Stock'];
+
+export const initialChemicals = {
+  name: '',
+  molecularFormula: '',
+  lotNumber: '',
+  purity: '',
+  location: '',
+  brand: '',
+  supply: '',
+  unit: '',
+  purchaseDate: '',
+  expiryDate: '',
+  status: '',
+  sds: '',
+  hazardClassification: '',
+  remarks: '',
+};
