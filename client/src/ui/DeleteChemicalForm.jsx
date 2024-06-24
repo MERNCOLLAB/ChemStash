@@ -1,4 +1,3 @@
-import FormatFormula from '../helpers/FormatFormula';
 import { ThemeProvider } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -27,9 +26,7 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
             {/* Molecular Formula */}
             <TableRow>
               <TableCell>Molecular Formula</TableCell>
-              <TableCell>
-                <FormatFormula formula={item.molecularFormula} />
-              </TableCell>
+              <TableCell>{item.molecularFormula}</TableCell>
             </TableRow>
 
             {/*Lot Number */}
