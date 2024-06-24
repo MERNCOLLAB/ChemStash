@@ -99,8 +99,10 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         </li>
 
         {/* Number of Supply */}
-        <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
-
+        <li>
+          <label>Supply</label>
+          <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
+        </li>
         {/*  Unit */}
         <li>
           <label>Unit</label>
