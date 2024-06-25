@@ -5,6 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 function TaskCard({ task, deleteTask, updateTask }) {
   const [editMode, setIsEditMode] = useState(false);
+  const [content, setContent] = useState(task.content);
 
   const toggleEditMode = () => {
     setIsEditMode((prev) => !prev);
@@ -22,6 +23,19 @@ function TaskCard({ task, deleteTask, updateTask }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+
+      toggleEditMode();
+    }
+  };
+
+  const handleBlur = () => {
+    updateTask(task.id, content);
+    toggleEditMode();
   };
 
   if (isDragging) {
@@ -44,17 +58,13 @@ function TaskCard({ task, deleteTask, updateTask }) {
         className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px] items-center flex text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
       >
         <textarea
-          className="border h-[90%] w-full resize-none border-none bg-transparent text-gray-300 focus:outline-none"
-          value={task.content}
+          className="border  h-[90%] w-full resize-none border-none  text-gray-300 focus:outline-none  bg-indigo-700"
+          value={content}
           autoFocus
           placeholder="Task content  here"
-          onBlur={toggleEditMode}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && e.shiftKey) {
-              toggleEditMode();
-            }
-          }}
-          onChange={(e) => updateTask(task.id, e.target.value)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setContent(e.target.value)}
         ></textarea>
       </div>
     );
