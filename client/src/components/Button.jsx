@@ -5,7 +5,15 @@ function Button({ loading, children, type, variant, customClass, onClick }) {
       onClick={onClick}
       disabled={loading}
       className={`${
-        !variant ? 'bg-slate-700' : variant === 'success' ? 'bg-emerald-950' : variant === 'form' ? 'bg-sky-500' : ''
+        !variant
+          ? 'bg-slate-700'
+          : variant === 'success'
+            ? 'bg-emerald-950'
+            : variant === 'form'
+              ? 'bg-sky-500 mt-4'
+              : variant === 'delete'
+                ? 'btn bg-rose-600 mt-4'
+                : ''
       } p-2 uppercase hover:opacity-60 border ${customClass} `}
     >
       {children}
