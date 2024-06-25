@@ -68,7 +68,9 @@ function SignUp() {
           isClearable
         />
 
-        <Button loading={loading}>{loading ? 'Loading' : 'Sign Up'}</Button>
+        <Button type="submit" loading={loading}>
+          {loading ? 'Loading' : 'Sign Up'}
+        </Button>
         <OAuth />
       </form>
       <div className="flex gap-2 mt-5">

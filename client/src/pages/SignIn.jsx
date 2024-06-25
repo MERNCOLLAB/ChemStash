@@ -46,7 +46,9 @@ function SignIn() {
         <Input id="email" type="email" placeholder="Enter your email" onChange={handleChange} />
         <Input id="password" type="password" placeholder="Enter password" onChange={handleChange} />
 
-        <Button loading={loading}>{loading ? 'Loading' : 'Sign In'}</Button>
+        <Button type="submit" loading={loading}>
+          {loading ? 'Loading' : 'Sign In'}
+        </Button>
         <OAuth />
       </form>
       <div className="flex gap-2 mt-5">

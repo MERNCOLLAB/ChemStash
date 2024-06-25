@@ -1,4 +1,3 @@
-import React from 'react';
 import useFormatFormula from '../hooks/useFormatFormula';
 import Input from './Input';
 import Button from './Button';
@@ -19,7 +18,7 @@ const FormulaInput = ({ value, onChange }) => {
     <div className="flex flex-row w-full justify-evenly items-center gap-2 relative my-4">
       <p>{renderOutputFormula(outputFormula)}</p>
       <div className="flex-[0.5]">
-        <Button type="form" onClick={showDialog}>
+        <Button type="button" variant="form" onClick={showDialog}>
           Type the Formula
         </Button>
       </div>
@@ -32,7 +31,9 @@ const FormulaInput = ({ value, onChange }) => {
             value={inputFormula}
             onChange={(e) => setInputFormula(e.target.value)}
           />
-          <Button onClick={closeDialog}>Format</Button>
+          <Button type="button" variant="form" onClick={closeDialog}>
+            Format
+          </Button>
         </dialog>
       )}
     </div>

@@ -1,11 +1,11 @@
-function Button({ loading, children, type, customClass, onClick }) {
+function Button({ loading, children, type, variant, customClass, onClick }) {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       disabled={loading}
       className={`${
-        !type ? 'bg-slate-700' : type === 'success' ? 'bg-emerald-950' : type === 'form' ? 'bg-sky-500' : ''
+        !variant ? 'bg-slate-700' : variant === 'success' ? 'bg-emerald-950' : variant === 'form' ? 'bg-sky-500' : ''
       } p-2 uppercase hover:opacity-60 border ${customClass} `}
     >
       {children}
