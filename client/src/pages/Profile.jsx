@@ -154,7 +154,9 @@ function Profile() {
           onChange={handleChange}
         />
 
-        <Button loading={loading}>{loading ? 'Loading' : 'Update'}</Button>
+        <Button type="button" variant="form" loading={loading}>
+          {loading ? 'Loading' : 'Update'}
+        </Button>
       </form>
       <div className="flex justify-between items-center mt-4 text-sm">
         <span onClick={handleDeleteAccount} className="p-2 text-red-700 cursor-pointer border border-red-700">

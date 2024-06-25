@@ -1,3 +1,4 @@
+import { Button } from '../components';
 import { ThemeProvider } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -93,9 +94,9 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
           </TableBody>
         </Table>
         <div className="mt-2 text-center">
-          <button type="button" className="btn bg-rose-600 mt-4" onClick={() => onDelete(item._id)}>
+          <Button type="button" variant="delete" onClick={() => onDelete(item._id)}>
             Delete
-          </button>
+          </Button>
         </div>
       </ThemeProvider>
     </div>

@@ -200,7 +200,9 @@ function Chemical() {
         />
         <div className="flex justify-between">
           <span></span>
-          <Button disable={loading}>Add Chemical</Button>
+          <Button type="submit" variant="form" disable={loading}>
+            Add Chemical
+          </Button>
         </div>
       </form>
       {error && <div className="text-red-500">There was an error processing your request.</div>}

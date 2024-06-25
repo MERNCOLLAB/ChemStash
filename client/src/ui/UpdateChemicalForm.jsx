@@ -1,4 +1,4 @@
-import { Input, FormulaInput } from '../components';
+import { Input, Button, FormulaInput } from '../components';
 import Select from 'react-select';
 import { location, hazardClassifications, chemicalStatus } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
@@ -171,9 +171,9 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         </li>
       </ul>
 
-      <button type="submit" className="btn btn-primary mt-4">
+      <Button type="submit" variant="form" className="btn btn-primary mt-4">
         Update
-      </button>
+      </Button>
     </form>
   );
 }
