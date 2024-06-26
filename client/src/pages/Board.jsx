@@ -6,7 +6,8 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 import io from 'socket.io-client';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../redux/notification/notificationSlice';
 function Board() {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -15,39 +16,46 @@ function Board() {
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
+  const { currentUser } = useSelector((state) => state.user);
+  const { user, socket } = useSelector((state) => state.notification);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
-
-    socket.on('columnAdded', (newColumn) => {
+    dispatch(setUser({ user: currentUser.username, socket: io('http://localhost:3000') }));
+  }, []);
+  useEffect(() => {
+    socket?.emit('newUser', user);
+  }, [socket, user]);
+  useEffect(() => {
+    socket?.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
     });
 
-    socket.on('columnDeleted', (deletedColumn) => {
+    socket?.on('columnDeleted', (deletedColumn) => {
       setColumns((prevColumns) => prevColumns.filter((col) => col.id !== deletedColumn.id));
       setTasks((prevTasks) => prevTasks.filter((task) => task.columnId !== deletedColumn.id));
     });
-    socket.on('columnOrderUpdated', (updatedColumns) => {
+    socket?.on('columnOrderUpdated', (updatedColumns) => {
       setColumns(updatedColumns);
     });
 
-    socket.on('columnTitleUpdated', (updatedColumn) => {
+    socket?.on('columnTitleUpdated', (updatedColumn) => {
       setColumns((prevColumns) => prevColumns.map((col) => (col.id === updatedColumn.id ? updatedColumn : col)));
     });
 
-    socket.on('createTask', (newTask) => {
+    socket?.on('createTask', (newTask) => {
       setTasks((prevTasks) => [...prevTasks, newTask]);
     });
-    socket.on('taskDeleted', (taskId) => {
+    socket?.on('taskDeleted', (taskId) => {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId.id));
     });
-    socket.on('taskUpdated', (updatedTask) => {
+    socket?.on('taskUpdated', (updatedTask) => {
       setTasks((prevTasks) => prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
     });
     return () => {
-      socket.disconnect();
+      socket?.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   // activate delete column function
   const sensors = useSensors(
@@ -203,7 +211,13 @@ function Board() {
 
   //   setTasks([...tasks, newTask]);
   // }
-  const createTask = async (columnId) => {
+  const createTask = async (columnId, type) => {
+    const maker = currentUser.username;
+    socket.emit('sendNotification', {
+      senderName: user,
+      type,
+    });
+
     // Filter tasks to find those that belong to the specified columnId
     const tasksInColumn = tasks.filter((task) => task.columnId === columnId);
 
@@ -213,6 +227,7 @@ function Board() {
     const newTask = {
       id: generateId(),
       columnId,
+      username: maker,
       content: `Task ${tasks.length + 1}`,
       order: newOrder,
     };
@@ -302,8 +317,6 @@ function Board() {
     }
   };
 
-  console.log(error);
-  console.log(loading);
   return (
     <div className="border p-2 flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden ">
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>

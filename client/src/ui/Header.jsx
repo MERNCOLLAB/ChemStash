@@ -1,7 +1,12 @@
 import { useSelector } from 'react-redux';
 import { Linker } from '../components';
+import { useEffect, useState } from 'react';
+
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
+  const { socket } = useSelector((state) => state.notification);
+  const [notification, setNotification] = useState([]);
+  const username = currentUser.username;
   const getLinkerPath = () => {
     if (!currentUser) return '/sign-in';
     switch (currentUser.role) {
@@ -17,6 +22,15 @@ function Header() {
         return '/';
     }
   };
+
+  useEffect(() => {
+    socket?.on('getNotification', (data) => {
+      if (data.senderName !== username) {
+        setNotification((prev) => [...prev, data]);
+      }
+    });
+  }, [socket, username]);
+  console.log(notification);
   return (
     <div className="mx-auto border">
       <div className="flex justify-between items-center  mx-auto p-3">
@@ -30,7 +44,14 @@ function Header() {
           <Linker to={`${currentUser?.role}/inventory`}>
             <li>Inventory</li>
           </Linker>
-          {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
+          {currentUser && (
+            <Linker to={`${currentUser.role}/board`}>
+              Board
+              <div className="absolute -top-4 -left-2 bg-sky-500 px-[0.35rem] rounded-full text-white text-sm">
+                {notification.length}
+              </div>
+            </Linker>
+          )}
           {/* <Linker to="/">
             <li>Home</li>
           </Linker>

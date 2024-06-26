@@ -7,6 +7,10 @@ const taskSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
     },

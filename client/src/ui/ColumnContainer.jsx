@@ -91,7 +91,7 @@ function ColumnContainer(props) {
 
       <button
         onClick={() => {
-          createTask(column.id);
+          createTask(column.id, 1);
         }}
         className=" justify-center   m-1   flex  gap-2 items-center px-1 py-2 stroke-gray-500 hover:stroke-white  hover:bg-mainBackGroundColor"
       >

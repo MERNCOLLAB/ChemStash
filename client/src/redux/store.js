@@ -1,21 +1,29 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice';
-import {persistReducer, persistStore} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import notificationReducer from './notification/notificationSlice'; // Import the notification slice
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const rootReducer = combineReducers({ user: userReducer });
+// Combine both reducers
+const rootReducer = combineReducers({
+  user: userReducer,
+  notification: notificationReducer, // Add notification reducer
+});
+
 const persistConfig = {
-    key: 'root-user',
-    version:1,
-    storage,
-}
+  key: 'root',
+  version: 1,
+  storage,
+  blacklist: ['notification'], // Exclude notification from being persisted
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
     }),
 });
 

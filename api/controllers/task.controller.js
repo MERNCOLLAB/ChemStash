@@ -12,9 +12,9 @@ export const taskList = async (req, res, next) => {
 };
 
 export const createTask = async (req, res, next) => {
-  const { id, columnId, content, order } = req.body;
+  const { id, username, columnId, content, order } = req.body;
 
-  if (!id || !columnId || !content || order === undefined) {
+  if (!id || !username || !columnId || !content || !order === undefined) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
@@ -28,6 +28,7 @@ export const createTask = async (req, res, next) => {
       id,
       columnId,
       content,
+      username,
       order,
     });
 
