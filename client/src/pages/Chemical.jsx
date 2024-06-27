@@ -57,7 +57,6 @@ function Chemical() {
       setError(error);
     }
   };
-  console.log(formData.molecularFormula);
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

@@ -1,0 +1,16 @@
+export const initialChemicalData = {
+  name: '',
+  molecularFormula: '',
+  lotNumber: '',
+  purity: '',
+  location: '',
+  brand: '',
+  supply: '',
+  unit: '',
+  purchaseDate: '',
+  expiryDate: '',
+  status: '',
+  sds: '',
+  hazardClassification: '',
+  remarks: '',
+};
