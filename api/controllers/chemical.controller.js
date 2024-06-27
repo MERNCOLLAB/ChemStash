@@ -1,44 +1,16 @@
 import Chemical from '../models/chemical.model.js';
-
+import { initialChemicalData } from '../utils/chemicalinfo.js';
 // add chemical
 export const createChemical = async (req, res, next) => {
-  const {
-    name,
-    casNumber,
-    molecularFormula,
-    purity,
-    location,
-    supplier,
-    quantity,
-    unit,
-    purchaseDate,
-    expiryDate,
-    sds,
-    hazardClassification,
-    remarks,
-  } = req.body;
+  const initialChemicalData = req.body;
 
-  const newChemical = new Chemical({
-    name,
-    casNumber,
-    molecularFormula,
-    purity,
-    location,
-    supplier,
-    quantity,
-    unit,
-    purchaseDate,
-    expiryDate,
-    sds,
-    hazardClassification,
-    remarks,
-  });
+  const newChemical = new Chemical(initialChemicalData);
   try {
     await newChemical.save();
-    res.status(201).json({ message: 'chemical create successfully' });
+    res.status(201).json({ message: 'Chemical Created successfully' });
   } catch (error) {
     next(error);
-    console.log('chemical error');
+    console.error('Error in createChemical controller', error.message);
   }
 };
 
@@ -49,6 +21,7 @@ export const chemicalList = async (req, res, next) => {
     res.json(chemicals);
   } catch (err) {
     next(err);
+    console.error('Error in chemicalList controller', error.message);
   }
 };
 
@@ -60,6 +33,7 @@ export const deleteChemical = async (req, res, next) => {
     res.status(200).json('chemical has been deleted...');
   } catch (error) {
     next(error);
+    console.error('Error in deleteChemical controller', error.message);
   }
 };
 
@@ -68,27 +42,13 @@ export const updateChemical = async (req, res, next) => {
     const updateChemical = await Chemical.findByIdAndUpdate(
       req.params.id,
       {
-        $set: {
-          name: req.body.name,
-          casNumber: req.body.casNumber,
-          molecularFormula: req.body.molecularFormula,
-          purity: req.body.purity,
-          location: req.body.location,
-          supplier: req.body.supplier,
-          quantity: req.body.quantity,
-          unit: req.body.unit,
-          purchaseDate: req.body.purchaseDate,
-          expiryDate: req.body.expiryDate,
-          sds: req.body.sds,
-          hazardClassification: req.body.hazardClassification,
-          remarks: req.body.remarks,
-        },
+        $set: req.body,
       },
       { new: true }
     );
-    // const { password, ...rest } = updatedUser._doc;
     res.status(200).json({ data: updateChemical, message: 'Item successfully updated' });
   } catch (error) {
     next(error);
+    console.error('Error in updateChemical controller', error.message);
   }
 };
