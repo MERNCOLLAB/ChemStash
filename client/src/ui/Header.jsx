@@ -1,12 +1,16 @@
 import { useSelector } from 'react-redux';
 import { Linker } from '../components';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/notification/notificationSlice';
 
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
-  const { socket } = useSelector((state) => state.notification);
+  const { socket, user } = useSelector((state) => state.notification);
   const [notification, setNotification] = useState([]);
-  const username = currentUser.username;
+  const username = currentUser?.username;
+
+  const dispatch = useDispatch();
   const getLinkerPath = () => {
     if (!currentUser) return '/sign-in';
     switch (currentUser.role) {
@@ -24,16 +28,33 @@ function Header() {
   };
 
   useEffect(() => {
+    if (currentUser) {
+      dispatch(setUser({ user: currentUser.username }));
+    }
+    socket?.emit('newUser', user);
     socket?.on('getNotification', (data) => {
       if (data.senderName !== username) {
         setNotification((prev) => [...prev, data]);
       }
     });
-  }, [socket, username]);
-  console.log(notification);
+  }, [socket, currentUser]);
+
+  const displayNotification = ({ senderName, type }) => {
+    let action;
+
+    if (type === 1) {
+      action = 'created a task';
+    } else if (type === 2) {
+      action = 'deleted a task';
+    } else {
+      action = 'moved a task';
+    }
+    return <p>{`${senderName} ${action}`}</p>;
+  };
+
   return (
-    <div className="mx-auto border">
-      <div className="flex justify-between items-center  mx-auto p-3">
+    <div className="mx-auto border relative">
+      <div className="flex justify-between items-center mx-auto p-3">
         <Linker to="/">
           <h1 className="font-bold">Chemstack</h1>
         </Linker>
@@ -44,20 +65,14 @@ function Header() {
           <Linker to={`${currentUser?.role}/inventory`}>
             <li>Inventory</li>
           </Linker>
-          {currentUser && (
-            <Linker to={`${currentUser.role}/board`}>
-              Board
-              <div className="absolute -top-4 -left-2 bg-sky-500 px-[0.35rem] rounded-full text-white text-sm">
-                {notification.length}
-              </div>
-            </Linker>
-          )}
-          {/* <Linker to="/">
-            <li>Home</li>
-          </Linker>
-          <Linker to="/about">
-            <li>About</li>
-          </Linker> */}
+          {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
+
+          <div className="relative cursor-pointer">
+            Notification
+            <div className="absolute -top-4 -left-2 bg-sky-500 px-[0.35rem] rounded-full text-white text-sm">
+              {notification.length}
+            </div>
+          </div>
 
           <Linker to={getLinkerPath()}>
             {currentUser ? (
@@ -71,6 +86,11 @@ function Header() {
             )}
           </Linker>
         </ul>
+      </div>
+      <div className=" absolute flex flex-col gap-2  z-50 right-16 pr-4 pl-2 border top-12 bg-columnBackGroundColor">
+        {notification.map((n, index) => (
+          <div key={index}>{displayNotification(n)}</div>
+        ))}
       </div>
     </div>
   );

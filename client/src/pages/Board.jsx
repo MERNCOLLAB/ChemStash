@@ -5,9 +5,8 @@ import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
-import io from 'socket.io-client';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../redux/notification/notificationSlice';
+import { useSelector } from 'react-redux';
+
 function Board() {
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -18,14 +17,7 @@ function Board() {
   const [activeTask, setActiveTask] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
   const { user, socket } = useSelector((state) => state.notification);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setUser({ user: currentUser.username, socket: io('http://localhost:3000') }));
-  }, []);
-  useEffect(() => {
-    socket?.emit('newUser', user);
-  }, [socket, user]);
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
@@ -200,17 +192,6 @@ function Board() {
     }
   };
 
-  // create Task
-
-  // function createTask(columnId) {
-  //   const newTask = {
-  //     id: generateId(),
-  //     columnId,
-  //     content: `Task ${tasks.length + 1}`,
-  //   };
-
-  //   setTasks([...tasks, newTask]);
-  // }
   const createTask = async (columnId, type) => {
     const maker = currentUser.username;
     socket.emit('sendNotification', {

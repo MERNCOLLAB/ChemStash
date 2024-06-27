@@ -1,19 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
+import io from 'socket.io-client';
 
-// Same as the states from sign-in page
 const initialState = {
   user: '',
-  socket: null,
+  socket: io('http://localhost:3000'),
 };
 
-// Slice Information
 const notificationSlice = createSlice({
   name: 'notification',
   initialState,
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload.user;
-      state.socket = action.payload.socket;
     },
   },
 });
