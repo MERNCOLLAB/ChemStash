@@ -9,6 +9,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import Drawer from '../ui/Drawer';
 import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
 import { MTable } from '../components';
+import useFormatFormula from '../hooks/useFormatFormula';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
@@ -17,6 +18,7 @@ function Inventory() {
   const [currentItem, setCurrentItem] = useState({});
   const [drawerType, setDrawerType] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { parseInput } = useFormatFormula();
 
   const handleUpdate = (id) => {
     handleDrawerOpen('update');
@@ -111,6 +113,11 @@ function Inventory() {
     }
   };
 
+  const renderFormula = (formula) => {
+    return formula.map((element, index) =>
+      element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
+    );
+  };
   const columns = [
     {
       name: 'name',
@@ -119,6 +126,7 @@ function Inventory() {
     {
       name: 'molecularFormula',
       label: 'Molecular Formula',
+      options: { customBodyRender: (value) => renderFormula(parseInput(value)) },
     },
 
     {

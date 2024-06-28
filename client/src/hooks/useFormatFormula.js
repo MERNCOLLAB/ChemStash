@@ -1,25 +1,4 @@
-import { useState, useEffect } from 'react';
-
-const useFormatFormula = (initialValue, onChange) => {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [inputFormula, setInputFormula] = useState(initialValue);
-  const [outputFormula, setOutputFormula] = useState([]);
-
-  useEffect(() => {
-    setInputFormula(initialValue);
-  }, [initialValue]);
-
-  const showDialog = () => {
-    setOpenDialog(true);
-  };
-
-  const closeDialog = () => {
-    setOpenDialog(false);
-    const parsedElements = parseInput(inputFormula);
-    setOutputFormula(parsedElements);
-    onChange(inputFormula);
-  };
-
+const useFormatFormula = () => {
   const parseInput = (input) => {
     const regex = /(\d+)/g;
     const elements = [];
@@ -41,12 +20,7 @@ const useFormatFormula = (initialValue, onChange) => {
   };
 
   return {
-    showDialog,
-    closeDialog,
-    openDialog,
-    inputFormula,
-    setInputFormula,
-    outputFormula,
+    parseInput,
   };
 };
 

@@ -1,12 +1,28 @@
 import useFormatFormula from '../hooks/useFormatFormula';
+import { useState, useEffect } from 'react';
 import Input from './Input';
 import Button from './Button';
 
 const FormulaInput = ({ value, onChange }) => {
-  const { inputFormula, setInputFormula, outputFormula, openDialog, showDialog, closeDialog } = useFormatFormula(
-    value,
-    onChange
-  );
+  const { parseInput } = useFormatFormula();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [inputFormula, setInputFormula] = useState(value);
+  const [outputFormula, setOutputFormula] = useState([]);
+
+  useEffect(() => {
+    setInputFormula(value);
+  }, [value]);
+
+  const showDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const closeDialog = () => {
+    setOpenDialog(false);
+    const parsedElements = parseInput(inputFormula);
+    setOutputFormula(parsedElements);
+    onChange(inputFormula);
+  };
 
   const renderOutputFormula = (outputFormula) => {
     return outputFormula.map((element, index) =>
