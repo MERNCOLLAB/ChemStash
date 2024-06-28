@@ -66,9 +66,9 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           <label>Lot Number</label>
           <Input
             value={updatedItem.lotNumber}
-            id="casNumber"
+            id="lotNumber"
             type="number"
-            placeholder="CAS Number"
+            placeholder="Lot Number"
             onChange={handleChange}
           />
         </li>
