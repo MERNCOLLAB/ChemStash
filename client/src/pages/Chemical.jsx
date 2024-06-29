@@ -2,34 +2,20 @@ import { useState } from 'react';
 import Select from 'react-select';
 import { selectStyle } from '../helpers/selectStyle';
 import { Button, Input, FormulaInput } from '../components';
-import { location, hazardClassifications, initialChemicals, chemicalStatus } from '../constants';
-import { transformArrayToOptions } from '../helpers/transformArray';
+import useChemicalForm from '../hooks/useChemicalForm';
 
 function Chemical() {
-  const locationOptions = transformArrayToOptions(location);
-  const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
-
-  const [formData, setFormData] = useState(initialChemicals);
+  const {
+    locationOptions,
+    hazardClassificationOptions,
+    chemicalStatusOptions,
+    formData,
+    handleChange,
+    handleChangeOption,
+  } = useChemicalForm();
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { id, value, type } = e.target;
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-      [id]: type === 'number' ? Number(value) : value,
-    });
-  };
-
-  const handleChangeOption = (selectedOption, field) => {
-    setFormData({
-      ...formData,
-      [field]: selectedOption ? selectedOption.value : '',
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
