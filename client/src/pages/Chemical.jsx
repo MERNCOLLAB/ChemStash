@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import Select from 'react-select';
 import { selectStyle } from '../helpers/selectStyle';
 import { Button, Input, FormulaInput } from '../components';
 import useChemicalForm from '../hooks/useChemicalForm';
+import useAddChemical from '../api/useAddChemical';
 
 function Chemical() {
   const {
@@ -10,38 +10,18 @@ function Chemical() {
     hazardClassificationOptions,
     chemicalStatusOptions,
     formData,
+    setFormData,
     handleChange,
     handleChangeOption,
   } = useChemicalForm();
 
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { loading, error, addChemical } = useAddChemical();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData(formData);
 
-    try {
-      setLoading(true);
-      setError(false);
-      const res = await fetch('/api/chemical/item', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      setLoading(false);
-      if (data.success === false) {
-        return;
-      }
-      setFormData(initialChemicals);
-      alert('Chemical successfully created');
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
+    await addChemical(formData);
   };
   return (
     <div className="p-3 max-w-lg">

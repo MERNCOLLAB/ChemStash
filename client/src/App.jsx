@@ -14,6 +14,7 @@ import {
 } from './pages';
 import { Header, PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

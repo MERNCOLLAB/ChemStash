@@ -32,6 +32,7 @@ const useChemicalForm = () => {
     hazardClassificationOptions,
     chemicalStatusOptions,
     formData,
+    setFormData,
     handleChange,
     handleChangeOption,
   };
