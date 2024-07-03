@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
 // import MUIDataTable from 'mui-datatables';
 import { createTheme } from '@mui/material/styles';
 import { GoGear } from 'react-icons/go';
@@ -13,40 +11,13 @@ import { MTable } from '../components';
 // Hooks
 import useDrawer from '../hooks/useDrawer';
 import useFormatFormula from '../hooks/useFormatFormula';
+import useGetChemical from '../api/useGetChemical';
 
 function Inventory() {
-  const [lists, setLists] = useState([]);
+  const { lists, loading, error } = useGetChemical();
   const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   const { parseInput } = useFormatFormula();
-
-  const fetchList = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/chemical/list', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setLoading(false);
-      const transformedData = data.map((item) => ({
-        ...item,
-        purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
-        expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
-      }));
-      setLists(transformedData);
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchList();
-  }, []);
 
   const deleteChemical = async (id) => {
     try {
