@@ -10,19 +10,13 @@ function Chemical() {
     hazardClassificationOptions,
     chemicalStatusOptions,
     formData,
-    setFormData,
+    handleSubmit,
     handleChange,
     handleChangeOption,
   } = useChemicalForm();
 
-  const { loading, error, addChemical } = useAddChemical();
+  const { loading, error } = useAddChemical();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setFormData(formData);
-
-    await addChemical(formData);
-  };
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

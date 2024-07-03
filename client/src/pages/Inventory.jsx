@@ -9,36 +9,17 @@ import { MdDeleteOutline } from 'react-icons/md';
 import Drawer from '../ui/Drawer';
 import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
 import { MTable } from '../components';
+
+// Hooks
+import useDrawer from '../hooks/useDrawer';
 import useFormatFormula from '../hooks/useFormatFormula';
 
 function Inventory() {
   const [lists, setLists] = useState([]);
+  const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [currentItem, setCurrentItem] = useState({});
-  const [drawerType, setDrawerType] = useState('');
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const { parseInput } = useFormatFormula();
-
-  const handleUpdate = (id) => {
-    handleDrawerOpen('update');
-    const itemToUpdate = lists.find((item) => item._id === id);
-    setCurrentItem(itemToUpdate);
-  };
-  const handleDelete = (id) => {
-    handleDrawerOpen('delete');
-    const itemToDelete = lists.find((item) => item._id === id);
-    setCurrentItem(itemToDelete);
-  };
-
-  const handleDrawerOpen = (type) => {
-    setDrawerType(type);
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
 
   const fetchList = async () => {
     try {
