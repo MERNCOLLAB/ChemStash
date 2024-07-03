@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import chemicalRoutes from './routes/chemical.route.js';
 import mapRoutes from './routes/map.route.js';
 import boardColumn from './routes/boardColumn.route.js';
+import notificationRoutes from './routes/notification.route.js';
 import task from './routes/task.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -72,6 +73,7 @@ app.use('/api/chemical', chemicalRoutes);
 app.use('/api/map', mapRoutes);
 app.use('/api/board', boardColumn);
 app.use('/api/board', task);
+app.use('/api/notification', notificationRoutes);
 
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
