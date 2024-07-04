@@ -208,7 +208,7 @@ function Board() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ type, makerId }),
+        body: JSON.stringify({ type, makerId, maker }),
       });
       const data = await response.json();
       if (!response.ok) {

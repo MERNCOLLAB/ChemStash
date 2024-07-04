@@ -4,8 +4,8 @@ import UserFeed from '../models/userFeed.model.js';
 
 export const createNotification = async (req, res, next) => {
   try {
-    const { type, makerId } = req.body;
-    const notification = new Notification({ text: type });
+    const { type, makerId, maker } = req.body;
+    const notification = new Notification({ text: type, maker });
     await notification.save();
 
     const users = await User.find({ _id: { $ne: makerId } });
@@ -23,10 +23,19 @@ export const createNotification = async (req, res, next) => {
   }
 };
 
-export const viewNotification = async (req, res, next) => {
+export const NotificationList = async (req, res, next) => {
   try {
     const userFeeds = await UserFeed.find({ user: req.params.userId }).populate('notification');
     res.status(200).json(userFeeds);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const markAllNotificationsAsSeen = async (req, res, next) => {
+  try {
+    await UserFeed.updateMany({ user: req.params.userId, isSeen: false }, { $set: { isSeen: true } });
+    res.status(200).json({ message: 'All notifications marked as seen' });
   } catch (error) {
     next(error);
   }

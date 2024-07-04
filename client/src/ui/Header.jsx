@@ -59,7 +59,7 @@ function Header() {
         <Linker to="/">
           <h1 className="font-bold">Chemstack</h1>
         </Linker>
-        <NotificationList userId={currentUser?._id} />
+
         <ul className="flex gap-4 items-center">
           <Linker to="/dashboard">
             <li>Dashboard</li>
@@ -69,12 +69,14 @@ function Header() {
           </Linker>
           {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
 
-          <div className="relative cursor-pointer">
+          <NotificationList userId={currentUser?._id} />
+
+          {/* <div className="relative cursor-pointer">
             Notification
             <div className="absolute -top-4 -left-2 bg-sky-500 px-[0.35rem] rounded-full text-white text-sm">
               {notification.length}
             </div>
-          </div>
+          </div> */}
 
           <Linker to={getLinkerPath()}>
             {currentUser ? (
@@ -89,11 +91,11 @@ function Header() {
           </Linker>
         </ul>
       </div>
-      <div className=" absolute flex flex-col gap-2  z-50 right-16 pr-4 pl-2 border top-12 bg-columnBackGroundColor">
+      {/* <div className=" absolute flex flex-col gap-2  z-50 right-16 pr-4 pl-2 border top-12 bg-columnBackGroundColor">
         {notification.map((n, index) => (
           <div key={index}>{displayNotification(n)}</div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
