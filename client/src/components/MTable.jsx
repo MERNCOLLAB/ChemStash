@@ -56,6 +56,7 @@ const MTable = ({ data, columns, options, title }) => {
       },
     });
 
+  if (!data) return;
   return (
     <ThemeProvider theme={getMuiTheme()}>
       <MUIDataTable className="text-slate-300" title={title} data={data} columns={columns} options={options} />

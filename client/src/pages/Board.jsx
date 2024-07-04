@@ -193,11 +193,32 @@ function Board() {
   };
 
   const createTask = async (columnId, type) => {
+    const makerId = currentUser._id;
     const maker = currentUser.username;
     socket.emit('sendNotification', {
       senderName: user,
       type,
     });
+
+    try {
+      setLoading(true);
+      setError(false);
+      const response = await fetch('/api/notification/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type, makerId }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to add notification');
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error('Error:', error);
+    }
 
     // Filter tasks to find those that belong to the specified columnId
     const tasksInColumn = tasks.filter((task) => task.columnId === columnId);

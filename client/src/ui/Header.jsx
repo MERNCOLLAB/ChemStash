@@ -3,6 +3,7 @@ import { Linker } from '../components';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/notification/notificationSlice';
+import NotificationList from './NotificationList';
 
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -58,6 +59,7 @@ function Header() {
         <Linker to="/">
           <h1 className="font-bold">Chemstack</h1>
         </Linker>
+        <NotificationList userId={currentUser?._id} />
         <ul className="flex gap-4 items-center">
           <Linker to="/dashboard">
             <li>Dashboard</li>
