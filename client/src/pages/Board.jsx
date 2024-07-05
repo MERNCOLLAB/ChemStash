@@ -193,6 +193,8 @@ function Board() {
   };
 
   const createTask = async (columnId, type) => {
+    const columnTitle = columns.find((column) => column.id === columnId);
+    console.log(columnTitle.title);
     const makerId = currentUser._id;
     const maker = currentUser.username;
     socket.emit('sendNotification', {
@@ -208,7 +210,7 @@ function Board() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ type, makerId, maker }),
+        body: JSON.stringify({ type, makerId, maker, title: columnTitle.title }),
       });
       const data = await response.json();
       if (!response.ok) {

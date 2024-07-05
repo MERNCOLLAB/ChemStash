@@ -4,8 +4,8 @@ import UserFeed from '../models/userFeed.model.js';
 
 export const createNotification = async (req, res, next) => {
   try {
-    const { type, makerId, maker } = req.body;
-    const notification = new Notification({ text: type, maker });
+    const { type, makerId, maker, title } = req.body;
+    const notification = new Notification({ text: type, maker, title });
     await notification.save();
 
     const users = await User.find({ _id: { $ne: makerId } });
