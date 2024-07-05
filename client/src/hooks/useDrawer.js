@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useGetChemical from '../api/useGetChemical';
+
 const useDrawer = (lists) => {
   const [currentItem, setCurrentItem] = useState({});
   const [drawerType, setDrawerType] = useState('');
@@ -23,6 +23,7 @@ const useDrawer = (lists) => {
 
   const handleDrawerClose = () => {
     setDrawerOpen(false);
+    setCurrentItem({});
   };
 
   return {
