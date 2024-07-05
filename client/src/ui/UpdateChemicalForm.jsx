@@ -1,47 +1,16 @@
 import { Input, Button, FormulaInput } from '../components';
 import Select from 'react-select';
-import { location, hazardClassifications, chemicalStatus } from '../constants';
-import { transformArrayToOptions } from '../helpers/transformArray';
 import { selectStyle } from '../helpers/selectStyle';
-import { useEffect, useState } from 'react';
-import { formatDate } from '../helpers/FormatDate';
-import { initialChemicals } from '../constants';
+import useChemicalForm from '../hooks/useChemicalForm';
+import useUpdateChemicalDrawer from '../hooks/useUpdateChemicalDrawer';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
-  const locationOptions = transformArrayToOptions(location);
-  const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
+  const { locationOptions, hazardClassificationOptions, chemicalStatusOptions } = useChemicalForm();
+  const { updatedItem, setUpdatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(
+    item,
+    handleUpdate
+  );
 
-  const [updatedItem, setUpdatedItem] = useState({ ...initialChemicals, ...item });
-
-  useEffect(() => {
-    setUpdatedItem((prevItem) => ({
-      ...prevItem,
-      ...item,
-      purchaseDate: formatDate(item.purchaseDate),
-      expiryDate: formatDate(item.expiryDate),
-    }));
-  }, [item]);
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setUpdatedItem((prevItem) => ({
-      ...prevItem,
-      [id]: value,
-    }));
-  };
-
-  const handleChangeOption = (selectedOption, field) => {
-    setUpdatedItem({
-      ...updatedItem,
-      [field]: selectedOption ? selectedOption.value : '',
-    });
-  };
-
-  const onUpdate = (e) => {
-    e.preventDefault();
-    handleUpdate(updatedItem);
-  };
   return (
     <form className="menu p-4 w-80 min-h-full text-base-content bg-slate-800" onSubmit={onUpdate}>
       <ul>
