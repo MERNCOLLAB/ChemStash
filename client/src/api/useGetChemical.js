@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-const useGetChemical = () => {
+const useGetChemical = (refreshList) => {
   const [lists, setLists] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const useGetChemical = () => {
     if (lists) {
       getChemicalList();
     }
-  }, []);
+  }, [refreshList]);
   return { loading, error, lists };
 };
 export default useGetChemical;

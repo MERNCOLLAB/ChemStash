@@ -1,4 +1,5 @@
 // import MUIDataTable from 'mui-datatables';
+import { useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import { GoGear } from 'react-icons/go';
 import { CiEdit } from 'react-icons/ci';
@@ -13,38 +14,30 @@ import useDrawer from '../hooks/useDrawer';
 import useFormatFormula from '../hooks/useFormatFormula';
 import useGetChemical from '../api/useGetChemical';
 import useUpdateChemical from '../api/useUpdateChemical';
+import useDeleteChemical from '../api/useDeleteChemical';
 
 function Inventory() {
-  const { updateItem } = useUpdateChemical();
-  const { lists, loading, error } = useGetChemical();
-  const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
-
+  const [refreshList, setRefreshList] = useState(0);
+  const handleRefresh = () => {
+    setRefreshList((prev) => prev + 1);
+  };
   const { parseInput } = useFormatFormula();
 
-  const deleteChemical = async (id) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/chemical/delete/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
+  const { lists, loading, error } = useGetChemical(refreshList);
+  const { updateItem } = useUpdateChemical(handleRefresh);
+  const { deleteChemical } = useDeleteChemical(handleRefresh);
 
-      setLoading(false);
-      if (data.success === false) {
-        return;
-      }
+  const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(
+    lists,
+    handleRefresh
+  );
 
-      fetchList();
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
   const renderFormula = (formula) => {
     return formula.map((element, index) =>
       element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
     );
   };
+
   const columns = [
     {
       name: 'name',
