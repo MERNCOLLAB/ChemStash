@@ -12,8 +12,10 @@ import { MTable } from '../components';
 import useDrawer from '../hooks/useDrawer';
 import useFormatFormula from '../hooks/useFormatFormula';
 import useGetChemical from '../api/useGetChemical';
+import useUpdateChemical from '../api/useUpdateChemical';
 
 function Inventory() {
+  const { updateItem } = useUpdateChemical();
   const { lists, loading, error } = useGetChemical();
   const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
 
@@ -38,33 +40,6 @@ function Inventory() {
       setError(error);
     }
   };
-
-  const updateItem = async (currentItem) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/chemical/update/${currentItem._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify(currentItem),
-      });
-
-      const data = await res.json();
-
-      if (data.success === false) {
-        setLoading(false);
-        return;
-      }
-
-      fetchList();
-    } catch (error) {
-      setLoading(false);
-      setError(error);
-    }
-  };
-
   const renderFormula = (formula) => {
     return formula.map((element, index) =>
       element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
