@@ -1,7 +1,7 @@
 import Notification from '../models/notification.model.js';
 import User from '../models/user.model.js';
 import UserFeed from '../models/userFeed.model.js';
-
+import { io } from '../index.js';
 export const createNotification = async (req, res, next) => {
   try {
     const { type, makerId, maker, title } = req.body;
@@ -16,7 +16,9 @@ export const createNotification = async (req, res, next) => {
     }));
 
     await UserFeed.insertMany(userFeeds);
-
+    users.forEach((user) => {
+      io.to(user._id.toString()).emit('newNotification', notification);
+    });
     res.status(201).json(notification);
   } catch (error) {
     next(error);

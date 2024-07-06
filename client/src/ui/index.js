@@ -12,6 +12,7 @@ import SampleBarChart from './SampleBarChart';
 import SamplePieChart from './SamplePieChart';
 import SampleRadarChart from './SampleRadarChart';
 import NotificationList from './NotificationList';
+import NotificationLayout from './NotificationLayout';
 export {
   AppLayout,
   Drawer,
@@ -27,4 +28,5 @@ export {
   SamplePieChart,
   SampleRadarChart,
   NotificationList,
+  NotificationLayout,
 };

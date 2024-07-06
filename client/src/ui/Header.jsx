@@ -68,8 +68,7 @@ function Header() {
             <li>Inventory</li>
           </Linker>
           {currentUser && <Linker to={`${currentUser.role}/board`}>Board</Linker>}
-
-          <NotificationList userId={currentUser?._id} />
+          {currentUser && <NotificationList userId={currentUser?._id} />}
 
           {/* <div className="relative cursor-pointer">
             Notification
