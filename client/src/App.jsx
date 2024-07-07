@@ -28,7 +28,7 @@ function App() {
         <Route element={<PrivateRoute role="manager" />}>
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/manager/board" element={<Board />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/manager/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />
@@ -41,6 +41,7 @@ function App() {
         {/* chemist */}
         <Route element={<PrivateRoute role="chemist" />}>
           <Route path="/chemist/board" element={<Board />} />
+          <Route path="/chemist/dashboard" element={<Dashboard />} />
           <Route path="/chemist-profile" element={<Profile />} />
           <Route path="/chemist" element={<AppLayout />}>
             <Route path="inventory" index element={<Inventory />} />

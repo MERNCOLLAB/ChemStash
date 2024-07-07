@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-const useGetChemical = (refreshList) => {
+const useGetChemical = (refreshList, query = '') => {
   const [lists, setLists] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ const useGetChemical = (refreshList) => {
     const getChemicalList = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`/api/chemical/list`);
+        const response = await fetch(`/api/chemical/list/${query}`);
         if (!response.ok) {
           toast.error('Failed to fetch the Chemical Lists');
         }

@@ -17,11 +17,17 @@ export const createChemical = async (req, res, next) => {
 // chemical list
 export const chemicalList = async (req, res, next) => {
   try {
+    const { query } = req.params;
+
+    if (query === 'low-amount') {
+      const chemicals = await Chemical.find({ supply: { $gt: 0, $lt: 5 } });
+      return res.json(chemicals);
+    }
+
     const chemicals = await Chemical.find();
     res.json(chemicals);
   } catch (err) {
     next(err);
-    console.error('Error in chemicalList controller', error.message);
   }
 };
 
@@ -36,7 +42,7 @@ export const deleteChemical = async (req, res, next) => {
     console.error('Error in deleteChemical controller', error.message);
   }
 };
-
+// update Chemical
 export const updateChemical = async (req, res, next) => {
   try {
     const updateChemical = await Chemical.findByIdAndUpdate(

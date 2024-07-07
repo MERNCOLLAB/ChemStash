@@ -3,7 +3,7 @@ import { BsBoxes } from 'react-icons/bs';
 import { PiCodesandboxLogoLight } from 'react-icons/pi';
 import { LuBox } from 'react-icons/lu';
 import { SampleBarChart, SampleLineChart, SamplePieChart, SampleRadarChart } from '../ui';
-
+import ChemicalRunningLow from '../ui/ChemicalRunningLow';
 function Dashboard() {
   return (
     <div className="w-full border p-2 h-[calc(100vh-66px)] mt-2">
@@ -24,9 +24,8 @@ function Dashboard() {
             <RiBox1Line />
           </div>
 
-          <div className="flex-1">
-            <p>Chemicals Running Low</p>
-            <p className="font-bold text-4xl">7</p>
+          <div className="flex-1 ">
+            <ChemicalRunningLow />
           </div>
         </div>
         <div className="border p-3 flex items-center gap-2  flex-grow">

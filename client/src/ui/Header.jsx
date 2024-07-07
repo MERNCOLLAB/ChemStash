@@ -61,7 +61,7 @@ function Header() {
         </Linker>
 
         <ul className="flex gap-4 items-center">
-          <Linker to="/dashboard">
+          <Linker to={`${currentUser?.role}/dashboard`}>
             <li>Dashboard</li>
           </Linker>
           <Linker to={`${currentUser?.role}/inventory`}>
