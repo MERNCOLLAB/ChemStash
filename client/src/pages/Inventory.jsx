@@ -1,6 +1,6 @@
 // Components
 import Drawer from '../ui/Drawer';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
 import { MTable } from '../components';
 
@@ -16,8 +16,7 @@ import useUpdateChemical from '../api/useUpdateChemical';
 import useDeleteChemical from '../api/useDeleteChemical';
 
 function Inventory() {
-  const [lists, setLists] = useState([]);
-  const { getChemicalList, loading, error } = useGetChemical(lists, setLists);
+  const { lists, getChemicalList, loading, error } = useGetChemical();
   const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
   const { updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
