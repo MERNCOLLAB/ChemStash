@@ -1,5 +1,6 @@
 import Chemical from '../models/chemical.model.js';
 import { initialChemicalData } from '../utils/chemicalinfo.js';
+import moment from 'moment';
 // add chemical
 export const createChemical = async (req, res, next) => {
   const initialChemicalData = req.body;
@@ -21,6 +22,15 @@ export const chemicalList = async (req, res, next) => {
 
     if (query === 'low-amount') {
       const chemicals = await Chemical.find({ supply: { $gt: 0, $lt: 5 } });
+      return res.json(chemicals);
+    }
+    if (query === 'out-of-stock') {
+      const chemicals = await Chemical.find({ supply: { $eq: 0 } });
+      return res.json(chemicals);
+    }
+    if (query === 'expired') {
+      const currentDate = moment().startOf('day').toDate();
+      const chemicals = await Chemical.find({ expiryDate: { $lt: currentDate } });
       return res.json(chemicals);
     }
 

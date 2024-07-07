@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
 import useGetChemical from '../api/useGetChemical';
-
-const ChemicalRunningLow = () => {
-  const { lists, loading, error, getChemicalList } = useGetChemical('low-amount');
+import { useEffect } from 'react';
+const DashboardCard = ({ query, title }) => {
+  const { lists, loading, error, getChemicalList } = useGetChemical(query);
 
   useEffect(() => {
     getChemicalList();
@@ -13,16 +12,16 @@ const ChemicalRunningLow = () => {
   }
 
   if (error) {
-    return <p>Error: </p>;
+    return <p>Error: {error}</p>;
   }
 
-  if (!lists) return;
+  if (!lists) return null;
+
   return (
     <div className="group relative">
-      <p>Chemicals Running Low</p>
-      <p className="font-bold text-4xl"> {lists.length}</p>
-
-      <ul className=" group-hover:block hidden absolute">
+      <p>{title}</p>
+      <p className="font-bold text-4xl">{lists.length}</p>
+      <ul className="group-hover:block hidden absolute">
         {lists.map((chemical) => (
           <li key={chemical._id}>
             <div>Name: {chemical.name}</div>
@@ -34,4 +33,4 @@ const ChemicalRunningLow = () => {
   );
 };
 
-export default ChemicalRunningLow;
+export default DashboardCard;

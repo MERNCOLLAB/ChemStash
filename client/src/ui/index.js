@@ -13,7 +13,7 @@ import SamplePieChart from './SamplePieChart';
 import SampleRadarChart from './SampleRadarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
-import ChemicalRunningLow from './ChemicalRunningLow';
+import DashBoardCard from './DashBoardCard';
 export {
   AppLayout,
   Drawer,
@@ -30,5 +30,5 @@ export {
   SampleRadarChart,
   NotificationList,
   NotificationLayout,
-  ChemicalRunningLow,
+  DashBoardCard,
 };

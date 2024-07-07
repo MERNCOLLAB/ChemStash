@@ -3,7 +3,7 @@ import { BsBoxes } from 'react-icons/bs';
 import { PiCodesandboxLogoLight } from 'react-icons/pi';
 import { LuBox } from 'react-icons/lu';
 import { SampleBarChart, SampleLineChart, SamplePieChart, SampleRadarChart } from '../ui';
-import ChemicalRunningLow from '../ui/ChemicalRunningLow';
+import { DashBoardCard } from '../ui';
 function Dashboard() {
   return (
     <div className="w-full border p-2 h-[calc(100vh-66px)] mt-2">
@@ -14,8 +14,7 @@ function Dashboard() {
           </div>
 
           <div className="flex-1">
-            <p>Total Chemicals</p>
-            <p className="font-bold text-4xl">12</p>
+            <DashBoardCard title="Total Chemicals" />
           </div>
         </div>
 
@@ -25,7 +24,7 @@ function Dashboard() {
           </div>
 
           <div className="flex-1 ">
-            <ChemicalRunningLow />
+            <DashBoardCard query="low-amount" title="Chemicals Running Low" />
           </div>
         </div>
         <div className="border p-3 flex items-center gap-2  flex-grow">
@@ -34,8 +33,7 @@ function Dashboard() {
           </div>
 
           <div className="flex-1">
-            <p>Out of Stock</p>
-            <p className="font-bold text-4xl">1</p>
+            <DashBoardCard query="out-of-stock" title="Out of Stock" />
           </div>
         </div>
         <div className="border p-3 flex items-center gap-2  flex-grow">
@@ -44,8 +42,7 @@ function Dashboard() {
           </div>
 
           <div className="flex-1">
-            <p>Expired Chemicals</p>
-            <p className="font-bold text-4xl">6</p>
+            <DashBoardCard query="expired" title="Expired Chemicals" />
           </div>
         </div>
       </div>
