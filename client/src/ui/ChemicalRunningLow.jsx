@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import useGetChemical from '../api/useGetChemical';
 
 const ChemicalRunningLow = () => {
-  const [refreshList, setRefreshList] = useState(false);
-  const { lists, loading, error } = useGetChemical(refreshList, 'low-amount');
-  const handleRefresh = () => {
-    setRefreshList(!refreshList);
-  };
+  const { lists, loading, error, getChemicalList } = useGetChemical('low-amount');
+
+  useEffect(() => {
+    getChemicalList();
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -19,9 +19,6 @@ const ChemicalRunningLow = () => {
   if (!lists) return;
   return (
     <div className="group relative">
-      <button className="hidden" onClick={handleRefresh}>
-        Refresh List
-      </button>
       <p>Chemicals Running Low</p>
       <p className="font-bold text-4xl"> {lists.length}</p>
 

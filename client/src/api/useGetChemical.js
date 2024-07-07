@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-const useGetChemical = (lists, setLists, query = '') => {
+const useGetChemical = (query = '') => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [lists, setLists] = useState([]);
 
   const getChemicalList = async () => {
     setLoading(true);
