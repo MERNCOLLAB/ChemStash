@@ -1,36 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-const useGetChemical = (refreshList, query = '') => {
-  const [lists, setLists] = useState([]);
+const useGetChemical = (lists, setLists, query = '') => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const getChemicalList = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`/api/chemical/list/${query}`);
-        if (!response.ok) {
-          toast.error('Failed to fetch the Chemical Lists');
-        }
-        const data = await response.json();
-        const transformedData = data.map((item) => ({
-          ...item,
-          purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
-          expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
-        }));
-        setLists(transformedData);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+  const getChemicalList = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/chemical/list/${query}`);
+      if (!response.ok) {
+        toast.error('Failed to fetch the Chemical Lists');
       }
-    };
-    if (lists) {
-      getChemicalList();
+      const data = await response.json();
+      const transformedData = data.map((item) => ({
+        ...item,
+        purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
+        expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
+      }));
+      setLists(transformedData);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
     }
-  }, [refreshList]);
-  return { loading, error, lists };
+  };
+  return { loading, error, lists, getChemicalList };
 };
 export default useGetChemical;
