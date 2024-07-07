@@ -16,6 +16,7 @@ const ChemicalRunningLow = () => {
     return <p>Error: </p>;
   }
 
+  if (!lists) return;
   return (
     <div className="group relative">
       <button className="hidden" onClick={handleRefresh}>
