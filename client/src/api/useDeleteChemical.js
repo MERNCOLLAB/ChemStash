@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-const useDeleteChemical = (handleRefresh) => {
+const useDeleteChemical = (getChemicalList, handleDrawerClose) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const deleteChemical = async (id) => {
@@ -16,7 +16,8 @@ const useDeleteChemical = (handleRefresh) => {
         toast.error('Failed to delete the selected chemical');
         return;
       }
-      handleRefresh();
+      getChemicalList();
+      handleDrawerClose();
       toast.success('Chemical has been deleted');
     } catch (error) {
       setError(error);

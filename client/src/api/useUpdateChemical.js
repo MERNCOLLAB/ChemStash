@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
-const useUpdateChemical = (handleRefresh) => {
+const useUpdateChemical = (getChemicalList, handleDrawerClose) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const updateItem = async (currentItem) => {
@@ -22,7 +22,9 @@ const useUpdateChemical = (handleRefresh) => {
         toast.error('Failed to update the selected chemical');
         return;
       }
-      handleRefresh();
+
+      getChemicalList();
+      handleDrawerClose();
       toast.success('Chemical successfully updated');
     } catch (error) {
       setLoading(false);
