@@ -106,7 +106,7 @@ function Board() {
   useEffect(() => {
     fetchColumnList();
     fetchTaskList();
-  }, []);
+  }, [loading, error]);
   // create column
   const createNewColumn = async () => {
     const columnToAdd = {
