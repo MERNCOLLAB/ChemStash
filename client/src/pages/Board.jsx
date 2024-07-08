@@ -22,7 +22,7 @@ function Board() {
   const { user, socket } = useSelector((state) => state.notification);
   const { onDragStart } = useOnDragStart();
   const { onDragOver } = useOnDragOver();
-  const { onDragEnd } = useOnDragEnd();
+  const { onDragEnd } = useOnDragEnd(currentUser);
 
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
@@ -372,6 +372,7 @@ function Board() {
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
                 createTask={createTask}
+                currentUser={currentUser}
                 deleteTask={deleteTask}
                 updateTask={updateTask}
                 tasks={tasks.filter((task) => task.columnId === activeColumn.id)}

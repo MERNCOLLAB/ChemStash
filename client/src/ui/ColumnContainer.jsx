@@ -19,13 +19,14 @@ function ColumnContainer(props) {
       type: 'Column',
       column,
     },
-    disabled: editMode,
+    disabled: editMode || currentUser.role === 'chemist',
   });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
   if (isDragging) {
     return (
       <div
@@ -51,7 +52,6 @@ function ColumnContainer(props) {
       >
         <div className="flex gap-2 items-center">
           <div className="bg-columnBackGroundColor text-sm rounded-full px-2 py-1">0</div>
-          {/* {column.title} */}
           {!editMode && column.title}
           {editMode && (
             <input

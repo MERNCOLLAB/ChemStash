@@ -2,7 +2,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import useUpdateOrder from '../../api/board/useUpdateOrder';
 import useUpdateColumnOrder from '../../api/board/useUpdateColumnOrder';
 
-const useOnDragEnd = () => {
+const useOnDragEnd = (currentUser) => {
   const { updateOrder } = useUpdateOrder();
   const { updateColumnOrder } = useUpdateColumnOrder();
   async function onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask) {
@@ -23,6 +23,7 @@ const useOnDragEnd = () => {
 
     if (isActiveAColumn) {
       // Handle column drag logic here
+      if (currentUser.role === 'chemist') return;
       const activeIndex = columns.findIndex((col) => col.id === activeId);
       const overIndex = columns.findIndex((col) => col.id === overId);
 
