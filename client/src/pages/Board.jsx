@@ -2,12 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import PlusIcon from '../icons/PlusIcon';
 import ColumnContainer from '../ui/ColumnContainer';
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import { SortableContext } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 import { useSelector } from 'react-redux';
 import useOnDragStart from '../hooks/dragevents/useOnDragStart';
-import useUpdateColumnOrder from '../api/board/useUpdateColumnOrder';
+import useOnDragOver from '../hooks/dragevents/useOnDragOver';
+import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 
 function Board() {
   const [columns, setColumns] = useState([]);
@@ -20,6 +21,8 @@ function Board() {
   const { currentUser } = useSelector((state) => state.user);
   const { user, socket } = useSelector((state) => state.notification);
   const { onDragStart } = useOnDragStart();
+  const { onDragOver } = useOnDragOver();
+  const { onDragEnd } = useOnDragEnd();
 
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
@@ -328,8 +331,8 @@ function Board() {
       <DndContext
         sensors={sensors}
         onDragStart={(event) => onDragStart(event, setActiveColumn, setActiveTask)}
-        onDragEnd={onDragEnd}
-        onDragOver={onDragOver}
+        onDragEnd={(event) => onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask)}
+        onDragOver={(event) => onDragOver(event, tasks, setTasks)}
       >
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
@@ -378,195 +381,6 @@ function Board() {
       </DndContext>
     </div>
   );
-
-  async function onDragOver(event) {
-    const { updateColumnOrder } = useUpdateColumnOrder();
-    const { active, over } = event;
-
-    if (!over) return;
-    const activeId = active.id;
-    const overId = over.id;
-
-    if (activeId === overId) return;
-
-    const isActiveATask = active.data.current?.type === 'Task';
-    const isOverATask = over.data.current?.type === 'Task';
-    const isOverAColumn = over.data.current?.type === 'Column';
-
-    if (isActiveATask) {
-      const activeTask = tasks.find((task) => task.id === activeId);
-
-      if (isOverATask) {
-        const overTask = tasks.find((task) => task.id === overId);
-        const newColumnId = overTask.columnId;
-        const newOrder = overTask.order;
-
-        setTasks((tasks) => {
-          const updatedTasks = tasks.map((task) =>
-            task.id === activeId ? { ...task, columnId: newColumnId, order: newOrder } : task
-          );
-          return arrayMove(updatedTasks, tasks.indexOf(activeTask), tasks.indexOf(overTask));
-        });
-
-        // UpdateColumnOrder Fetch
-        updateColumnOrder(newColumnId, newOrder);
-      } else if (isOverAColumn) {
-        const newColumnId = overId;
-        const tasksInNewColumn = tasks.filter((task) => task.columnId === newColumnId);
-        const newOrder = tasksInNewColumn.length + 1;
-
-        setTasks((tasks) =>
-          tasks.map((task) => (task.id === activeId ? { ...task, columnId: newColumnId, order: newOrder } : task))
-        );
-        // UpdateColumnOrder Fetch
-        updateColumnOrder(newColumnId, newOrder);
-      }
-    }
-  }
-
-  async function onDragEnd(event) {
-    setActiveColumn(null);
-    setActiveTask(null);
-
-    const { active, over } = event;
-
-    if (!over) return;
-
-    const activeId = active.id;
-    const overId = over.id;
-
-    if (activeId === overId) return;
-
-    const isActiveAColumn = active.data.current?.type === 'Column';
-    const isActiveATask = active.data.current?.type === 'Task';
-
-    if (isActiveAColumn) {
-      // Handle column drag logic here
-      const activeIndex = columns.findIndex((col) => col.id === activeId);
-      const overIndex = columns.findIndex((col) => col.id === overId);
-
-      if (activeIndex === -1 || overIndex === -1) return;
-
-      const updatedColumns = arrayMove([...columns], activeIndex, overIndex).map((col, index) => ({
-        ...col,
-        order: index,
-      }));
-
-      try {
-        const response = await fetch('/api/board/column/updateOrder', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedColumns),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to update columns order');
-        }
-
-        setColumns(updatedColumns);
-      } catch (error) {
-        console.error('Error updating columns order:', error);
-      }
-      return;
-    }
-    if (isActiveATask) {
-      const activeTask = tasks.find((task) => task.id === activeId);
-      const overTask = tasks.find((task) => task.id === overId);
-
-      if (overTask && activeTask.columnId !== overTask.columnId) {
-        // Task is moved to a different column
-        const newColumnId = overTask.columnId;
-        const tasksInNewColumn = tasks.filter((task) => task.columnId === newColumnId);
-        const newOrder = tasksInNewColumn.length + 1;
-
-        setTasks((prevTasks) => {
-          const updatedTasks = [
-            ...prevTasks.filter((task) => task.id !== activeId),
-            {
-              ...activeTask,
-              columnId: newColumnId,
-              order: newOrder,
-            },
-          ].map((task, index) => ({
-            ...task,
-            order: task.columnId === newColumnId ? index + 1 : task.order,
-          }));
-
-          return updatedTasks;
-        });
-
-        try {
-          setLoading(true);
-          const response = await fetch(`/api/board/task/updateColumnAndOrder/${activeId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ columnId: newColumnId, order: newOrder }),
-          });
-
-          setError(false);
-          setLoading(false);
-          if (!response.ok) {
-            throw new Error('Failed to update task order');
-          }
-
-          const updatedTask = await response.json();
-          setActiveTask(updatedTask); // Refresh tasks after updating order
-        } catch (error) {
-          console.error('Error updating task order:', error);
-          setError(error);
-          setLoading(false);
-        }
-      } else if (overTask && activeTask.columnId === overTask.columnId) {
-        // Task is reordered within the same column
-        const newOrder = overTask.order;
-
-        setTasks((prevTasks) => {
-          const updatedTasks = arrayMove(
-            [...prevTasks],
-            prevTasks.indexOf(activeTask),
-            prevTasks.indexOf(overTask)
-          ).map((task, index) => ({
-            ...task,
-            order: task.columnId === activeTask.columnId ? index + 1 : task.order,
-          }));
-
-          return updatedTasks;
-        });
-
-        try {
-          setLoading(true);
-          const response = await fetch(`/api/board/task/updateColumnAndOrder/${activeId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ columnId: activeTask.columnId, order: newOrder }),
-          });
-
-          setError(false);
-          setLoading(false);
-          if (!response.ok) {
-            throw new Error('Failed to update task order');
-          }
-
-          const updatedTask = await response.json();
-          setActiveTask(updatedTask); // Refresh tasks after updating order
-        } catch (error) {
-          console.error('Error updating task order:', error);
-          setError(error);
-          setLoading(false);
-        }
-      } else {
-        // Handle the scenario when overTask is undefined (dropped in empty space within the same column)
-        // You can add any specific logic or handling here, if needed
-        return;
-      }
-    }
-  }
 }
 
 function generateId() {
