@@ -1,5 +1,5 @@
 const useUpdateColumnOrder = () => {
-  const updateColumnOrder = async (newColumnId, newOrder) => {
+  const updateColumnOrder = async (newColumnId, newOrder, activeId) => {
     try {
       await fetch(`/api/board/task/updateColumnAndOrder/${activeId}`, {
         method: 'PUT',
