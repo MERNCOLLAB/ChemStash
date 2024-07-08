@@ -3,7 +3,7 @@ import { CiEdit } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 
-export const inventoryColumns = (handleUpdate, handleDelete, parseInput, renderFormula) => [
+export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseInput, renderFormula) => [
   {
     name: 'name',
   },
@@ -119,18 +119,24 @@ export const inventoryColumns = (handleUpdate, handleDelete, parseInput, renderF
                 <span>Edit </span>
               </p>
             </li>
-            <li className="flex gap-2 hover:bg-slate-700">
-              <p
-                onClick={() => {
-                  handleDelete(value);
-                }}
-              >
-                <span>
-                  <MdDeleteOutline />
-                </span>
-                <span>Delete</span>
-              </p>
-            </li>
+            {currentUser.role === 'chemist' ? null : (
+              <li className="flex gap-2 hover:bg-slate-700">
+                <p
+                  onClick={
+                    currentUser.role === 'chemist'
+                      ? null
+                      : () => {
+                          handleDelete(value);
+                        }
+                  }
+                >
+                  <span>
+                    <MdDeleteOutline />
+                  </span>
+                  <span>Delete</span>
+                </p>
+              </li>
+            )}
           </ul>
         </div>
       ),

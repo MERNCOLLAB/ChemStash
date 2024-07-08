@@ -14,20 +14,20 @@ import useDrawer from '../hooks/useDrawer';
 import useGetChemical from '../api/useGetChemical';
 import useUpdateChemical from '../api/useUpdateChemical';
 import useDeleteChemical from '../api/useDeleteChemical';
-
+import { useSelector } from 'react-redux';
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
   const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
   const { updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
-
+  const currentUser = useSelector((state) => state.user.currentUser);
   const { parseInput } = useFormatFormula();
   const renderFormula = (formula) => {
     return formula.map((element, index) =>
       element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
     );
   };
-  const columns = inventoryColumns(handleUpdate, handleDelete, parseInput, renderFormula);
+  const columns = inventoryColumns(currentUser, handleUpdate, handleDelete, parseInput, renderFormula);
 
   useEffect(() => {
     getChemicalList();
