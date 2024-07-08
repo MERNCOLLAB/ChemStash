@@ -6,7 +6,7 @@ import PlusIcon from '../icons/PlusIcon';
 import TaskCard from '../ui/TaskCard';
 
 function ColumnContainer(props) {
-  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask } = props;
+  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask, currentUser } = props;
   const [editMode, setEditMode] = useState(false);
 
   const tasksIds = useMemo(() => {
@@ -44,7 +44,7 @@ function ColumnContainer(props) {
     >
       {/* title */}
       <div
-        onClick={() => setEditMode(true)}
+        onClick={currentUser.role === 'chemist' ? null : () => setEditMode(true)}
         {...attributes}
         {...listeners}
         className="flex justify-between bg-mainBackGroundColor cursor-grab p-3 border-4 border-columnBackGroundColor font-bold"
@@ -69,14 +69,16 @@ function ColumnContainer(props) {
             />
           )}
         </div>
-        <button
-          onClick={() => {
-            deleteColumn(column.id);
-          }}
-          className="px-1 py-2 stroke-gray-500 hover:stroke-white rounded-full hover:bg-columnBackGroundColor"
-        >
-          <TrashIcon />
-        </button>
+        {currentUser.role === 'chemist' ? null : (
+          <button
+            onClick={() => {
+              deleteColumn(column.id);
+            }}
+            className="px-1 py-2 stroke-gray-500 hover:stroke-white rounded-full hover:bg-columnBackGroundColor"
+          >
+            <TrashIcon />
+          </button>
+        )}
       </div>
       {/* task container */}
       <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
@@ -88,16 +90,17 @@ function ColumnContainer(props) {
       </div>
 
       {/* footer */}
-
-      <button
-        onClick={() => {
-          createTask(column.id, 1);
-        }}
-        className=" justify-center   m-1   flex  gap-2 items-center px-1 py-2 stroke-gray-500 hover:stroke-white  hover:bg-mainBackGroundColor"
-      >
-        <PlusIcon />
-        <div>Add task</div>
-      </button>
+      {currentUser.role === 'chemist' ? null : (
+        <button
+          onClick={() => {
+            createTask(column.id, 1);
+          }}
+          className=" justify-center   m-1   flex  gap-2 items-center px-1 py-2 stroke-gray-500 hover:stroke-white  hover:bg-mainBackGroundColor"
+        >
+          <PlusIcon />
+          <div>Add task</div>
+        </button>
+      )}
     </div>
   );
 }

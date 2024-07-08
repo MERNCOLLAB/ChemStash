@@ -112,7 +112,7 @@ function Board() {
   useEffect(() => {
     fetchColumnList();
     fetchTaskList();
-  }, [loading, error]);
+  }, []);
   // create column
   const createNewColumn = async () => {
     const columnToAdd = {
@@ -341,6 +341,7 @@ function Board() {
                 <ColumnContainer
                   key={col.id}
                   column={col}
+                  currentUser={currentUser}
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
                   createTask={createTask}
@@ -351,14 +352,16 @@ function Board() {
               ))}
             </SortableContext>
           </div>
-          <button
-            className=" p-2 flex gap-2 border border-transparent hover:border-white h-fit"
-            onClick={() => {
-              createNewColumn();
-            }}
-          >
-            <PlusIcon /> Add Column
-          </button>
+          {currentUser.role === 'chemist' ? null : (
+            <button
+              className=" p-2 flex gap-2 border border-transparent hover:border-white h-fit"
+              onClick={() => {
+                createNewColumn();
+              }}
+            >
+              <PlusIcon /> Add Column
+            </button>
+          )}
         </div>
 
         {createPortal(
