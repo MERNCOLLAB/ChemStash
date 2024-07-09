@@ -20,20 +20,19 @@ export const hazardClassifications = [
   'Gases Under Pressure',
 ];
 
-export const chemicalStatus = ['New', 'Open', 'Near Expiry', 'Expired', 'Out of Stock'];
-
-export const initialChemicals = {
+export const initialChemicalData = {
   name: '',
+  batch: '',
   molecularFormula: '',
   lotNumber: '',
   purity: '',
   location: '',
   brand: '',
   supply: '',
+  amount: '',
   unit: '',
   purchaseDate: '',
   expiryDate: '',
-  status: '',
   sds: '',
   hazardClassification: '',
   remarks: '',

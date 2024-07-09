@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { location, hazardClassifications, initialChemicals, chemicalStatus } from '../constants';
+import { location, hazardClassifications, initialChemicalData } from '../constants';
 import { transformArrayToOptions } from '../helpers/transformArray';
 import useAddChemical from '../api/useAddChemical';
 
@@ -8,10 +8,9 @@ const useChemicalForm = () => {
   // Select Element Options
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
-  const chemicalStatusOptions = transformArrayToOptions(chemicalStatus);
 
   // Chemical Form Fields
-  const [formData, setFormData] = useState(initialChemicals);
+  const [formData, setFormData] = useState(initialChemicalData);
 
   const handleChange = (e) => {
     const { id, value, type } = e.target;
@@ -38,7 +37,6 @@ const useChemicalForm = () => {
   return {
     locationOptions,
     hazardClassificationOptions,
-    chemicalStatusOptions,
     formData,
     handleChange,
     handleChangeOption,
