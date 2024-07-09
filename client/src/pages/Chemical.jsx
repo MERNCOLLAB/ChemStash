@@ -5,15 +5,8 @@ import useChemicalForm from '../hooks/useChemicalForm';
 import useAddChemical from '../api/useAddChemical';
 
 function Chemical() {
-  const {
-    locationOptions,
-    hazardClassificationOptions,
-    chemicalStatusOptions,
-    formData,
-    handleSubmit,
-    handleChange,
-    handleChangeOption,
-  } = useChemicalForm();
+  const { locationOptions, hazardClassificationOptions, formData, handleSubmit, handleChange, handleChangeOption } =
+    useChemicalForm();
 
   const { loading, error } = useAddChemical();
 
@@ -27,6 +20,16 @@ function Chemical() {
           id="name"
           type="text"
           placeholder="Name"
+          onChange={handleChange}
+        />
+
+        {/* Batch Number */}
+        <Input
+          disable={loading}
+          value={formData.batch}
+          id="batch"
+          type="number"
+          placeholder="Batch Number"
           onChange={handleChange}
         />
 
@@ -86,7 +89,17 @@ function Chemical() {
           value={formData.supply}
           id="supply"
           type="number"
-          placeholder="Supply"
+          placeholder="Supply (in Bottles)"
+          onChange={handleChange}
+        />
+
+        {/* Amount */}
+        <Input
+          disable={loading}
+          value={formData.amount}
+          id="amount"
+          type="number"
+          placeholder="Amount"
           onChange={handleChange}
         />
 
@@ -96,7 +109,7 @@ function Chemical() {
           value={formData.unit}
           id="unit"
           type="text"
-          placeholder="Unit (eg. Bottle)"
+          placeholder="Unit (eg. L, grams)"
           onChange={handleChange}
         />
 
@@ -117,16 +130,6 @@ function Chemical() {
           <label className="flex-2">Expiry Date: </label>
           <Input disable={loading} value={formData.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
         </div>
-
-        {/* Chemical Status */}
-        <Select
-          placeholder="Status"
-          value={chemicalStatusOptions.find((opt) => opt.value === formData.status)}
-          options={chemicalStatusOptions}
-          onChange={(selectedStatus) => handleChangeOption(selectedStatus, 'status')}
-          styles={selectStyle}
-          isClearable
-        />
 
         {/* Hazard Classification */}
         <Select
