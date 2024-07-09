@@ -5,7 +5,11 @@ const chemicalSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
+      unique: false,
+    },
+    batch: {
+      type: Number,
+      required: true,
     },
     lotNumber: {
       type: Number,
@@ -33,10 +37,14 @@ const chemicalSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    amount: {
+      type: Number,
+      required: true,
+    },
     unit: {
       type: String,
       required: true,
-      default: 'Bottle',
+      default: ['L', 'mL', 'g', 'kg'],
     },
     purchaseDate: {
       type: Date,
@@ -45,11 +53,6 @@ const chemicalSchema = new mongoose.Schema(
     expiryDate: {
       type: Date,
       required: true,
-    },
-    status: {
-      type: String,
-      enum: ['New', 'Open', 'Near Expiry', 'Expired', 'Out of Stock'],
-      default: 'New',
     },
     sds: {
       type: String,

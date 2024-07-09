@@ -1,6 +1,6 @@
 import Chemical from '../models/chemical.model.js';
-import { initialChemicalData } from '../utils/chemicalinfo.js';
 import moment from 'moment';
+
 // add chemical
 export const createChemical = async (req, res, next) => {
   const initialChemicalData = req.body;
