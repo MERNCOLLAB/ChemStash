@@ -5,7 +5,7 @@ import useChemicalForm from '../hooks/useChemicalForm';
 import useUpdateChemicalDrawer from '../hooks/useUpdateChemicalDrawer';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
-  const { locationOptions, hazardClassificationOptions, chemicalStatusOptions } = useChemicalForm();
+  const { locationOptions, hazardClassificationOptions } = useChemicalForm();
   const { updatedItem, setUpdatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(
     item,
     handleUpdate
@@ -18,6 +18,17 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           {/* Chemical Name */}
           <label>Chemical Name</label>
           <Input value={updatedItem.name} id="name" type="text" placeholder="Name" onChange={handleChange} />
+        </li>
+
+        <li>
+          <label>Batch</label>
+          <Input
+            value={updatedItem.batch}
+            id="batch"
+            type="number"
+            placeholder="Batch Number"
+            onChange={handleChange}
+          />
         </li>
 
         {/* Molecular Formula */}
@@ -72,6 +83,13 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           <label>Supply</label>
           <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
         </li>
+
+        {/* Amount */}
+        <li>
+          <label>Amount</label>
+          <Input value={updatedItem.amount} id="amount" type="number" placeholder="Amount" onChange={handleChange} />
+        </li>
+
         {/*  Unit */}
         <li>
           <label>Unit</label>
@@ -79,7 +97,7 @@ function UpdateChemicalForm({ item, handleUpdate }) {
             value={updatedItem.unit}
             id="unit"
             type="text"
-            placeholder="Unit (eg. Bottle)"
+            placeholder="Unit (eg. L or grams)"
             onChange={handleChange}
           />
         </li>
@@ -93,19 +111,6 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           {/* Expiry Date */}
           <label>Expiry Date</label>
           <Input value={updatedItem.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
-        </li>
-
-        {/* Chemical Status */}
-        <li>
-          <label>Status</label>
-          <Select
-            placeholder="Select a Status"
-            value={chemicalStatusOptions.find((opt) => opt.value === updatedItem.status)}
-            options={chemicalStatusOptions}
-            onChange={(selectedStatus) => handleChangeOption(selectedStatus, 'status')}
-            styles={selectStyle}
-            isClearable
-          />
         </li>
 
         {/* Hazard Classification */}

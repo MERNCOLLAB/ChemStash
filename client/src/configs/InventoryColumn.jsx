@@ -7,13 +7,15 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   {
     name: 'name',
   },
-
+  {
+    name: 'batch',
+    label: 'Batch',
+  },
   {
     name: 'molecularFormula',
     label: 'Molecular Formula',
     options: { customBodyRender: (value) => renderFormula(parseInput(value)) },
   },
-
   {
     name: 'lotNumber',
     label: 'Lot Number',
@@ -61,6 +63,9 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
     name: 'supply',
   },
   {
+    name: 'amount',
+  },
+  {
     name: 'unit',
   },
   {
@@ -70,9 +75,6 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   {
     name: 'expiryDate',
     label: 'Expiry Date',
-  },
-  {
-    name: 'status',
   },
   {
     name: 'hazardClassification',

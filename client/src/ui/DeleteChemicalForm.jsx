@@ -24,6 +24,12 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
               <TableCell>{item.name}</TableCell>
             </TableRow>
 
+            {/* Batch */}
+            <TableRow>
+              <TableCell>Batch</TableCell>
+              <TableCell>{item.batch}</TableCell>
+            </TableRow>
+
             {/* Molecular Formula */}
             <TableRow>
               <TableCell>Molecular Formula</TableCell>
@@ -54,11 +60,17 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
               <TableCell>{item.brand}</TableCell>
             </TableRow>
 
-            {/* Supply  */}
+            {/* Supply */}
             <TableRow>
               <TableCell>Supply</TableCell>
+              <TableCell>{item.supply}</TableCell>
+            </TableRow>
+
+            {/* Amount  */}
+            <TableRow>
+              <TableCell>Amount</TableCell>
               <TableCell>
-                {item.supply} &nbsp; {item.unit}
+                {item.amount} &nbsp; {item.unit}
               </TableCell>
             </TableRow>
 
@@ -72,12 +84,6 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
             <TableRow>
               <TableCell>Expiry Date</TableCell>
               <TableCell>{item.expiryDate}</TableCell>
-            </TableRow>
-
-            {/* Status */}
-            <TableRow>
-              <TableCell>Status</TableCell>
-              <TableCell>{item.status}</TableCell>
             </TableRow>
 
             {/* Hazard Classification */}
