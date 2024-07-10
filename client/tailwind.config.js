@@ -25,11 +25,12 @@ export default {
         gray0: '#E2E8F0',
         gray1: '#94A3B8',
         gray2: '#64748B',
-        blue0: '#4F46E5',
-        blue1: '#4338CA',
+        indigo0: '#4F46E5',
+        indigo1: '#4338CA',
       },
     },
   },
+  // eslint-disable-next-line no-undef
   plugins: [require('daisyui')],
   daisyui: {
     themes: [],
