@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  @apply bg-slate-950 font-poppins font-base text-slate-300 overflow-y-scroll;
+  @apply bg-white1 font-poppins font-base text-gray2 overflow-y-scroll;
 }
 
 /* For Active Links */

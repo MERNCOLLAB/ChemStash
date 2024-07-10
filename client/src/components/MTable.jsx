@@ -6,10 +6,10 @@ const MTable = ({ data, columns, options, title }) => {
     createTheme({
       palette: {
         background: {
-          paper: '#0f172a',
-          default: '#ffffff',
+          paper: '#E2E8F0',
+          default: '#64748B',
         },
-        mode: 'dark',
+        mode: 'light',
       },
       components: {
         MuiTableCell: {
