@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,7 +20,7 @@ html {
 }
 
 body {
-  @apply bg-slate-950 text-slate-300 overflow-y-scroll;
+  @apply bg-slate-950 font-poppins font-base text-slate-300 overflow-y-scroll;
 }
 
 /* For Active Links */
