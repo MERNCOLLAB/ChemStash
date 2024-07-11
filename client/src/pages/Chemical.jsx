@@ -12,15 +12,17 @@ function Chemical() {
 
   return (
     <div className="p-3 max-w-lg">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col">
         {/* Chemical Name */}
         <Input
           disable={loading}
           value={formData.name}
           id="name"
           type="text"
-          placeholder="Name"
+          label="Chemical Name"
+          placeholder="Enter chemical name"
           onChange={handleChange}
+          validation="general compound name"
         />
 
         {/* Batch Number */}
@@ -29,8 +31,10 @@ function Chemical() {
           value={formData.batch}
           id="batch"
           type="number"
-          placeholder="Batch Number"
+          label="Batch Number"
+          placeholder="Enter Batch Number"
           onChange={handleChange}
+          validation="Please enter a valid batch number (e.g., 1001, 2002)"
         />
 
         {/* Molecular Formula */}
@@ -49,8 +53,10 @@ function Chemical() {
           value={formData.lotNumber}
           id="lotNumber"
           type="number"
-          placeholder="Lot Number"
+          label="Lot Number"
+          placeholder="Enter Lot Number"
           onChange={handleChange}
+          validation="Please enter a valid lot number (e.g., 001, 002)"
         />
 
         {/* Purity */}

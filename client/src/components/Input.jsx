@@ -1,14 +1,20 @@
-function Input({ type, value, placeholder, id, onChange, defaultValue }) {
+function Input({ type, label, value, placeholder, id, onChange, defaultValue, validation }) {
   return (
-    <input
-      id={id}
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
-      onChange={onChange}
-      className="flex-1 w-full bg-slate-900 p-3 border"
-    />
+    <>
+      <label className="text-sm font-semibold text-gray2 mb-2" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        className="rounded-lg border-gray1 h-10 text-base mb-1 max-w-[279px] focus:outline-none focus:ring-0 focus:border-indigo0 border-2 border-solid"
+      />
+      <p className="text-xs text-gray1">{validation}</p>
+    </>
   );
 }
 
