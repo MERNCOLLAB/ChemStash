@@ -16,7 +16,7 @@ const useGetChemical = (query = '') => {
       const data = await response.json();
       const transformedData = data.map((item) => ({
         ...item,
-        purchaseDate: item.purchaseDate.split('T')[0].replace(/-/g, '/'),
+        dateReceived: item.dateReceived.split('T')[0].replace(/-/g, '/'),
         expiryDate: item.expiryDate.split('T')[0].replace(/-/g, '/'),
       }));
       setLists(transformedData);

@@ -102,10 +102,10 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           />
         </li>
 
-        {/* Purchase Date */}
+        {/* Date Received */}
         <li>
-          <label>Purchase Date</label>
-          <Input value={updatedItem.purchaseDate} id="purchaseDate" type="date" onChange={handleChange} />
+          <label>Date Received</label>
+          <Input value={updatedItem.dateReceived} id="dateReceived" type="date" onChange={handleChange} />
         </li>
         <li>
           {/* Expiry Date */}

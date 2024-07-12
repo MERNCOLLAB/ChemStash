@@ -9,7 +9,7 @@ function Chemical() {
     useChemicalForm();
 
   const { loading, error } = useAddChemical();
-
+  console.log(formData);
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col">
@@ -22,7 +22,7 @@ function Chemical() {
           label="Chemical Name"
           placeholder="Enter chemical name"
           onChange={handleChange}
-          validation="general compound name"
+          validation="General compound name"
         />
 
         {/* Batch Number */}
@@ -61,12 +61,14 @@ function Chemical() {
 
         {/* Purity */}
         <Input
+          label="Purity"
           disable={loading}
           value={formData.purity}
           id="purity"
           type="text"
-          placeholder="Purity"
+          placeholder="Enter Purity"
           onChange={handleChange}
+          validation="Please enter the purity (eg., Lab Grade, Tech Grade)"
         />
 
         {/* Location */}
@@ -81,61 +83,73 @@ function Chemical() {
 
         {/* Brand */}
         <Input
+          label="Brand"
           disable={loading}
           value={formData.brand}
           id="brand"
           type="text"
-          placeholder="Brand"
+          placeholder="Enter Brand"
           onChange={handleChange}
+          validation="Please enter the chemical brand (eg. Merck, Sigma Aldrich)"
         />
 
         {/* Number of Supply */}
         <Input
+          label="Supply"
           disable={loading}
           value={formData.supply}
           id="supply"
           type="number"
-          placeholder="Supply (in Bottles)"
+          placeholder="Enter the Number of Supply"
           onChange={handleChange}
+          validation="Please enter the number of bottles or container"
         />
 
         {/* Amount */}
         <Input
+          label="Amount"
           disable={loading}
           value={formData.amount}
           id="amount"
           type="number"
-          placeholder="Amount"
+          placeholder="Enter Amount"
           onChange={handleChange}
+          validation="Please enter the amount or quantity of the chemical"
         />
 
         {/* Unit */}
         <Input
+          label="Expression unit"
           disable={loading}
           value={formData.unit}
           id="unit"
           type="text"
-          placeholder="Unit (eg. L, grams)"
+          placeholder="Enter Unit"
           onChange={handleChange}
+          validation="Please enter the unit of expression for the amount(eg. L, grams)"
         />
 
-        {/* Purchase Date */}
-        <div className="flex items-center gap-2">
-          <label className="flex-2">Date of Purchase: </label>
-          <Input
-            disable={loading}
-            value={formData.purchaseDate}
-            id="purchaseDate"
-            type="date"
-            onChange={handleChange}
-          />
-        </div>
+        {/* Date Received */}
+        <Input
+          label="Date Received"
+          disable={loading}
+          value={formData.dateReceived}
+          id="dateReceived"
+          type="date"
+          onChange={handleChange}
+          validation="Enter the date the chemical received in mm/dd/yy"
+        />
 
         {/* Expiry Date */}
-        <div className="flex items-center gap-2">
-          <label className="flex-2">Expiry Date: </label>
-          <Input disable={loading} value={formData.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
-        </div>
+        <Input
+          label="Expiry Date"
+          disable={loading}
+          value={formData.expiryDate}
+          id="expiryDate"
+          type="date"
+          onChange={handleChange}
+          validation="Enter the chemical expiry date in mm/dd/yy. Greater than date purchased"
+        />
 
         {/* Hazard Classification */}
         <Select
@@ -149,22 +163,26 @@ function Chemical() {
 
         {/* Safety Data Sheet */}
         <Input
+          label="Safety Data Sheet"
           disable={loading}
           value={formData.sds}
           id="sds"
           type="text"
-          placeholder="Safety Data Sheet URL"
+          placeholder="SDS Link"
           onChange={handleChange}
+          validation="Please enter the safety data sheet URL"
         />
 
         {/* Remarks */}
         <Input
+          label="Additional Notes"
           disable={loading}
           value={formData.remarks}
           id="remarks"
           type="text"
-          placeholder="Remarks"
+          placeholder="Enter Remarks"
           onChange={handleChange}
+          validation="Optional remarks"
         />
         <div className="flex justify-between">
           <span></span>
