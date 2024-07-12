@@ -6,7 +6,7 @@ function CustomSelect({ placeholder, label, value, options, onChange, validation
     <>
       <label className="text-sm font-semibold text-gray2 mb-2">{label}</label>
       <Select
-        className="rounded-lg w-[310px] mb-1 placeholder:text-xs"
+        className="w-[310px] mb-1"
         placeholder={placeholder}
         value={value}
         options={options}

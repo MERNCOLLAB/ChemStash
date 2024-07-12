@@ -1,3 +1,4 @@
+// #E2E8F0 Gray0
 // #94a3B8 Gray1
 // #64748B  Gray2
 // #F8FAFC White0
@@ -9,9 +10,11 @@ export const selectStyle = {
     ...defaultStyle,
     backgroundColor: 'none',
     borderColor: state.isFocused ? '#4F46E5' : '#94A3B8',
-    padding: '7px',
+    borderRadius: '8px',
+    padding: '0px',
     color: '#64748B',
   }),
+
   singleValue: (defaultStyle) => ({
     ...defaultStyle,
     color: '#64748B',
@@ -26,7 +29,7 @@ export const selectStyle = {
   }),
   option: (defaultStyle, state) => ({
     ...defaultStyle,
-    backgroundColor: state.isFocused ? '#F8FAFC' : '#F8FAFC',
+    backgroundColor: state.isFocused ? '#E2E8F0' : '#F8FAFC',
     color: '#64748B',
   }),
   placeholder: (defaultStyle) => ({
