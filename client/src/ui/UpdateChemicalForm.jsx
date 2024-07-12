@@ -33,7 +33,6 @@ function UpdateChemicalForm({ item, handleUpdate }) {
 
         {/* Molecular Formula */}
         <li className="space-y-2">
-          <label>Molecular Formula</label>
           <FormulaInput
             id="molecularFormula"
             value={updatedItem.molecularFormula}
@@ -145,7 +144,7 @@ function UpdateChemicalForm({ item, handleUpdate }) {
         </li>
       </ul>
 
-      <Button type="submit" variant="form" className="btn btn-primary mt-4">
+      <Button type="submit" variant="primary" className="btn btn-primary mt-4">
         Update
       </Button>
     </form>

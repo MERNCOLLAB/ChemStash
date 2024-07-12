@@ -38,14 +38,11 @@ function Chemical() {
         />
 
         {/* Molecular Formula */}
-        <div className="flex items-center gap-2">
-          <label className="flex-1 text-center">Molecular Formula</label>
-          <FormulaInput
-            id="molecularFormula"
-            value={formData.molecularFormula}
-            onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
-          />
-        </div>
+        <FormulaInput
+          id="molecularFormula"
+          value={formData.molecularFormula}
+          onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
+        />
 
         {/* Lot Number */}
         <Input
@@ -186,7 +183,7 @@ function Chemical() {
         />
         <div className="flex justify-between">
           <span></span>
-          <Button type="submit" variant="form" disable={loading}>
+          <Button type="submit" variant="primary" disable={loading}>
             Add Chemical
           </Button>
         </div>

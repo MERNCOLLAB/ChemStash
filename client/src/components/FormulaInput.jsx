@@ -31,23 +31,23 @@ const FormulaInput = ({ value, onChange }) => {
   };
 
   return (
-    <div className="flex flex-row w-full justify-evenly items-center gap-2 relative my-4">
+    <div className="flex relative my-4">
       <p>{renderOutputFormula(outputFormula)}</p>
       <div className="flex-[0.5]">
-        <Button type="button" variant="form" onClick={showDialog}>
+        <Button type="button" variant="primary" onClick={showDialog}>
           Type the Formula
         </Button>
       </div>
 
       {openDialog && (
-        <dialog className="w-[90%] flex mx-auto bg-sky-500 text-gray2" open>
+        <dialog className="w-[90%] flex mx-auto bg-white1 text-gray2" open>
           <Input
             placeholder="Molecular Formula"
             type="text"
             value={inputFormula}
             onChange={(e) => setInputFormula(e.target.value)}
           />
-          <Button type="button" variant="form" onClick={closeDialog}>
+          <Button type="button" variant="primary" onClick={closeDialog}>
             Format
           </Button>
         </dialog>
