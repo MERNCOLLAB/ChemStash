@@ -9,7 +9,7 @@ function Chemical() {
     useChemicalForm();
 
   const { loading, error } = useAddChemical();
-
+  console.log(formData);
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col">
@@ -119,22 +119,22 @@ function Chemical() {
 
         {/* Unit */}
         <Input
-          label="Amount Unit"
+          label="Expression unit"
           disable={loading}
           value={formData.unit}
           id="unit"
           type="text"
           placeholder="Enter Unit"
           onChange={handleChange}
-          validation="Please enter the expression unit of the amount(eg. L, grams)"
+          validation="Please enter the unit of expression for the amount(eg. L, grams)"
         />
 
-        {/* Purchase Date */}
+        {/* Date Received */}
         <Input
           label="Date Received"
           disable={loading}
-          value={formData.purchaseDate}
-          id="purchaseDate"
+          value={formData.dateReceived}
+          id="dateReceived"
           type="date"
           onChange={handleChange}
           validation="Enter the date the chemical received in mm/dd/yy"

@@ -7,7 +7,7 @@ const lists = [
     quantity: '5',
     unit: 'L',
     supplier: 'Sigma-Aldrich',
-    purchaseDate: '2023/06/21',
+    dateReceived: '2023/06/21',
     status:
       'Pending to Team leader || Approved by Team Leader || Pending to Manager || Approved by Manager || Pending to Order || Orderd',
   },
@@ -17,7 +17,7 @@ const lists = [
     quantity: '10',
     unit: 'L',
     supplier: 'Fisher Scientific',
-    purchaseDate: '2023/06/19',
+    dateReceived: '2023/06/19',
     status: 'Pending to Team leader',
   },
   {
@@ -26,7 +26,7 @@ const lists = [
     quantity: '8',
     unit: 'L',
     supplier: 'VWR',
-    purchaseDate: '2023/06/15',
+    dateReceived: '2023/06/15',
     status: 'Pending to Team leader',
   },
   {
@@ -35,7 +35,7 @@ const lists = [
     quantity: '8',
     unit: 'L',
     supplier: 'VWR',
-    purchaseDate: '2023/06/15',
+    dateReceived: '2023/06/15',
     status: 'Pending to Team leader',
   },
   {
@@ -44,7 +44,7 @@ const lists = [
     quantity: '78',
     unit: 'L',
     supplier: 'VWR',
-    purchaseDate: '2023/06/15',
+    dateReceived: '2023/06/15',
     status: 'Pending to Team leader',
   },
 ];
@@ -71,8 +71,8 @@ const columns = [
     label: 'Supplier',
   },
   {
-    name: 'purchaseDate',
-    label: 'Purchase Date',
+    name: 'dateReceived',
+    label: 'Date Received',
   },
 
   {

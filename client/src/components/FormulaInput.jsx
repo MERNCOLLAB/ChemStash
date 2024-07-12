@@ -40,7 +40,7 @@ const FormulaInput = ({ value, onChange }) => {
       </div>
 
       {openDialog && (
-        <dialog className="w-[90%] flex mx-auto bg-sky-500 text-white" open>
+        <dialog className="w-[90%] flex mx-auto bg-sky-500 text-gray2" open>
           <Input
             placeholder="Molecular Formula"
             type="text"

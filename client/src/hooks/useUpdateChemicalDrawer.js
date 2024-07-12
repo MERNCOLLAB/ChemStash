@@ -29,7 +29,7 @@ const useUpdateChemicalDrawer = (item, handleUpdate) => {
     setUpdatedItem((prevItem) => ({
       ...prevItem,
       ...item,
-      purchaseDate: formatDate(item.purchaseDate),
+      dateReceived: formatDate(item.dateReceived),
       expiryDate: formatDate(item.expiryDate),
     }));
   }, [item]);

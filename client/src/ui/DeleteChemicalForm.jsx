@@ -74,10 +74,10 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
               </TableCell>
             </TableRow>
 
-            {/* Purchase Date */}
+            {/* Date Received */}
             <TableRow>
-              <TableCell>Purchase Date</TableCell>
-              <TableCell>{item.purchaseDate}</TableCell>
+              <TableCell>Date Received</TableCell>
+              <TableCell>{item.dateReceived}</TableCell>
             </TableRow>
 
             {/* Expiry Date */}

@@ -69,8 +69,8 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
     name: 'unit',
   },
   {
-    name: 'purchaseDate',
-    label: 'Purchase Date',
+    name: 'dateReceived',
+    label: 'Date Received',
   },
   {
     name: 'expiryDate',

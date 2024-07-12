@@ -9,7 +9,7 @@ export const initialChemicalData = {
   supply: '',
   amount: '',
   unit: '',
-  purchaseDate: '',
+  dateReceived: '',
   expiryDate: '',
   sds: '',
   hazardClassification: '',

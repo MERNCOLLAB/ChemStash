@@ -44,9 +44,8 @@ const chemicalSchema = new mongoose.Schema(
     unit: {
       type: String,
       required: true,
-      default: ['L', 'mL', 'g', 'kg'],
     },
-    purchaseDate: {
+    dateReceived: {
       type: Date,
       required: true,
     },
@@ -56,7 +55,7 @@ const chemicalSchema = new mongoose.Schema(
     },
     sds: {
       type: String,
-      required: true,
+      required: false,
     },
     hazardClassification: {
       type: String,
