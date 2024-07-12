@@ -1,26 +1,33 @@
+// #94a3B8 Gray1
+// #64748B  Gray2
+// #F8FAFC White0
+// #F1F5F9 White1
+// #4F46E5 Indigo0
+
 export const selectStyle = {
-  control: (defaultStyle) => ({
+  control: (defaultStyle, state) => ({
     ...defaultStyle,
-    backgroundColor: '#0f172a',
+    backgroundColor: 'none',
+    borderColor: state.isFocused ? '#4F46E5' : '#94A3B8',
     padding: '7px',
-    color: '#fff',
+    color: '#64748B',
   }),
   singleValue: (defaultStyle) => ({
     ...defaultStyle,
-    color: '#fff',
+    color: '#64748B',
   }),
   input: (defaultStyle) => ({
     ...defaultStyle,
-    color: '#fff',
+    color: '#64748B',
   }),
   menu: (defaultStyle) => ({
     ...defaultStyle,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#F1F5F9',
   }),
   option: (defaultStyle, state) => ({
     ...defaultStyle,
-    backgroundColor: state.isFocused ? '#4b5563' : '#1e293b',
-    color: '#fff',
+    backgroundColor: state.isFocused ? '#F8FAFC' : '#F8FAFC',
+    color: '#64748B',
   }),
   placeholder: (defaultStyle) => ({
     ...defaultStyle,

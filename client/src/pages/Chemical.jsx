@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import CustomSelect from '../components/CustomSelect';
 import { selectStyle } from '../helpers/selectStyle';
 import { Button, Input, FormulaInput } from '../components';
 import useChemicalForm from '../hooks/useChemicalForm';
@@ -9,7 +9,7 @@ function Chemical() {
     useChemicalForm();
 
   const { loading, error } = useAddChemical();
-  console.log(formData);
+
   return (
     <div className="p-3 max-w-lg">
       <form onSubmit={handleSubmit} className="flex flex-col">
@@ -72,13 +72,13 @@ function Chemical() {
         />
 
         {/* Location */}
-        <Select
+        <CustomSelect
+          label="Storage Location"
+          validation="Enter where are you going to store the chemical"
           placeholder="Select a location"
           value={locationOptions.find((opt) => opt.value === formData.location)}
           options={locationOptions}
           onChange={(selectedLocation) => handleChangeOption(selectedLocation, 'location')}
-          styles={selectStyle}
-          isClearable
         />
 
         {/* Brand */}
@@ -152,13 +152,13 @@ function Chemical() {
         />
 
         {/* Hazard Classification */}
-        <Select
-          placeholder="Select a Hazard Classification"
+        <CustomSelect
+          label="Hazard Classification"
+          validation="Enter the chemical hazard classification (GHS Standard)"
+          placeholder="Select a classification"
           value={hazardClassificationOptions.find((opt) => opt.value === formData.hazardClassification)}
           options={hazardClassificationOptions}
           onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
-          styles={selectStyle}
-          isClearable
         />
 
         {/* Safety Data Sheet */}
