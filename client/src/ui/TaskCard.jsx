@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TrashIcon from '../icons/TrashIcon';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-function TaskCard({ task, deleteTask, updateTask }) {
+function TaskCard({ task, deleteTask, openTask }) {
   const [editMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState(task.content);
-
+  useEffect(() => {
+    setContent(task.content);
+  }, [task.content]);
   const toggleEditMode = () => {
     setIsEditMode((prev) => !prev);
+    openTask(task);
   };
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
@@ -25,18 +28,19 @@ function TaskCard({ task, deleteTask, updateTask }) {
     transition,
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter' && !e.shiftKey) {
+  //     e.preventDefault();
 
-      toggleEditMode();
-    }
-  };
+  //     toggleEditMode();
+  //   }
+  // };
 
-  const handleBlur = () => {
-    updateTask(task.id, content);
-    toggleEditMode();
-  };
+  // const openTask = (e) => {
+  //   e.preventDefault();
+  //   updateTask(task.id, content);
+  //   toggleEditMode();
+  // };
 
   if (isDragging) {
     return (
@@ -48,50 +52,26 @@ function TaskCard({ task, deleteTask, updateTask }) {
     );
   }
 
-  if (editMode) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px] items-center flex text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
-      >
-        <textarea
-          className="border  h-[90%] w-full resize-none border-none  text-gray-300 focus:outline-none  bg-indigo-700"
-          value={content}
-          autoFocus
-          placeholder="Task content  here"
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-      </div>
-    );
-  }
-  if (editMode === false) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        onClick={toggleEditMode}
-        className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px] items-center flex text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
-      >
-        <p className=" my-auto h-[90%] overflow-x-hidden overflow-y-auto whitespace-pre-wrap w-full pr-4">
-          {task.content}
-        </p>
+  return (
+    <div
+      onClick={toggleEditMode}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      // onClick={toggleEditMode}
+      className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px] items-center flex text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
+    >
+      <p className=" my-auto h-[90%] overflow-x-hidden overflow-y-auto whitespace-pre-wrap w-full pr-4">{content}</p>
 
-        <button
-          onClick={() => deleteTask(task.id)}
-          className="hidden  group-hover:block absolute right-4 top-1/2 -translate-y-1/2  px-1 py-2 stroke-gray-500 hover:stroke-white rounded-full hover:bg-columnBackGroundColor"
-        >
-          <TrashIcon />
-        </button>
-      </div>
-    );
-  }
+      <button
+        onClick={() => deleteTask(task.id)}
+        className="hidden  group-hover:block absolute right-4 top-1/2 -translate-y-1/2  px-1 py-2 stroke-gray-500 hover:stroke-white rounded-full hover:bg-columnBackGroundColor"
+      >
+        <TrashIcon />
+      </button>
+    </div>
+  );
 }
 
 export default TaskCard;

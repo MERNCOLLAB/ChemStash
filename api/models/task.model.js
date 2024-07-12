@@ -22,6 +22,20 @@ const taskSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    dueDate: {
+      type: String,
+      default: null,
+    },
+    assignedUsers: [
+      {
+        id: {
+          type: String,
+        },
+        username: {
+          type: String,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

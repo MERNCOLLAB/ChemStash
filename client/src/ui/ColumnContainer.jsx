@@ -6,7 +6,7 @@ import PlusIcon from '../icons/PlusIcon';
 import TaskCard from '../ui/TaskCard';
 
 function ColumnContainer(props) {
-  const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask, currentUser } = props;
+  const { open, column, deleteColumn, updateColumn, createTask, tasks, deleteTask, currentUser, openTask } = props;
   const [editMode, setEditMode] = useState(false);
 
   const tasksIds = useMemo(() => {
@@ -84,7 +84,7 @@ function ColumnContainer(props) {
       <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
         <SortableContext items={tasksIds}>
           {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} deleteTask={deleteTask} updateTask={updateTask} />
+            <TaskCard key={task.id} task={task} deleteTask={deleteTask} open={open} openTask={openTask} />
           ))}
         </SortableContext>
       </div>

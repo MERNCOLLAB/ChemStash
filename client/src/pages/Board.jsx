@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import useOnDragStart from '../hooks/dragevents/useOnDragStart';
 import useOnDragOver from '../hooks/dragevents/useOnDragOver';
 import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
+import Drawer from '../ui/Drawer';
+import UpdateTask from '../ui/UpdateTask';
 
 function Board() {
   const [columns, setColumns] = useState([]);
@@ -23,7 +25,8 @@ function Board() {
   const { onDragStart } = useOnDragStart();
   const { onDragOver } = useOnDragOver();
   const { onDragEnd } = useOnDragEnd(currentUser);
-
+  const [open, setOpen] = useState(false);
+  const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
@@ -53,7 +56,12 @@ function Board() {
     return () => {
       socket?.disconnect();
     };
-  }, [socket]);
+  }, [socket, open]);
+
+  useEffect(() => {
+    fetchColumnList();
+    fetchTaskList();
+  }, [open]);
 
   // activate delete column function
   const sensors = useSensors(
@@ -109,10 +117,6 @@ function Board() {
     }
   };
 
-  useEffect(() => {
-    fetchColumnList();
-    fetchTaskList();
-  }, []);
   // create column
   const createNewColumn = async () => {
     const columnToAdd = {
@@ -301,7 +305,7 @@ function Board() {
   //   setTasks(updateTask);
   // }
 
-  const updateTask = async (taskId, content) => {
+  const updateTask = async (taskId, content, dueDate, assignedUsers) => {
     try {
       setLoading(true);
       setError(false);
@@ -310,7 +314,7 @@ function Board() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content, dueDate, assignedUsers }),
       });
       const data = await response.json();
 
@@ -320,70 +324,92 @@ function Board() {
       }
 
       fetchTaskList();
+
+      setOpen(false);
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update task');
     }
   };
 
+  const openTask = (task) => {
+    setOpen((prev) => !prev);
+
+    setTaskItem(task);
+  };
+  const close = () => {
+    setOpen(false);
+  };
+
+  const handleUpdate = (id, update, date, selectedMembers) => {
+    updateTask(id, update, date, selectedMembers);
+  };
+
   return (
-    <div className="border p-2 flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden ">
-      <DndContext
-        sensors={sensors}
-        onDragStart={(event) => onDragStart(event, setActiveColumn, setActiveTask)}
-        onDragEnd={(event) => onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask)}
-        onDragOver={(event) => onDragOver(event, tasks, setTasks)}
-      >
-        <div className="m-auto flex gap-4">
-          <div className="flex gap-4">
-            <SortableContext items={columnsId}>
-              {columns.map((col) => (
+    <>
+      <div className="border p-2 flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden ">
+        <DndContext
+          sensors={sensors}
+          onDragStart={(event) => onDragStart(event, setActiveColumn, setActiveTask)}
+          onDragEnd={(event) => onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask)}
+          onDragOver={(event) => onDragOver(event, tasks, setTasks)}
+        >
+          <div className="m-auto flex gap-4">
+            <div className="flex gap-4">
+              <SortableContext items={columnsId}>
+                {columns.map((col) => (
+                  <ColumnContainer
+                    key={col.id}
+                    column={col}
+                    currentUser={currentUser}
+                    deleteColumn={deleteColumn}
+                    updateColumn={updateColumn}
+                    createTask={createTask}
+                    openTask={openTask}
+                    open={open}
+                    tasks={tasks.filter((task) => task.columnId === col.id)}
+                    deleteTask={deleteTask}
+                  />
+                ))}
+              </SortableContext>
+            </div>
+            {currentUser.role === 'chemist' ? null : (
+              <button
+                className=" p-2 flex gap-2 border border-transparent hover:border-white h-fit"
+                onClick={() => {
+                  createNewColumn();
+                }}
+              >
+                <PlusIcon /> Add Column
+              </button>
+            )}
+          </div>
+
+          {createPortal(
+            <DragOverlay>
+              {activeColumn && (
                 <ColumnContainer
-                  key={col.id}
-                  column={col}
-                  currentUser={currentUser}
+                  column={activeColumn}
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
                   createTask={createTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
+                  currentUser={currentUser}
                   deleteTask={deleteTask}
-                  updateTask={updateTask}
+                  openTask={openTask}
+                  open={open}
+                  tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 />
-              ))}
-            </SortableContext>
-          </div>
-          {currentUser.role === 'chemist' ? null : (
-            <button
-              className=" p-2 flex gap-2 border border-transparent hover:border-white h-fit"
-              onClick={() => {
-                createNewColumn();
-              }}
-            >
-              <PlusIcon /> Add Column
-            </button>
+              )}
+              {activeTask && <TaskCard task={activeTask} updateTask={updateTask} deleteTask={deleteTask} />}
+            </DragOverlay>,
+            document.body
           )}
-        </div>
-
-        {createPortal(
-          <DragOverlay>
-            {activeColumn && (
-              <ColumnContainer
-                column={activeColumn}
-                deleteColumn={deleteColumn}
-                updateColumn={updateColumn}
-                createTask={createTask}
-                currentUser={currentUser}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
-                tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
-              />
-            )}
-            {activeTask && <TaskCard task={activeTask} updateTask={updateTask} deleteTask={deleteTask} />}
-          </DragOverlay>,
-          document.body
-        )}
-      </DndContext>
-    </div>
+        </DndContext>
+      </div>
+      <Drawer isOpen={open} onClose={close}>
+        <UpdateTask taskitem={taskitem} onUpdate={handleUpdate} />
+      </Drawer>
+    </>
   );
 }
 
