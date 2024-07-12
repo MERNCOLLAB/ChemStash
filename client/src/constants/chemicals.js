@@ -1,6 +1,7 @@
 export const location = [
   'Flammable Storage Cabinet',
-  'Corrosive Storage Cabinet',
+  'Acid Storage Cabinet',
+  'Alkaline Storage Cabinet',
   'Refrigerator/Freezer',
   'General Storage Shelf',
   'Oxidizer Storage Shelf',
@@ -31,7 +32,7 @@ export const initialChemicalData = {
   supply: '',
   amount: '',
   unit: '',
-  purchaseDate: '',
+  dateReceived: '',
   expiryDate: '',
   sds: '',
   hazardClassification: '',
