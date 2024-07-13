@@ -28,7 +28,7 @@ const taskSchema = new mongoose.Schema(
     },
     assignedUsers: [
       {
-        id: {
+        img: {
           type: String,
         },
         username: {

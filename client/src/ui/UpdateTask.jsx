@@ -7,13 +7,19 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState([]);
-  const [update, setUpdate] = useState('');
-  const [date, setDate] = useState(null);
+  const [update, setUpdate] = useState({ content: '', dueDate: '', assignedUsers: [] });
   const animatedComponents = makeAnimated();
 
   useEffect(() => {
-    setUpdate(taskitem.content);
-  }, [taskitem.content]);
+    setUpdate({
+      content: taskitem.content,
+      dueDate: taskitem.dueDate,
+      assignedUsers: taskitem.assignedUsers.map((user) => ({
+        label: user.username,
+        value: user.img,
+      })),
+    });
+  }, [taskitem]);
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -41,31 +47,40 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
 
   const options = members.map((member) => ({
     label: member.username,
-    value: member.username,
+    value: member.profilePicture,
   }));
 
   const handleSelectChange = (selectedOptions) => {
     setSelectedMembers(selectedOptions || []);
+    setUpdate((prevState) => ({
+      ...prevState,
+      assignedUsers: selectedOptions || [],
+    }));
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
     const formattedMembers = selectedMembers.map((member) => ({
       username: member.label,
+      img: member.value,
     }));
-    onUpdate(taskitem.id, update, date, formattedMembers);
+    onUpdate(taskitem.id, update.content, update.dueDate, formattedMembers);
+    console.log(formattedMembers);
   };
 
-  const editContent = (e) => {
-    setUpdate(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdate((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
     <div className="bg-slate-400 h-screen w-1/3 text-slate-500">
       <form onSubmit={handleUpdate} className=" flex flex-col gap-2">
-        <input value={update} type="text" onChange={editContent} />
-
-        <input type="date" value={date || ''} onChange={(e) => setDate(e.target.value)} />
+        <input value={update.content} name="content" type="text" onChange={handleChange} />
+        <input type="date" name="dueDate" value={update.dueDate || ''} onChange={handleChange} />
 
         {loading ? (
           <p>Loading...</p>
@@ -78,6 +93,7 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
             components={animatedComponents}
             options={options}
             onChange={handleSelectChange}
+            value={update.assignedUsers}
           />
         )}
         <button>Submit</button>

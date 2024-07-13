@@ -6,9 +6,11 @@ import { CSS } from '@dnd-kit/utilities';
 function TaskCard({ task, deleteTask, openTask }) {
   const [editMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState(task.content);
+  const [au, setAu] = useState(task.assignedUsers);
   useEffect(() => {
     setContent(task.content);
-  }, [task.content]);
+    setAu(task.assignedUsers);
+  }, [task]);
   const toggleEditMode = () => {
     setIsEditMode((prev) => !prev);
     openTask(task);
@@ -60,9 +62,23 @@ function TaskCard({ task, deleteTask, openTask }) {
       {...attributes}
       {...listeners}
       // onClick={toggleEditMode}
-      className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px] items-center flex text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
+      className="group relative bg-gray-950 p-2.5 h-[100px] min-h-[100px]  flex  flex-col text-left hover:ring-2 hover:ring-gray-400 ring-inset cursor-grab"
     >
-      <p className=" my-auto h-[90%] overflow-x-hidden overflow-y-auto whitespace-pre-wrap w-full pr-4">{content}</p>
+      <p className=" my-auto    w-full  pr-4">{content}</p>
+      <div className="flex flex-col">
+        <div className="">{task.dueDate}</div>
+
+        <div className="flex items-start  -space-x-4 flex-1">
+          {au.map((au) => (
+            <div className="avatar" key={au.username}>
+              {/* {au.username} */}
+              <div className=" rounded-full  w-10 h-10">
+                <img src={au.img} alt="" className="" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <button
         onClick={() => deleteTask(task.id)}

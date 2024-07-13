@@ -60,8 +60,9 @@ function Board() {
   useEffect(() => {
     boardColumnList();
     boardTaskList();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks]);
+  }, [open]);
 
   // activate delete column function
   const sensors = useSensors(
