@@ -28,11 +28,13 @@ import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 import useCreateTask from '../api/task/useCreateTask';
 import useUpdateTask from '../api/task/useUpdateTask';
 import useDeleteTask from '../api/task/useDeleteTask';
+import useDrawer from '../hooks/board/useDrawer';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const [open, setOpen] = useState(false);
+  const { openDrawer, taskItem, openTask, handleDrawerClose } = useDrawer();
+
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
   const { deleteColumn } = useDeleteColumn();
@@ -41,7 +43,7 @@ function Board() {
 
   // Tasks
   const { createTask } = useCreateTask();
-  const { updateTask } = useUpdateTask(setOpen);
+  const { updateTask } = useUpdateTask();
   const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
 
@@ -51,8 +53,6 @@ function Board() {
   const { onDragStart } = useOnDragStart();
   const { onDragOver } = useOnDragOver();
   const { onDragEnd } = useOnDragEnd(currentUser);
-
-  const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
 
   // Socket Operations
   useBoardSocketListeners(setColumns, setTasks);
@@ -72,15 +72,6 @@ function Board() {
       },
     })
   );
-
-  const openTask = (task) => {
-    setOpen((prev) => !prev);
-
-    setTaskItem(task);
-  };
-  const close = () => {
-    setOpen(false);
-  };
 
   const handleUpdate = (id, update, date, selectedMembers, priority) => {
     updateTask(id, update, date, selectedMembers, priority);
@@ -107,7 +98,7 @@ function Board() {
                     updateColumn={updateColumnTitle}
                     createTask={createTask}
                     openTask={openTask}
-                    open={open}
+                    open={openDrawer}
                     tasks={tasks.filter((task) => task.columnId === col.id)}
                     deleteTask={deleteTask}
                   />
@@ -137,7 +128,7 @@ function Board() {
                   currentUser={currentUser}
                   deleteTask={deleteTask}
                   openTask={openTask}
-                  open={open}
+                  open={openDrawer}
                   tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 />
               )}
@@ -147,8 +138,8 @@ function Board() {
           )}
         </DndContext>
       </div>
-      <Drawer isOpen={open} onClose={close}>
-        <UpdateTask taskitem={taskitem} onUpdate={handleUpdate} />
+      <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
+        <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} />
       </Drawer>
     </>
   );
