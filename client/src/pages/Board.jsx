@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlusIcon from '../icons/PlusIcon';
 import ColumnContainer from '../ui/ColumnContainer';
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -13,13 +13,13 @@ import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
+import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
 
 function Board() {
-  const { columns, setColumns, boardColumnList } = useBoardColumnList();
+  const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
@@ -30,37 +30,8 @@ function Board() {
   const [open, setOpen] = useState(false);
   const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
 
-  console.log(tasks);
-  useEffect(() => {
-    socket?.on('columnAdded', (newColumn) => {
-      setColumns((prevColumns) => [...prevColumns, newColumn]);
-    });
-
-    socket?.on('columnDeleted', (deletedColumn) => {
-      setColumns((prevColumns) => prevColumns.filter((col) => col.id !== deletedColumn.id));
-      setTasks((prevTasks) => prevTasks.filter((task) => task.columnId !== deletedColumn.id));
-    });
-    socket?.on('columnOrderUpdated', (updatedColumns) => {
-      setColumns(updatedColumns);
-    });
-
-    socket?.on('columnTitleUpdated', (updatedColumn) => {
-      setColumns((prevColumns) => prevColumns.map((col) => (col.id === updatedColumn.id ? updatedColumn : col)));
-    });
-
-    socket?.on('createTask', (newTask) => {
-      setTasks((prevTasks) => [...prevTasks, newTask]);
-    });
-    socket?.on('taskDeleted', (taskId) => {
-      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId.id));
-    });
-    socket?.on('taskUpdated', (updatedTask) => {
-      setTasks((prevTasks) => prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
-    });
-    return () => {
-      socket?.disconnect();
-    };
-  }, [socket, open]);
+  // Socket Operations
+  useBoardSocketListeners(setColumns, setTasks);
 
   useEffect(() => {
     boardColumnList();
@@ -75,29 +46,6 @@ function Board() {
       },
     })
   );
-
-  const fetchTaskList = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/board/task/list', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch tasks');
-      }
-
-      setTasks(data);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to fetch tasks');
-    }
-  };
 
   // create column
   const createNewColumn = async () => {
@@ -131,15 +79,6 @@ function Board() {
     }
   };
 
-  // function deleteColumn(id) {
-
-  //   const newTasks = columns.filter((col) => col.id !== id);
-  //   setColumns(newTasks);
-
-  //   const deleteTask = tasks.filter((task) => task.id !== id);
-  //   setTasks(deleteTask);
-  // }
-
   // delete column
   const deleteColumn = async (id) => {
     try {
@@ -153,7 +92,7 @@ function Board() {
       if (!res.ok) {
         throw new Error(data.message || 'Failed to delete column');
       }
-      fetchTaskList();
+      boardTaskList();
       boardColumnList();
     } catch (error) {
       setLoading(false);
@@ -245,7 +184,7 @@ function Board() {
         throw new Error(data.message || 'Failed to add task');
       }
 
-      fetchTaskList();
+      boardTaskList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to add task');
@@ -270,7 +209,7 @@ function Board() {
         throw new Error(data.message || 'Failed to delete column');
       }
 
-      fetchTaskList();
+      boardTaskList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to delete column');
@@ -305,7 +244,7 @@ function Board() {
         throw new Error(data.message || 'Failed to update task');
       }
 
-      fetchTaskList();
+      boardTaskList();
 
       setOpen(false);
     } catch (error) {
