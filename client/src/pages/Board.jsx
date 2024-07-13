@@ -13,13 +13,16 @@ import useOnDragStart from '../hooks/dragevents/useOnDragStart';
 import useOnDragOver from '../hooks/dragevents/useOnDragOver';
 import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 
-// Drawer
+// UI
 import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
+
+// Column and Task Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
+import useDeleteColumn from '../api/board/useDeleteColumn';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
@@ -29,6 +32,7 @@ function Board() {
 
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
+  const { deleteColumn } = useDeleteColumn();
 
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
@@ -56,59 +60,6 @@ function Board() {
       },
     })
   );
-
-  // create column
-  // const createNewColumn = async () => {
-  //   const columnToAdd = {
-  //     id: generateId(),
-  //     title: `Column ${columns.length + 1}`,
-  //     order: columns.length + 1,
-  //   };
-
-  //   try {
-  //     setLoading(true);
-  //     setError(false);
-  //     const response = await fetch('/api/board/column/create', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(columnToAdd),
-  //     });
-  //     const data = await response.json();
-
-  //     setLoading(false);
-  //     if (!response.ok) {
-  //       throw new Error(data.message || 'Failed to add column');
-  //     }
-
-  //     boardColumnList();
-  //   } catch (error) {
-  //     setLoading(false);
-  //     setError(error.message || 'Failed to add column');
-  //   }
-  // };
-
-  // delete column
-  const deleteColumn = async (id) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/board/column/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-
-      setLoading(false);
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete column');
-      }
-      boardTaskList();
-      boardColumnList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to delete column');
-    }
-  };
 
   const updateColumn = async (id, title) => {
     try {
