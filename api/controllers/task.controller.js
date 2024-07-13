@@ -60,14 +60,14 @@ export const deleteTask = async (req, res, next) => {
 
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
-  const { content, dueDate, assignedUsers } = req.body;
+  const { content, dueDate, assignedUsers, priority } = req.body;
 
   if (!id) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
   try {
-    const updatedTask = await Task.findOneAndUpdate({ id }, { content, dueDate, assignedUsers });
+    const updatedTask = await Task.findOneAndUpdate({ id }, { content, dueDate, assignedUsers, priority });
 
     if (!updatedTask) {
       return res.status(404).json({ message: 'Task not found' });

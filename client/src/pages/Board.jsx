@@ -82,8 +82,8 @@ function Board() {
     setOpen(false);
   };
 
-  const handleUpdate = (id, update, date, selectedMembers) => {
-    updateTask(id, update, date, selectedMembers);
+  const handleUpdate = (id, update, date, selectedMembers, priority) => {
+    updateTask(id, update, date, selectedMembers, priority);
   };
 
   return (

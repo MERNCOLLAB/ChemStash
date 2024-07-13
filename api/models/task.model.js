@@ -26,6 +26,9 @@ const taskSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    priority: {
+      type: Number,
+    },
     assignedUsers: [
       {
         img: {
