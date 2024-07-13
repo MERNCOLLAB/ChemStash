@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import useBoardTaskList from '../board/useBoardTaskList';
 import toast from 'react-hot-toast';
+import useDrawer from '../../hooks/board/useDrawer';
 
-const useUpdateTask = (setOpen) => {
+const useUpdateTask = () => {
+  const { setOpenDrawer } = useDrawer();
   const { boardTaskList } = useBoardTaskList();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -27,7 +29,7 @@ const useUpdateTask = (setOpen) => {
 
       boardTaskList();
       toast.success('Task has been updated');
-      setOpen(false);
+      setOpenDrawer(false);
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update task');
