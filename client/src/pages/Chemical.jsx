@@ -1,5 +1,4 @@
 import CustomSelect from '../components/CustomSelect';
-import { selectStyle } from '../helpers/selectStyle';
 import { Button, Input, FormulaInput } from '../components';
 import useChemicalForm from '../hooks/useChemicalForm';
 import useAddChemical from '../api/useAddChemical';

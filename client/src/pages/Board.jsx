@@ -11,10 +11,12 @@ import useOnDragOver from '../hooks/dragevents/useOnDragOver';
 import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
+import useBoardColumnList from '../api/board/useBoardColumnList';
+import useBoardTaskList from '../api/board/useBoardTaskList';
 
 function Board() {
-  const [columns, setColumns] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const { columns, setColumns, boardColumnList } = useBoardColumnList();
+  const { tasks, setTasks, boardTaskList } = useBoardTaskList();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -27,6 +29,8 @@ function Board() {
   const { onDragEnd } = useOnDragEnd(currentUser);
   const [open, setOpen] = useState(false);
   const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
+
+  console.log(tasks);
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
       setColumns((prevColumns) => [...prevColumns, newColumn]);
@@ -59,9 +63,9 @@ function Board() {
   }, [socket, open]);
 
   useEffect(() => {
-    fetchColumnList();
-    fetchTaskList();
-  }, [open]);
+    boardColumnList();
+    boardTaskList();
+  }, []);
 
   // activate delete column function
   const sensors = useSensors(
@@ -71,28 +75,6 @@ function Board() {
       },
     })
   );
-  const fetchColumnList = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/board/column/list', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch columns');
-      }
-
-      setColumns(data);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to fetch columns');
-    }
-  };
 
   const fetchTaskList = async () => {
     try {
@@ -142,7 +124,7 @@ function Board() {
         throw new Error(data.message || 'Failed to add column');
       }
 
-      fetchColumnList();
+      boardColumnList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to add column');
@@ -172,7 +154,7 @@ function Board() {
         throw new Error(data.message || 'Failed to delete column');
       }
       fetchTaskList();
-      fetchColumnList();
+      boardColumnList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to delete column');
@@ -195,7 +177,7 @@ function Board() {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to update column title');
       }
-      fetchColumnList();
+      boardColumnList();
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update column title');
