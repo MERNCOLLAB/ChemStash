@@ -6,20 +6,36 @@ import { SortableContext } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 import { useSelector } from 'react-redux';
+import generateId from '../helpers/GenerateId';
+
+// Drag Events
 import useOnDragStart from '../hooks/dragevents/useOnDragStart';
 import useOnDragOver from '../hooks/dragevents/useOnDragOver';
 import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
+
+// UI
 import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
+
+// Column and Task Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
+import useCreateNewColumn from '../api/board/useCreateNewColumn';
+import useDeleteColumn from '../api/board/useDeleteColumn';
+import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Column
+  const { createNewColumn } = useCreateNewColumn(columns);
+  const { deleteColumn } = useDeleteColumn();
+  const { updateColumnTitle } = useUpdateColumnTitle();
+
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
@@ -46,82 +62,6 @@ function Board() {
       },
     })
   );
-
-  // create column
-  const createNewColumn = async () => {
-    const columnToAdd = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-      order: columns.length + 1,
-    };
-
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch('/api/board/column/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(columnToAdd),
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add column');
-      }
-
-      boardColumnList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to add column');
-    }
-  };
-
-  // delete column
-  const deleteColumn = async (id) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/board/column/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-
-      setLoading(false);
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete column');
-      }
-      boardTaskList();
-      boardColumnList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to delete column');
-    }
-  };
-
-  const updateColumn = async (id, title) => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/board/column/updateTitle', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, title }),
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to update column title');
-      }
-      boardColumnList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to update column title');
-    }
-  };
 
   const createTask = async (columnId, type) => {
     const columnTitle = columns.find((column) => column.id === columnId);
@@ -284,7 +224,7 @@ function Board() {
                     column={col}
                     currentUser={currentUser}
                     deleteColumn={deleteColumn}
-                    updateColumn={updateColumn}
+                    updateColumn={updateColumnTitle}
                     createTask={createTask}
                     openTask={openTask}
                     open={open}
@@ -312,7 +252,7 @@ function Board() {
                 <ColumnContainer
                   column={activeColumn}
                   deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
+                  updateColumn={updateColumnTitle}
                   createTask={createTask}
                   currentUser={currentUser}
                   deleteTask={deleteTask}
@@ -332,10 +272,6 @@ function Board() {
       </Drawer>
     </>
   );
-}
-
-function generateId() {
-  return Math.floor(Math.random() * 100001);
 }
 
 export default Board;
