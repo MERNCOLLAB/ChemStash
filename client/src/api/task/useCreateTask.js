@@ -3,6 +3,7 @@ import generateId from '../../helpers/GenerateId';
 import useBoardColumnList from '../board/useBoardColumnList';
 import { useSelector } from 'react-redux';
 import useBoardTaskList from '../board/useBoardTaskList';
+import toast from 'react-hot-toast';
 
 const useCreateTask = () => {
   // External States
@@ -74,16 +75,18 @@ const useCreateTask = () => {
       });
 
       const data = await response.json();
-      setLoading(false);
 
       if (!response.ok) {
         throw new Error(data.message || 'Failed to add task');
       }
 
       boardTaskList();
+      toast.success('A task has been created');
     } catch (error) {
-      setLoading(false);
+      setError(true);
       setError(error.message || 'Failed to add task');
+    } finally {
+      setLoading(false);
     }
   };
 

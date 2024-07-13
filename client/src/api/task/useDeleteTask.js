@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useBoardTaskList from '../board/useBoardTaskList';
-
+import toast from 'react-hot-toast';
 const useDeleteTask = () => {
   const { boardTaskList } = useBoardTaskList();
   const [loading, setLoading] = useState(false);
@@ -17,6 +17,7 @@ const useDeleteTask = () => {
       }
       const data = await res.json();
 
+      toast.success('A task has been deleted');
       boardTaskList();
     } catch (error) {
       setError(true);

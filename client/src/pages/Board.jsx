@@ -16,7 +16,7 @@ import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
 
-// Column and Task Hooks
+// Column Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
@@ -24,14 +24,15 @@ import useCreateNewColumn from '../api/board/useCreateNewColumn';
 import useDeleteColumn from '../api/board/useDeleteColumn';
 import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 
+// Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
+import useUpdateTask from '../api/task/useUpdateTask';
 import useDeleteTask from '../api/task/useDeleteTask';
+
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const [open, setOpen] = useState(false);
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
   const { deleteColumn } = useDeleteColumn();
@@ -40,6 +41,7 @@ function Board() {
 
   // Tasks
   const { createTask } = useCreateTask();
+  const { updateTask } = useUpdateTask(setOpen);
   const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
 
@@ -49,7 +51,7 @@ function Board() {
   const { onDragStart } = useOnDragStart();
   const { onDragOver } = useOnDragOver();
   const { onDragEnd } = useOnDragEnd(currentUser);
-  const [open, setOpen] = useState(false);
+
   const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
 
   // Socket Operations
@@ -58,6 +60,7 @@ function Board() {
   useEffect(() => {
     boardColumnList();
     boardTaskList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // activate delete column function
@@ -68,63 +71,6 @@ function Board() {
       },
     })
   );
-
-  // const deleteTask = async (id) => {
-  //   try {
-  //     setLoading(true);
-  //     const res = await fetch(`/api/board/task/delete/${id}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-
-  //     setLoading(false);
-  //     if (!res.ok) {
-  //       throw new Error(data.message || 'Failed to delete column');
-  //     }
-
-  //     boardTaskList();
-  //   } catch (error) {
-  //     setLoading(false);
-  //     setError(error.message || 'Failed to delete column');
-  //   }
-  // };
-
-  // Update task function
-
-  // function updateTask(taskId, content) {
-  //   const updateTask = tasks.map((task) => {
-  //     if (task.id !== taskId) return task;
-  //     return { ...task, content };
-  //   });
-  //   setTasks(updateTask);
-  // }
-
-  const updateTask = async (taskId, content, dueDate, assignedUsers) => {
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch(`/api/board/task/update/${taskId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content, dueDate, assignedUsers }),
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to update task');
-      }
-
-      boardTaskList();
-
-      setOpen(false);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to update task');
-    }
-  };
 
   const openTask = (task) => {
     setOpen((prev) => !prev);
