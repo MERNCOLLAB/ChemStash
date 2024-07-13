@@ -13,14 +13,14 @@ const useDeleteTask = () => {
       });
 
       if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete column');
+        throw new Error(data.message || 'Failed to delete the task');
       }
       const data = await res.json();
 
       boardTaskList();
     } catch (error) {
       setError(true);
-      setError(error.message || 'Failed to delete column');
+      setError(error.message || 'Failed to delete the task');
     } finally {
       setLoading(false);
     }

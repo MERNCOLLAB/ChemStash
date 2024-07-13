@@ -25,6 +25,7 @@ import useDeleteColumn from '../api/board/useDeleteColumn';
 import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 
 import useCreateTask from '../api/task/useCreateTask';
+import useDeleteTask from '../api/task/useDeleteTask';
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
@@ -39,6 +40,7 @@ function Board() {
 
   // Tasks
   const { createTask } = useCreateTask();
+  const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
 
   const { currentUser } = useSelector((state) => state.user);
@@ -67,25 +69,25 @@ function Board() {
     })
   );
 
-  const deleteTask = async (id) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/board/task/delete/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
+  // const deleteTask = async (id) => {
+  //   try {
+  //     setLoading(true);
+  //     const res = await fetch(`/api/board/task/delete/${id}`, {
+  //       method: 'DELETE',
+  //     });
+  //     const data = await res.json();
 
-      setLoading(false);
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete column');
-      }
+  //     setLoading(false);
+  //     if (!res.ok) {
+  //       throw new Error(data.message || 'Failed to delete column');
+  //     }
 
-      boardTaskList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to delete column');
-    }
-  };
+  //     boardTaskList();
+  //   } catch (error) {
+  //     setLoading(false);
+  //     setError(error.message || 'Failed to delete column');
+  //   }
+  // };
 
   // Update task function
 
