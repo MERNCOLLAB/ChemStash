@@ -61,7 +61,7 @@ function Board() {
     boardColumnList();
     boardTaskList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tasks]);
 
   // activate delete column function
   const sensors = useSensors(
