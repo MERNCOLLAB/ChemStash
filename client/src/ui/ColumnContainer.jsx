@@ -38,17 +38,13 @@ function ColumnContainer(props) {
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="bg-columnBackGroundColor w-[350px] h-[500px] max-h-[500px] flex flex-col"
-    >
+    <div ref={setNodeRef} style={style} className="bg-gray0 w-[350px] h-[500px] max-h-[500px] flex flex-col">
       {/* title */}
       <div
         onClick={currentUser.role === 'chemist' ? null : () => setEditMode(true)}
         {...attributes}
         {...listeners}
-        className="flex justify-between bg-mainBackGroundColor cursor-grab p-3 border-4 border-columnBackGroundColor font-bold"
+        className="flex justify-between bg-white1 cursor-grab p-3 border-4 border-columnBackGroundColor font-bold"
       >
         <div className="flex gap-2 items-center">
           <div className="bg-columnBackGroundColor text-sm rounded-full px-2 py-1">0</div>

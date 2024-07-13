@@ -6,7 +6,6 @@ import { SortableContext } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import TaskCard from '../ui/TaskCard';
 import { useSelector } from 'react-redux';
-import generateId from '../helpers/GenerateId';
 
 // Drag Events
 import useOnDragStart from '../hooks/dragevents/useOnDragStart';
@@ -17,7 +16,7 @@ import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 import Drawer from '../ui/Drawer';
 import UpdateTask from '../ui/UpdateTask';
 
-// Column and Task Hooks
+// Column Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
@@ -25,25 +24,34 @@ import useCreateNewColumn from '../api/board/useCreateNewColumn';
 import useDeleteColumn from '../api/board/useDeleteColumn';
 import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 
+// Task Hooks
+import useCreateTask from '../api/task/useCreateTask';
+import useUpdateTask from '../api/task/useUpdateTask';
+import useDeleteTask from '../api/task/useDeleteTask';
+
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  const [open, setOpen] = useState(false);
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
   const { deleteColumn } = useDeleteColumn();
   const { updateColumnTitle } = useUpdateColumnTitle();
-
   const [activeColumn, setActiveColumn] = useState(null);
+
+  // Tasks
+  const { createTask } = useCreateTask();
+  const { updateTask } = useUpdateTask(setOpen);
+  const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
+
   const { currentUser } = useSelector((state) => state.user);
-  const { user, socket } = useSelector((state) => state.notification);
+
+  // Drag Events
   const { onDragStart } = useOnDragStart();
   const { onDragOver } = useOnDragOver();
   const { onDragEnd } = useOnDragEnd(currentUser);
-  const [open, setOpen] = useState(false);
+
   const [taskitem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
 
   // Socket Operations
@@ -52,6 +60,7 @@ function Board() {
   useEffect(() => {
     boardColumnList();
     boardTaskList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // activate delete column function
@@ -62,136 +71,6 @@ function Board() {
       },
     })
   );
-
-  const createTask = async (columnId, type) => {
-    const columnTitle = columns.find((column) => column.id === columnId);
-    const makerId = currentUser._id;
-    const maker = currentUser.username;
-    socket.emit('sendNotification', {
-      senderName: user,
-      type,
-    });
-
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch('/api/notification/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ type, makerId, maker, title: columnTitle.title }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add notification');
-      }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.error('Error:', error);
-    }
-
-    // Filter tasks to find those that belong to the specified columnId
-    const tasksInColumn = tasks.filter((task) => task.columnId === columnId);
-
-    // Determine the order number for the new task
-    const newOrder = tasksInColumn.length > 0 ? Math.max(...tasksInColumn.map((task) => task.order)) + 1 : 1;
-
-    const newTask = {
-      id: generateId(),
-      columnId,
-      username: maker,
-      content: `Task ${tasks.length + 1}`,
-      order: newOrder,
-    };
-
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch('/api/board/task/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTask),
-      });
-
-      const data = await response.json();
-      setLoading(false);
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add task');
-      }
-
-      boardTaskList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to add task');
-    }
-  };
-
-  // function deleteTask(taskId) {
-  //   const filteredTask = tasks.filter((task) => task.id !== taskId);
-  //   setTasks(filteredTask);
-  // }
-
-  const deleteTask = async (id) => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/board/task/delete/${id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-
-      setLoading(false);
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete column');
-      }
-
-      boardTaskList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to delete column');
-    }
-  };
-
-  // Update task function
-
-  // function updateTask(taskId, content) {
-  //   const updateTask = tasks.map((task) => {
-  //     if (task.id !== taskId) return task;
-  //     return { ...task, content };
-  //   });
-  //   setTasks(updateTask);
-  // }
-
-  const updateTask = async (taskId, content, dueDate, assignedUsers) => {
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch(`/api/board/task/update/${taskId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content, dueDate, assignedUsers }),
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to update task');
-      }
-
-      boardTaskList();
-
-      setOpen(false);
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to update task');
-    }
-  };
 
   const openTask = (task) => {
     setOpen((prev) => !prev);
