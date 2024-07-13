@@ -13,17 +13,19 @@ const useDeleteColumn = () => {
       const res = await fetch(`/api/board/column/${id}`, {
         method: 'DELETE',
       });
-      const data = await res.json();
 
-      setLoading(false);
       if (!res.ok) {
         throw new Error(data.message || 'Failed to delete column');
       }
+
+      const data = await res.json();
+
       boardTaskList();
       boardColumnList();
     } catch (error) {
-      setLoading(false);
       setError(error.message || 'Failed to delete column');
+    } finally {
+      setLoading(false);
     }
   };
   return { loading, error, deleteColumn };

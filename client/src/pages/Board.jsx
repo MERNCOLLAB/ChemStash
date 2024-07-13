@@ -23,6 +23,7 @@ import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
 import useDeleteColumn from '../api/board/useDeleteColumn';
+import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
@@ -33,6 +34,7 @@ function Board() {
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
   const { deleteColumn } = useDeleteColumn();
+  const { updateColumnTitle } = useUpdateColumnTitle();
 
   const [activeColumn, setActiveColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
@@ -60,29 +62,6 @@ function Board() {
       },
     })
   );
-
-  const updateColumn = async (id, title) => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/board/column/updateTitle', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, title }),
-      });
-      const data = await response.json();
-
-      setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to update column title');
-      }
-      boardColumnList();
-    } catch (error) {
-      setLoading(false);
-      setError(error.message || 'Failed to update column title');
-    }
-  };
 
   const createTask = async (columnId, type) => {
     const columnTitle = columns.find((column) => column.id === columnId);
@@ -245,7 +224,7 @@ function Board() {
                     column={col}
                     currentUser={currentUser}
                     deleteColumn={deleteColumn}
-                    updateColumn={updateColumn}
+                    updateColumn={updateColumnTitle}
                     createTask={createTask}
                     openTask={openTask}
                     open={open}
@@ -273,7 +252,7 @@ function Board() {
                 <ColumnContainer
                   column={activeColumn}
                   deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
+                  updateColumn={updateColumnTitle}
                   createTask={createTask}
                   currentUser={currentUser}
                   deleteTask={deleteTask}
