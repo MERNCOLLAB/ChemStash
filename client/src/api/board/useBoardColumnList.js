@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 const useBoardColumnList = () => {
   const [columns, setColumns] = useState([]);
@@ -23,7 +23,15 @@ const useBoardColumnList = () => {
     }
   };
 
-  return { loading, error, boardColumnList, columns, setColumns };
+  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+  return {
+    loading,
+    error,
+    boardColumnList,
+    columns,
+    setColumns,
+    columnsId,
+  };
 };
 
 export default useBoardColumnList;

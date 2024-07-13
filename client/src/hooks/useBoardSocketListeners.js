@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const useBoardSocketListeners = () => {
-  const [columns, setColumns] = useState([]);
-  const [tasks, setTasks] = useState([]);
-  const { user, socket } = useSelector((state) => state.notification);
+const useBoardSocketListeners = (setColumns, setTasks) => {
+  const { socket } = useSelector((state) => state.notification);
 
   useEffect(() => {
     socket?.on('columnAdded', (newColumn) => {
@@ -33,11 +31,15 @@ const useBoardSocketListeners = () => {
       setTasks((prevTasks) => prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
     });
     return () => {
-      socket?.disconnect();
+      socket.off('columnAdded');
+      socket.off('columnDeleted');
+      socket.off('columnOrderUpdated');
+      socket.off('columnTitleUpdated');
+      socket.off('createTask');
+      socket.off('taskDeleted');
+      socket.off('taskUpdated');
     };
-  }, [socket]);
-
-  return { columns, setColumns, tasks, setTasks, user };
+  }, [socket, setColumns, setTasks]);
 };
 
 export default useBoardSocketListeners;
