@@ -1,7 +1,7 @@
 // Components
 import Drawer from '../ui/Drawer';
 import { useEffect } from 'react';
-import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
+import { UpdateChemicalForm, DeleteChemicalForm, ConsumeChemicalForm } from '../ui';
 import { MTable } from '../components';
 
 // Table Configurations
@@ -14,10 +14,12 @@ import useDrawer from '../hooks/chemical/useDrawer';
 import useGetChemical from '../api/chemical/useGetChemical';
 import useUpdateChemical from '../api/chemical/useUpdateChemical';
 import useDeleteChemical from '../api/chemical/useDeleteChemical';
+
 import { useSelector } from 'react-redux';
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
-  const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
+  const { currentItem, drawerType, drawerOpen, handleConsume, handleUpdate, handleDelete, handleDrawerClose } =
+    useDrawer(lists);
   const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -27,7 +29,7 @@ function Inventory() {
       element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
     );
   };
-  const columns = inventoryColumns(currentUser, handleUpdate, handleDelete, parseInput, renderFormula);
+  const columns = inventoryColumns(currentUser, handleConsume, handleUpdate, handleDelete, parseInput, renderFormula);
 
   useEffect(() => {
     getChemicalList();
@@ -41,6 +43,8 @@ function Inventory() {
           <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
         ) : drawerType === 'delete' ? (
           <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
+        ) : drawerType === 'consume' ? (
+          <ConsumeChemicalForm item={currentItem} getChemicalList={getChemicalList} />
         ) : null}
       </Drawer>
       {loading ? (

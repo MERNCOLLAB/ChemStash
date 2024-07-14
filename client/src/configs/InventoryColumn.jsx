@@ -4,7 +4,7 @@ import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import getTagClass from '../helpers/TagColors';
 
-export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseInput, renderFormula) => [
+export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handleDelete, parseInput, renderFormula) => [
   {
     name: 'name',
     label: 'Name',
@@ -99,6 +99,16 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
             <GoGear />
           </div>
           <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52">
+            <li className="flex gap-2 hover:bg-slate-700">
+              <p
+                onClick={() => {
+                  handleConsume(value);
+                }}
+              >
+                <span>➖</span>
+                <span>Consume </span>
+              </p>
+            </li>
             <li className="flex gap-2 hover:bg-slate-700">
               <p
                 onClick={() => {

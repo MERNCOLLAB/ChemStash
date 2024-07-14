@@ -71,7 +71,9 @@ export const updateChemical = async (req, res, next) => {
 
 export const saveConsumption = async (req, res, next) => {
   try {
+    const { unit } = req.body;
     const currentChemical = await Chemical.findById(req.params.id);
+
     if (!currentChemical) {
       return res.status(404).json({ message: 'Chemical not found' });
     }
@@ -89,6 +91,7 @@ export const saveConsumption = async (req, res, next) => {
     const newConsumption = new ChemicalConsumption({
       chemicalId: req.params.id,
       amount: consumptionAmount,
+      unit,
       date: new Date(),
       user: req.body.user,
     });

@@ -14,6 +14,8 @@ import SampleRadarChart from './SampleRadarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
 import DashBoardCard from './DashBoardCard';
+import ConsumeChemicalForm from './ConsumeChemicalForm';
+
 export {
   AppLayout,
   Drawer,
@@ -31,4 +33,5 @@ export {
   NotificationList,
   NotificationLayout,
   DashBoardCard,
+  ConsumeChemicalForm,
 };

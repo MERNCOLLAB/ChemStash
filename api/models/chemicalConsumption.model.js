@@ -10,6 +10,11 @@ const ChemicalConsumptionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
+  unit: {
+    type: Number,
+  },
+
   date: {
     type: Date,
     default: Date.now,

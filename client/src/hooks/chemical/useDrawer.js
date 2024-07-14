@@ -16,6 +16,11 @@ const useDrawer = (lists) => {
     setCurrentItem(itemToDelete);
   };
 
+  const handleConsume = (id) => {
+    handleDrawerOpen('consume');
+    setCurrentItem(id);
+  };
+
   const handleDrawerOpen = (type) => {
     setDrawerType(type);
     setDrawerOpen(true);
@@ -34,6 +39,7 @@ const useDrawer = (lists) => {
     handleDelete,
     handleDrawerOpen,
     handleDrawerClose,
+    handleConsume,
   };
 };
 
