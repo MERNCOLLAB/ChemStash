@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
   const { currentItem, drawerType, drawerOpen, handleUpdate, handleDelete, handleDrawerClose } = useDrawer(lists);
-  const { updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
+  const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
   const currentUser = useSelector((state) => state.user.currentUser);
   const { parseInput } = useFormatFormula();
@@ -38,7 +38,7 @@ function Inventory() {
     <div className="flex flex-col  ">
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
         {drawerType === 'update' ? (
-          <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} />
+          <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
         ) : drawerType === 'delete' ? (
           <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
         ) : null}

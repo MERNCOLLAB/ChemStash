@@ -62,7 +62,7 @@ function Board() {
     boardTaskList();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [openDrawer]);
 
   // activate delete column function
   const sensors = useSensors(

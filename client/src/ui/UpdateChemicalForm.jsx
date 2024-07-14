@@ -1,39 +1,53 @@
-import { Input, Button, FormulaInput } from '../components';
-import Select from 'react-select';
-import { selectStyle } from '../helpers/selectStyle';
+import { Input, Button } from '../components';
+import CustomSelect from '../components/CustomSelect';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useUpdateChemicalDrawer from '../hooks/chemical/useUpdateChemicalDrawer';
 
-function UpdateChemicalForm({ item, handleUpdate }) {
+function UpdateChemicalForm({ item, handleUpdate, loading }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
   const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, handleUpdate);
 
   return (
-    <form className="menu p-4 w-80 min-h-full text-base-content bg-slate-800" onSubmit={onUpdate}>
+    <form className="menu p-4 w-[49%] min-h-full text-base-content bg-white0" onSubmit={onUpdate}>
       <ul>
         <li>
           {/* Chemical Name */}
-          <label>Chemical Name</label>
-          <Input value={updatedItem.name} id="name" type="text" placeholder="Name" onChange={handleChange} />
+          <Input
+            disabled={loading}
+            value={updatedItem.name}
+            id="name"
+            type="text"
+            label="Chemical Name"
+            placeholder="Enter chemical name"
+            onChange={handleChange}
+            validation="General compound name"
+          />
         </li>
 
         <li>
-          <label>Batch</label>
+          {/* Batch Number */}
           <Input
+            disabled={loading}
             value={updatedItem.batch}
             id="batch"
             type="number"
-            placeholder="Batch Number"
+            label="Batch Number"
+            placeholder="Enter Batch Number"
             onChange={handleChange}
+            validation="Please enter a valid batch number (e.g., 1001, 2002)"
           />
         </li>
 
         {/* Molecular Formula */}
-        <li className="space-y-2">
-          <FormulaInput
-            id="molecularFormula"
+        <li>
+          <Input
+            disabled={loading}
             value={updatedItem.molecularFormula}
-            onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
+            id="molecularFormula"
+            label="Molecular Formula"
+            placeholder="Enter Molecular Formula"
+            onChange={handleChange}
+            validation="Please enter the chemical formula (eg. Ba2SO4)"
           />
         </li>
 
@@ -41,103 +55,164 @@ function UpdateChemicalForm({ item, handleUpdate }) {
           {/* Lot Number */}
           <label>Lot Number</label>
           <Input
+            disabled={loading}
             value={updatedItem.lotNumber}
             id="lotNumber"
             type="number"
-            placeholder="Lot Number"
+            label="Lot Number"
+            placeholder="Enter Lot Number"
             onChange={handleChange}
+            validation="Please enter a valid lot number (e.g., 001, 002)"
           />
         </li>
 
         {/* Purity */}
         <li>
-          <label>Purity</label>
-          <Input value={updatedItem.purity} id="purity" type="text" placeholder="Purity" onChange={handleChange} />
+          <Input
+            label="Purity"
+            disable={loading}
+            value={updatedItem.purity}
+            id="purity"
+            type="text"
+            placeholder="Enter Purity"
+            onChange={handleChange}
+            validation="Please enter the purity (eg., Lab Grade, Tech Grade)"
+          />
         </li>
 
         {/* Location */}
         <li>
           <label>Location</label>
-          <Select
+          <CustomSelect
+            label="Storage Location"
+            validation="Enter where are you going to store the chemical"
             placeholder="Select a location"
             value={locationOptions.find((opt) => opt.value === updatedItem.location)}
             options={locationOptions}
             onChange={(selectedLocation) => handleChangeOption(selectedLocation, 'location')}
-            styles={selectStyle}
-            isClearable
           />
         </li>
 
         {/* Brand */}
         <li>
-          <label>Brand</label>
-          <Input value={updatedItem.brand} id="brand" type="text" placeholder="Brand" onChange={handleChange} />
+          <Input
+            label="Brand"
+            disable={loading}
+            value={updatedItem.brand}
+            id="brand"
+            type="text"
+            placeholder="Enter Brand"
+            onChange={handleChange}
+            validation="Please enter the chemical brand (eg. Merck, Sigma Aldrich)"
+          />
         </li>
 
         {/* Number of Supply */}
         <li>
-          <label>Supply</label>
-          <Input value={updatedItem.supply} id="supply" type="number" placeholder="Supply" onChange={handleChange} />
+          <Input
+            label="Supply"
+            disable={loading}
+            value={updatedItem.supply}
+            id="supply"
+            type="number"
+            placeholder="Enter the Number of Supply"
+            onChange={handleChange}
+            validation="Please enter the number of bottles or container"
+          />
         </li>
 
         {/* Amount */}
         <li>
-          <label>Amount</label>
-          <Input value={updatedItem.amount} id="amount" type="number" placeholder="Amount" onChange={handleChange} />
+          <Input
+            label="Amount"
+            disable={loading}
+            value={updatedItem.amount}
+            id="amount"
+            type="number"
+            placeholder="Enter Amount"
+            onChange={handleChange}
+            validation="Please enter the amount or quantity of the chemical"
+          />
         </li>
 
         {/*  Unit */}
         <li>
-          <label>Unit</label>
           <Input
+            label="Expression Unit"
+            disable={loading}
             value={updatedItem.unit}
             id="unit"
             type="text"
-            placeholder="Unit (eg. L or grams)"
+            placeholder="Enter Unit"
             onChange={handleChange}
+            validation="Please enter the unit of expression for the amount(eg. L, grams)"
           />
         </li>
 
         {/* Date Received */}
         <li>
-          <label>Date Received</label>
-          <Input value={updatedItem.dateReceived} id="dateReceived" type="date" onChange={handleChange} />
+          <Input
+            label="Date Received"
+            disable={loading}
+            value={updatedItem.dateReceived}
+            id="dateReceived"
+            type="date"
+            onChange={handleChange}
+            validation="Enter the date the chemical received in mm/dd/yy"
+          />
         </li>
         <li>
           {/* Expiry Date */}
-          <label>Expiry Date</label>
-          <Input value={updatedItem.expiryDate} id="expiryDate" type="date" onChange={handleChange} />
+          <Input
+            label="Expiry Date"
+            disable={loading}
+            value={updatedItem.expiryDate}
+            id="expiryDate"
+            type="date"
+            onChange={handleChange}
+            validation="Enter the chemical expiry date in mm/dd/yy. Greater than date purchased"
+          />
         </li>
 
         {/* Hazard Classification */}
         <li>
           <label>Hazard Classification</label>
-          <Select
-            placeholder="Select a Hazard Classification"
+          <CustomSelect
+            label="Hazard Classification"
+            validation="Enter the chemical hazard classification (GHS Standard)"
+            placeholder="Select a classification"
             value={hazardClassificationOptions.find((opt) => opt.value === updatedItem.hazardClassification)}
             options={hazardClassificationOptions}
             onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
-            styles={selectStyle}
-            isClearable
           />
         </li>
 
         {/* Safety Data Sheet */}
         <li>
-          <label>SDS</label>
           <Input
+            label="Safety Data Sheet"
+            disable={loading}
             value={updatedItem.sds}
             id="sds"
             type="text"
-            placeholder="Safety Data Sheet URL"
+            placeholder="SDS Link"
             onChange={handleChange}
+            validation="Please enter the safety data sheet URL"
           />
         </li>
 
         {/* Remarks */}
         <li>
-          <label>Remarks</label>
-          <Input value={updatedItem.remarks} id="remarks" type="text" placeholder="Remarks" onChange={handleChange} />
+          <Input
+            label="Additional Notes"
+            disable={loading}
+            value={updatedItem.remarks}
+            id="remarks"
+            type="text"
+            placeholder="Enter Remarks"
+            onChange={handleChange}
+            validation="Optional remarks"
+          />
         </li>
       </ul>
 
