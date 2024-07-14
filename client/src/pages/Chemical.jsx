@@ -1,5 +1,5 @@
 import CustomSelect from '../components/CustomSelect';
-import { Button, Input, FormulaInput } from '../components';
+import { Button, Input } from '../components';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useAddChemical from '../api/chemical/useAddChemical';
 
@@ -37,10 +37,14 @@ function Chemical() {
         />
 
         {/* Molecular Formula */}
-        <FormulaInput
-          id="molecularFormula"
+        <Input
+          disable={loading}
           value={formData.molecularFormula}
-          onChange={(value) => handleChange({ target: { id: 'molecularFormula', value } })}
+          id="molecularFormula"
+          label="Molecular Formula"
+          placeholder="Enter Molecular Formula"
+          onChange={handleChange}
+          validation="Please enter the chemical formula (eg. Ba2SO4)"
         />
 
         {/* Lot Number */}
@@ -115,7 +119,7 @@ function Chemical() {
 
         {/* Unit */}
         <Input
-          label="Expression unit"
+          label="Expression Unit"
           disable={loading}
           value={formData.unit}
           id="unit"
