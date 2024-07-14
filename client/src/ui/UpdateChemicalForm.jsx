@@ -6,10 +6,7 @@ import useUpdateChemicalDrawer from '../hooks/useUpdateChemicalDrawer';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
-  const { updatedItem, setUpdatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(
-    item,
-    handleUpdate
-  );
+  const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, handleUpdate);
 
   return (
     <form className="menu p-4 w-80 min-h-full text-base-content bg-slate-800" onSubmit={onUpdate}>

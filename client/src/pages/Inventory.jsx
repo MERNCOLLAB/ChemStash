@@ -11,9 +11,9 @@ import { paginationOptions, getMuiTheme } from '../helpers/TableConfig';
 
 // Hooks
 import useDrawer from '../hooks/useDrawer';
-import useGetChemical from '../api/useGetChemical';
-import useUpdateChemical from '../api/useUpdateChemical';
-import useDeleteChemical from '../api/useDeleteChemical';
+import useGetChemical from '../api/chemical/useGetChemical';
+import useUpdateChemical from '../api/chemical/useUpdateChemical';
+import useDeleteChemical from '../api/chemical/useDeleteChemical';
 import { useSelector } from 'react-redux';
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
