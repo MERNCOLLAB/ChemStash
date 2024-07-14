@@ -55,9 +55,9 @@ function Header() {
 
   return (
     <div className="mx-auto border relative">
-      <div className="flex justify-between items-center mx-auto p-3">
+      <div className="flex justify-between items-center mx-auto px-7 py-5">
         <Linker to="/">
-          <h1 className="font-bold">Chemstack</h1>
+          <h1 className="font-semibold text-md">ChemStack</h1>
         </Linker>
 
         <ul className="flex gap-4 items-center">

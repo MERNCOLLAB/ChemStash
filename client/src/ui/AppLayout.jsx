@@ -3,11 +3,11 @@ import LeftNavbar from './LeftNavbar';
 
 function AppLayout() {
   return (
-    <div className="gap-4 mt-4 flex flex-col">
-      <div className="border p-4  ">
+    <div className="flex">
+      <div className="border h-screen w-[200px] p-7">
         <LeftNavbar />
       </div>
-      <div className="border p-4 w-full   overflow-y-scroll no-scrollbar ">
+      <div className="border overflow-y-scroll no-scrollbar ">
         <Outlet />
       </div>
     </div>
