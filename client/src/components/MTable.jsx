@@ -15,12 +15,13 @@ const MTable = ({ data, columns, options, title }) => {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: '0px 3px',
-              color: '#94a3b8',
+              padding: '10px 14px',
+              color: '#F8FAFC',
             },
             body: {
-              padding: '8px',
-              color: '#94a3b8',
+              padding: '10px 14px',
+              backgroundColor: '#F8FAFC',
+              color: '#64748B',
               fontSize: '12px',
             },
           },
@@ -39,17 +40,11 @@ const MTable = ({ data, columns, options, title }) => {
             },
           },
         },
-        MUIDataTable: {
-          styleOverrides: {
-            root: {
-              border: '1px solid #fff',
-            },
-          },
-        },
         MUIDataTableHeadCell: {
           styleOverrides: {
             data: {
               whiteSpace: 'pre',
+              color: '#64748B',
             },
           },
         },
@@ -59,7 +54,7 @@ const MTable = ({ data, columns, options, title }) => {
   if (!data) return;
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable className="text-slate-300" title={title} data={data} columns={columns} options={options} />
+      <MUIDataTable title={title} data={data} columns={columns} options={options} />
     </ThemeProvider>
   );
 };

@@ -11,21 +11,21 @@ export const getMuiTheme = () =>
   createTheme({
     palette: {
       background: {
-        paper: '#0f172a',
+        paper: '#64748B',
         default: '#ffffff',
       },
-      mode: 'dark',
+      mode: 'light',
     },
     components: {
-      MuiTableCell: {
+      MuiTableHeadCell: {
         styleOverrides: {
           head: {
             padding: '0px 3px',
-            color: '#94a3b8',
+            color: '#64748B',
           },
           body: {
             padding: ' 8px',
-            color: '#94a3b8',
+            color: '#64748B',
             fontSize: '12px',
           },
         },
