@@ -35,22 +35,26 @@ function Inventory() {
   }, []);
 
   return (
-    <div className="flex flex-col  ">
-      <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
-        {drawerType === 'update' ? (
-          <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
-        ) : drawerType === 'delete' ? (
-          <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
-        ) : null}
-      </Drawer>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>Something went wrong, {error.message}</div>
-      ) : (
-        <MTable className="text-slate-300 " data={lists} columns={columns} options={paginationOptions} />
-      )}
-    </div>
+    <section className="bg-gray0 p-[30px]">
+      <h1 className="font-semibold text-md">Chemical Inventory Table</h1>
+
+      <div className="flex flex-col  ">
+        <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
+          {drawerType === 'update' ? (
+            <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
+          ) : drawerType === 'delete' ? (
+            <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
+          ) : null}
+        </Drawer>
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>Something went wrong, {error.message}</div>
+        ) : (
+          <MTable data={lists} columns={columns} options={paginationOptions} />
+        )}
+      </div>
+    </section>
   );
 }
 
