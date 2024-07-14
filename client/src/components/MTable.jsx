@@ -1,6 +1,21 @@
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import Button from './Button';
+
+const CustomToolbar = () => {
+  const handleClick = () => {
+    // Need to link at add Chemical Drawer
+    return;
+  };
+
+  return (
+    <Button variant="primary" onClick={handleClick}>
+      Add chemical
+    </Button>
+  );
+};
+
 const MTable = ({ data, columns, options, title }) => {
   const getMuiTheme = () =>
     createTheme({
@@ -51,10 +66,15 @@ const MTable = ({ data, columns, options, title }) => {
       },
     });
 
-  if (!data) return;
+  const customOptions = {
+    ...options,
+    customToolbar: () => <CustomToolbar />,
+  };
+
+  if (!data) return null;
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable title={title} data={data} columns={columns} options={options} />
+      <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />
     </ThemeProvider>
   );
 };
