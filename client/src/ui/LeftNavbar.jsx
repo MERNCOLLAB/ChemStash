@@ -3,21 +3,21 @@ import { useSelector } from 'react-redux';
 function LeftNavbar() {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <ul className="flex  gap-4">
+    <ul className="flex flex-col gap-[10px]">
+      <li>
+        <Linker to="dashboard">Dashboard</Linker>
+      </li>
       <li>
         <Linker to="inventory">Inventory</Linker>
+      </li>
+      <li>
+        <Linker to="board">Board</Linker>
       </li>
       {currentUser.role === 'manager' ? (
         <li>
           <Linker to="users">Users</Linker>
         </li>
       ) : null}
-      <li>
-        <Linker to="chemical">Add Chemical</Linker>
-      </li>
-      <li>
-        <Linker to="purchase">Purchase</Linker>
-      </li>
       <li>
         <Linker to="map">Map</Linker>
       </li>
