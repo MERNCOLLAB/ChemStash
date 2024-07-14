@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import { tagColorUtilities } from './src/helpers/TagColors';
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -30,8 +31,13 @@ export default {
       },
     },
   },
-  // eslint-disable-next-line no-undef
-  plugins: [require('daisyui')],
+  plugins: [
+    // eslint-disable-next-line no-undef
+    require('daisyui'),
+    ({ addUtilities }) => {
+      addUtilities(tagColorUtilities);
+    },
+  ],
   daisyui: {
     themes: [],
   },
