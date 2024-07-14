@@ -1,6 +1,6 @@
 import CustomSelect from '../components/CustomSelect';
 import { Button, Input, FormulaInput } from '../components';
-import useChemicalForm from '../hooks/useChemicalForm';
+import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useAddChemical from '../api/chemical/useAddChemical';
 
 function Chemical() {

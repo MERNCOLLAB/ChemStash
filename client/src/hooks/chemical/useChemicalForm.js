@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { location, hazardClassifications, initialChemicalData } from '../constants';
-import { transformArrayToOptions } from '../helpers/transformArray';
-import useAddChemical from '../api/chemical/useAddChemical';
+import { location, hazardClassifications, initialChemicalData } from '../../constants';
+import { transformArrayToOptions } from '../../helpers/transformArray';
+import useAddChemical from '../../api/chemical/useAddChemical';
 
 const useChemicalForm = () => {
   const { addChemical } = useAddChemical();

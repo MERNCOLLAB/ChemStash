@@ -19,7 +19,7 @@ import UpdateTask from '../ui/UpdateTask';
 // Column Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
-import useBoardSocketListeners from '../hooks/useBoardSocketListeners';
+import useBoardSocketListeners from '../hooks/board/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
 import useDeleteColumn from '../api/board/useDeleteColumn';
 import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';

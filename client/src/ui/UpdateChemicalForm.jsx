@@ -1,8 +1,8 @@
 import { Input, Button, FormulaInput } from '../components';
 import Select from 'react-select';
 import { selectStyle } from '../helpers/selectStyle';
-import useChemicalForm from '../hooks/useChemicalForm';
-import useUpdateChemicalDrawer from '../hooks/useUpdateChemicalDrawer';
+import useChemicalForm from '../hooks/chemical/useChemicalForm';
+import useUpdateChemicalDrawer from '../hooks/chemical/useUpdateChemicalDrawer';
 
 function UpdateChemicalForm({ item, handleUpdate }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
