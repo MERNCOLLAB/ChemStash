@@ -2,6 +2,7 @@ import { GoGear } from 'react-icons/go';
 import { CiEdit } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
+import getTagClass from '../helpers/TagColors';
 
 export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseInput, renderFormula) => [
   {
@@ -30,27 +31,7 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   {
     name: 'location',
     options: {
-      customBodyRender: (value) => (
-        <p
-          className={`capitalize px-3 py-1 inline-block rounded-full text-slate-300   ${
-            value === 'Flammable Storage Cabinet'
-              ? 'bg-rose-800'
-              : value === 'Corrosive Storage Cabinet'
-                ? 'bg-teal-800'
-                : value === 'Refrigerator/Freezer'
-                  ? 'bg-sky-800'
-                  : value === 'General Storage Shelf'
-                    ? 'bg-indigo-800'
-                    : value === 'Oxidizer Storage Shelf'
-                      ? 'bg-amber-800'
-                      : value === 'Gas Cylinder Storage'
-                        ? 'bg-slate-800'
-                        : 'bg-fuchsia-800'
-          }`}
-        >
-          {value}
-        </p>
-      ),
+      customBodyRender: (value) => <p className={`px-1.5 py-[3px] rounded-lg ${getTagClass(value)}`}>{value}</p>,
     },
   },
   {

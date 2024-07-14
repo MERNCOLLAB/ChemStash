@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 
 function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
   return (
-    <div className="menu p-4 w-80 min-h-full text-base-content bg-slate-800">
+    <div className="menu p-4 w-[49%] min-h-full text-base-content bg-white0">
       <ThemeProvider theme={getMuiTheme()}>
         <Table sx={{ minWidth: 80 }} size="small" aria-label="delete drawer">
           <TableHead>
@@ -100,7 +100,7 @@ function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
           </TableBody>
         </Table>
         <div className="mt-2 text-center">
-          <Button type="button" variant="delete" onClick={() => onDelete(item._id)}>
+          <Button type="button" variant="secondary" onClick={() => onDelete(item._id)}>
             Delete
           </Button>
         </div>
