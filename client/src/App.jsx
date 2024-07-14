@@ -1,17 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {
-  Home,
-  SignIn,
-  SignUp,
-  About,
-  UserList,
-  Profile,
-  Inventory,
-  PageNotFound,
-  Chemical,
-  Dashboard,
-  PurchaseRequest,
-} from './pages';
+import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
 import { Header, PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
 import { Toaster } from 'react-hot-toast';
@@ -27,43 +15,38 @@ function App() {
         {/* manager */}
         <Route element={<PrivateRoute role="manager" />}>
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/manager/board" element={<Board />} />
-          <Route path="/manager/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
-            <Route path="inventory" index element={<Inventory />} />
-            <Route path="purchase" index element={<PurchaseRequest />} />
+            <Route path="dashboard" index element={<Dashboard />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="board" element={<Board />} />
             <Route path="users" element={<UserList />} />
-            <Route path="chemical" element={<Chemical />} />
             <Route path="map" element={<Map />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
         {/* chemist */}
         <Route element={<PrivateRoute role="chemist" />}>
-          <Route path="/chemist/board" element={<Board />} />
-          <Route path="/chemist/dashboard" element={<Dashboard />} />
-          <Route path="/chemist-profile" element={<Profile />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/chemist" element={<AppLayout />}>
-            <Route path="inventory" index element={<Inventory />} />
-            <Route path="purchase" index element={<PurchaseRequest />} />
-            <Route path="chemical" element={<Chemical />} />
+            <Route path="dashboard" index element={<Dashboard />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="board" element={<Board />} />
             <Route path="map" element={<Map />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
 
         {/* team leader */}
         <Route element={<PrivateRoute role="tl" />}>
-          <Route path="/tl/board" element={<Board />} />
-          <Route path="/tl-profile" element={<Profile />} />
-          <Route path="/tl" element={<div>Team leader</div>} />
-          <Route path="/tl/map" element={<Map />} />
-        </Route>
-        {/* purchacer */}
-        <Route element={<PrivateRoute role="purchacer" />}>
-          <Route path="/purchacer/board" element={<Board />} />
-          <Route path="/purchacer-profile" element={<Profile />} />
-          <Route path="/purchacer" element={<div>purchacer</div>} />
-          <Route path="/purchacer/map" element={<Map />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/teamleader" element={<AppLayout />}>
+            <Route path="dashboard" index element={<Dashboard />} />
+            <Route path="inventory" element={<Inventory />} />
+            <Route path="board" element={<Board />} />
+            <Route path="users" element={<UserList />} />
+            <Route path="map" element={<Map />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<PageNotFound />} />

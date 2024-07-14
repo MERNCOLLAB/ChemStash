@@ -21,6 +21,9 @@ function LeftNavbar() {
       <li>
         <Linker to="map">Map</Linker>
       </li>
+      <li>
+        <Linker to="profile">Profile</Linker>
+      </li>
     </ul>
   );
 }
