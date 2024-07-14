@@ -7,6 +7,7 @@ import getTagClass from '../helpers/TagColors';
 export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseInput, renderFormula) => [
   {
     name: 'name',
+    label: 'Name',
   },
   {
     name: 'batch',
@@ -14,7 +15,7 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   },
   {
     name: 'molecularFormula',
-    label: 'Molecular Formula',
+    label: 'Formula',
     options: { customBodyRender: (value) => renderFormula(parseInput(value)) },
   },
   {
@@ -24,30 +25,36 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
 
   {
     name: 'purity',
+    label: 'Purity',
     options: {
       filter: false,
     },
   },
   {
     name: 'location',
+    label: 'Location',
     options: {
       customBodyRender: (value) => <p className={`px-1.5 py-[3px] rounded-lg ${getTagClass(value)}`}>{value}</p>,
     },
   },
   {
     name: 'brand',
+    label: 'Brand',
     options: {
       filter: false,
     },
   },
   {
     name: 'supply',
+    label: 'Supply',
   },
   {
     name: 'amount',
+    label: 'Amount',
   },
   {
     name: 'unit',
+    label: 'Unit',
   },
   {
     name: 'dateReceived',
@@ -63,6 +70,7 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   },
   {
     name: 'sds',
+    label: 'SDS',
     options: {
       customBodyRender: (value) => (
         <div className="btn btn-sm  bg-slate-800 hover:bg-slate-700">
@@ -76,6 +84,7 @@ export const inventoryColumns = (currentUser, handleUpdate, handleDelete, parseI
   },
   {
     name: 'remarks',
+    label: 'Remarks',
     options: {
       filter: false,
     },

@@ -48,7 +48,7 @@ function Inventory() {
       ) : error ? (
         <div>Something went wrong, {error.message}</div>
       ) : (
-        <MTable className="text-slate-300 " data={lists} columns={columns} options={paginationOptions} />
+        <MTable data={lists} columns={columns} options={paginationOptions} />
       )}
     </div>
   );

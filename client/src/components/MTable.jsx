@@ -1,5 +1,23 @@
+import React from 'react';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import Button from './Button';
+
+const CustomToolbar = () => {
+  const handleClick = () => {
+    // Need to add link at Add Chemical Drawer
+    return;
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="primary" onClick={handleClick}>
+        Add chemical
+      </Button>
+    </React.Fragment>
+  );
+};
 
 const MTable = ({ data, columns, options, title }) => {
   const getMuiTheme = () =>
@@ -15,12 +33,13 @@ const MTable = ({ data, columns, options, title }) => {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: '0px 3px',
-              color: '#94a3b8',
+              padding: '10px 14px',
+              color: '#F8FAFC',
             },
             body: {
-              padding: '8px',
-              color: '#94a3b8',
+              padding: '10px 14px',
+              backgroundColor: '#F8FAFC',
+              color: '#64748B',
               fontSize: '12px',
             },
           },
@@ -39,27 +58,29 @@ const MTable = ({ data, columns, options, title }) => {
             },
           },
         },
-        MUIDataTable: {
-          styleOverrides: {
-            root: {
-              border: '1px solid #fff',
-            },
-          },
-        },
         MUIDataTableHeadCell: {
           styleOverrides: {
             data: {
               whiteSpace: 'pre',
+              color: '#64748B',
             },
           },
         },
       },
     });
 
-  if (!data) return;
+  const customOptions = {
+    ...options,
+    customToolbar: () => <CustomToolbar />,
+  };
+
+  if (!data) return null;
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <MUIDataTable className="text-slate-300" title={title} data={data} columns={columns} options={options} />
+      <div className="p-8">
+        <h1 className="font-semibold pb-4">Chemical Inventory Table</h1>
+        <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />
+      </div>
     </ThemeProvider>
   );
 };
