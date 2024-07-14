@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
+import useGetUser from '../api/users/useGetUsers';
 const UpdateTask = ({ taskitem, onUpdate }) => {
-  const [members, setMembers] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [update, setUpdate] = useState({
     content: '',
     dueDate: '',
@@ -14,28 +11,9 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
   });
 
   const animatedComponents = makeAnimated();
+  const { loading, error, members, fetchMembers } = useGetUser();
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/user/manager/members', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch members');
-        }
-        const data = await response.json();
-        setMembers(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(true);
-      }
-    };
     fetchMembers();
   }, []);
 
