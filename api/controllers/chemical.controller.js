@@ -1,6 +1,6 @@
 import Chemical from '../models/chemical.model.js';
 import moment from 'moment';
-
+import ChemicalConsumption from '../models/chemicalConsumption.model.js';
 // add chemical
 export const createChemical = async (req, res, next) => {
   const initialChemicalData = req.body;
@@ -66,5 +66,46 @@ export const updateChemical = async (req, res, next) => {
   } catch (error) {
     next(error);
     console.error('Error in updateChemical controller', error.message);
+  }
+};
+
+export const saveConsumption = async (req, res, next) => {
+  try {
+    const currentChemical = await Chemical.findById(req.params.id);
+    if (!currentChemical) {
+      return res.status(404).json({ message: 'Chemical not found' });
+    }
+
+    const consumptionAmount = req.body.amount;
+
+    if (consumptionAmount <= 0) {
+      return res.status(400).json({ message: 'Invalid consumption amount. It must be greater than 0.' });
+    }
+
+    if (consumptionAmount > currentChemical.amount) {
+      return res.status(400).json({ message: 'Consumption amount exceeds available chemical amount.' });
+    }
+
+    const newConsumption = new ChemicalConsumption({
+      chemicalId: req.params.id,
+      amount: consumptionAmount,
+      date: new Date(),
+      user: req.body.user,
+    });
+    await newConsumption.save();
+
+    currentChemical.amount -= consumptionAmount;
+    await currentChemical.save();
+
+    res.status(200).json({
+      message: 'Consumption successfully saved and chemical amount updated',
+      data: {
+        consumption: newConsumption,
+        updatedChemical: currentChemical,
+      },
+    });
+  } catch (error) {
+    next(error);
+    console.error('Error in saveConsumption controller', error.message);
   }
 };
