@@ -1,10 +1,11 @@
-import useGetChemical from '../api/useGetChemical';
+import useGetChemical from '../api/chemical/useGetChemical';
 import { useEffect } from 'react';
 const DashboardCard = ({ query, title }) => {
   const { lists, loading, error, getChemicalList } = useGetChemical(query);
 
   useEffect(() => {
     getChemicalList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

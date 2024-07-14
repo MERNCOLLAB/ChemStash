@@ -5,15 +5,15 @@ import { UpdateChemicalForm, DeleteChemicalForm } from '../ui';
 import { MTable } from '../components';
 
 // Table Configurations
-import useFormatFormula from '../hooks/useFormatFormula';
+import useFormatFormula from '../hooks/chemical/useFormatFormula';
 import { inventoryColumns } from '../configs/InventoryColumn';
 import { paginationOptions, getMuiTheme } from '../helpers/TableConfig';
 
 // Hooks
-import useDrawer from '../hooks/useDrawer';
-import useGetChemical from '../api/useGetChemical';
-import useUpdateChemical from '../api/useUpdateChemical';
-import useDeleteChemical from '../api/useDeleteChemical';
+import useDrawer from '../hooks/chemical/useDrawer';
+import useGetChemical from '../api/chemical/useGetChemical';
+import useUpdateChemical from '../api/chemical/useUpdateChemical';
+import useDeleteChemical from '../api/chemical/useDeleteChemical';
 import { useSelector } from 'react-redux';
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
@@ -31,6 +31,7 @@ function Inventory() {
 
   useEffect(() => {
     getChemicalList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

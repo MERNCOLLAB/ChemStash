@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { initialChemicalData } from '../constants';
-import { formatDate } from '../helpers/FormatDate';
+import { initialChemicalData } from '../../constants';
+import { formatDate } from '../../helpers/FormatDate';
 
 const useUpdateChemicalDrawer = (item, handleUpdate) => {
   const [updatedItem, setUpdatedItem] = useState({ ...initialChemicalData, ...item });

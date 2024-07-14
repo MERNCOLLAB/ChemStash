@@ -1,4 +1,4 @@
-import useFormatFormula from '../hooks/useFormatFormula';
+import useFormatFormula from '../hooks/chemical/useFormatFormula';
 import { useState, useEffect } from 'react';
 import Input from './Input';
 import Button from './Button';
