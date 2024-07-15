@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const unitOptions = [
   { value: 1, label: 'ml' },
-  { value: 2, label: 'kl' },
+  { value: 2, label: 'kg' },
   { value: 3, label: 'grams' },
 ];
 
