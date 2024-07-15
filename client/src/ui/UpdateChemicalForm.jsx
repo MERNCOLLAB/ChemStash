@@ -1,13 +1,12 @@
 import { Input, Button, FormHeader, FormSubHeader, FormContainer } from '../components';
 import CustomSelect from '../components/CustomSelect';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
-import useDrawer from '../hooks/chemical/useDrawer';
 import useUpdateChemicalDrawer from '../hooks/chemical/useUpdateChemicalDrawer';
 
-function UpdateChemicalForm({ item, handleUpdate, loading }) {
+function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
   const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, handleUpdate);
-  const { handleDrawerClose } = useDrawer();
+
   // Basic Information Section
   // First Row: Chemical Name, Molecular Formula, Brand
   const basicInfoFirstRow = (
@@ -108,7 +107,7 @@ function UpdateChemicalForm({ item, handleUpdate, loading }) {
         id="expiryDate"
         type="date"
         onChange={handleChange}
-        validation="Enter the chemical expiry date in mm/dd/yy. Greater than date purchased"
+        validation="Enter the chemical expiry date in mm/dd/yy"
       />
     </>
   );
@@ -186,19 +185,20 @@ function UpdateChemicalForm({ item, handleUpdate, loading }) {
   );
 
   return (
-    <form className="p-7 min-w-[49%]  min-h-full  bg-white0" onSubmit={onUpdate}>
+    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={onUpdate}>
       <FormHeader title="Update Chemical Form" />
       {/* Basic Info */}
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
-      <FormContainer firstRowInput={basicInfoFirstRow} secondRowInput={basicInfoSecondRow} />
-
+      <FormContainer gridNumber={3}>{basicInfoFirstRow}</FormContainer>
+      <FormContainer gridNumber={3}>{basicInfoSecondRow}</FormContainer>
       {/* Storage Info */}
       <FormSubHeader title="Storage Info" subtitle="Details about the storage and quantity of the chemical" />
-      <FormContainer firstRowInput={storageInfoFirstRow} secondRowInput={storageInfoSecondRow} />
+      <FormContainer gridNumber={3}>{storageInfoFirstRow}</FormContainer>
+      <FormContainer gridNumber={3}>{storageInfoSecondRow}</FormContainer>
 
       {/* Safety Info */}
       <FormSubHeader title="Safety Info" subtitle="Hazard classification and reference safety data sheet" />
-      <FormContainer firstRowInput={safetyInfoRow} />
+      <FormContainer gridNumber={3}>{safetyInfoRow}</FormContainer>
 
       <div className="flex justify-end mt-4 gap-2.5 p-2.5">
         <Button type="button" variant="secondary" onClick={handleDrawerClose}>

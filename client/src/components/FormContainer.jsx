@@ -1,11 +1,5 @@
-const FormContainer = ({ firstRowInput, secondRowInput }) => {
-  return (
-    <div className="grid grid-cols-1 gap-4">
-      <div className="flex justify-start items-center gap-5">{firstRowInput}</div>
-      {secondRowInput && <div className="flex justify-start items-center gap-5">{secondRowInput}</div>}
-      <hr className="bg-gray1 mt-5" />
-    </div>
-  );
+const FormContainer = ({ children, gridNumber = '3' }) => {
+  return <div className={`grid grid-cols-${gridNumber} gap-4`}>{children}</div>;
 };
 
 export default FormContainer;
