@@ -3,7 +3,7 @@ import { selectStyle } from '../helpers/selectStyle';
 
 function CustomSelect({ placeholder, label, value, options, onChange, validation }) {
   return (
-    <>
+    <div className="flex flex-col">
       <label className="text-sm font-semibold text-gray2 mb-2">{label}</label>
       <Select
         className="w-[310px] mb-1"
@@ -15,18 +15,8 @@ function CustomSelect({ placeholder, label, value, options, onChange, validation
         isClearable
       />
       <p className="text-xs text-gray1">{validation}</p>
-    </>
+    </div>
   );
 }
 
 export default CustomSelect;
-
-// <Select
-//   placeholder="Select a Hazard Classification"
-//   className="rounded-lg mb-1"
-//   value={hazardClassificationOptions.find((opt) => opt.value === formData.hazardClassification)}
-//   options={hazardClassificationOptions}
-//   onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
-//   styles={selectStyle}
-//   isClearable
-// />;
