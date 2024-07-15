@@ -57,6 +57,14 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
             },
           },
         },
+        MuiPaper: {
+          styleOverrides: {
+            root: {
+              borderRadius: '8px',
+              overflow: 'hidden',
+            },
+          },
+        },
       },
     });
 
