@@ -4,11 +4,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Button from './Button';
 
-const CustomToolbar = () => {
+const CustomToolbar = ({ currentUser }) => {
   const navigate = useNavigate();
 
   const handleNavigateAddChemical = () => {
-    navigate('/manager/chemical');
+    if (currentUser.role === 'chemist') {
+      return;
+    }
+    navigate(`/${currentUser.role}/chemical`);
   };
 
   return (
@@ -18,7 +21,7 @@ const CustomToolbar = () => {
   );
 };
 
-const MTable = ({ data, columns, options, title }) => {
+const MTable = ({ data, columns, options, title, currentUser }) => {
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -70,7 +73,7 @@ const MTable = ({ data, columns, options, title }) => {
 
   const customOptions = {
     ...options,
-    customToolbar: () => <CustomToolbar />,
+    customToolbar: () => <CustomToolbar currentUser={currentUser} />,
   };
 
   if (!data) return null;
