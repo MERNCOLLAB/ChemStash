@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
+import { Home, Chemical, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
 import { Header, PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
 import { Toaster } from 'react-hot-toast';
@@ -18,6 +18,7 @@ function App() {
           <Route path="/manager" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
+            <Route path="chemical" element={<Chemical />} />
             <Route path="board" element={<Board />} />
             <Route path="users" element={<UserList />} />
             <Route path="map" element={<Map />} />
@@ -42,6 +43,7 @@ function App() {
           <Route path="/teamleader" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
+            <Route path="chemical" element={<Chemical />} />
             <Route path="board" element={<Board />} />
             <Route path="users" element={<UserList />} />
             <Route path="map" element={<Map />} />
