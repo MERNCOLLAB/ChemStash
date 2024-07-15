@@ -200,15 +200,13 @@ function UpdateChemicalForm({ item, handleUpdate, loading }) {
       <FormSubHeader title="Safety Info" subtitle="Hazard classification and reference safety data sheet" />
       <FormContainer firstRowInput={safetyInfoRow} />
 
-      <div className="">
-        <div className="flex justify-end mt-4 gap-2.5 p-2.5">
-          <Button type="button" variant="secondary" onClick={handleDrawerClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary">
-            Update
-          </Button>
-        </div>
+      <div className="flex justify-end mt-4 gap-2.5 p-2.5">
+        <Button type="button" variant="secondary" onClick={handleDrawerClose}>
+          Cancel
+        </Button>
+        <Button type="submit" variant="primary">
+          Update
+        </Button>
       </div>
     </form>
   );
