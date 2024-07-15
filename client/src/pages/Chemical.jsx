@@ -109,7 +109,7 @@ function Chemical() {
         id="expiryDate"
         type="date"
         onChange={handleChange}
-        validation="Enter the chemical expiry date in mm/dd/yy. Greater than date purchased"
+        validation="Enter the chemical expiry date in mm/dd/yy"
       />
     </>
   );
@@ -186,23 +186,26 @@ function Chemical() {
   return (
     <div className="p-7  min-h-full  bg-white0 max-w-fit">
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <FormHeader title="Add Chemical to the Inventory List" />
-
+        <FormHeader title="Add Chemical" />
         {/* Basic Info */}
         <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
-        <FormContainer firstRowInput={basicInfoFirstRow} secondRowInput={basicInfoSecondRow} />
-
+        <FormContainer gridNumber={3}>{basicInfoFirstRow}</FormContainer>
+        <FormContainer gridNumber={3}>{basicInfoSecondRow}</FormContainer>
         {/* Storage Info */}
         <FormSubHeader title="Storage Info" subtitle="Details about the storage and quantity of the chemical" />
-        <FormContainer firstRowInput={storageInfoFirstRow} secondRowInput={storageInfoSecondRow} />
+        <FormContainer gridNumber={3}>{storageInfoFirstRow}</FormContainer>
+        <FormContainer gridNumber={3}>{storageInfoSecondRow}</FormContainer>
 
         {/* Safety Info */}
         <FormSubHeader title="Safety Info" subtitle="Hazard classification and reference safety data sheet" />
-        <FormContainer firstRowInput={safetyInfoRow} />
+        <FormContainer gridNumber={3}>{safetyInfoRow}</FormContainer>
 
-        <div className="flex justify-center mt-4 gap-2.5 p-2.5">
+        <div className="flex justify-end mt-4 gap-2.5 p-2.5">
+          <Button type="button" variant="secondary">
+            Cancel
+          </Button>
           <Button type="submit" variant="primary">
-            Add Chemical
+            Update
           </Button>
         </div>
       </form>

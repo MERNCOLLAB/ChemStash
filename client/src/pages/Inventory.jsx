@@ -51,7 +51,7 @@ function Inventory() {
     <div className="">
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
         {drawerType === 'add' ? (
-          <AddChemicalForm />
+          <AddChemicalForm handleDrawerClose={handleDrawerClose} />
         ) : drawerType === 'update' ? (
           <UpdateChemicalForm
             item={currentItem}
