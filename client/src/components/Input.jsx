@@ -12,9 +12,9 @@ function Input({ type, label, value, placeholder, id, onChange, defaultValue, va
         defaultValue={defaultValue}
         onChange={onChange}
         className="rounded-lg indent-2 bg-transparent border-gray1 h-10 text-base 
-        mb-1 w-[279px] focus:outline-none focus:ring-0 focus:border-indigo0 border border-solid"
+        mb-1 min-w-fit w-[279px] focus:outline-none focus:ring-0 focus:border-indigo0 border border-solid"
       />
-      <p className="text-xs text-gray1">{validation}</p>
+      <p className="text-xs text-gray1 w-fit">{validation}</p>
     </div>
   );
 }

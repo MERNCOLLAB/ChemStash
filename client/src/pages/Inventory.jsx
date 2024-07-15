@@ -53,7 +53,12 @@ function Inventory() {
         {drawerType === 'add' ? (
           <AddChemicalForm />
         ) : drawerType === 'update' ? (
-          <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
+          <UpdateChemicalForm
+            item={currentItem}
+            handleUpdate={updateItem}
+            handleDrawerClose={handleDrawerClose}
+            loading={updateLoading}
+          />
         ) : drawerType === 'delete' ? (
           <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
         ) : drawerType === 'consume' ? (
