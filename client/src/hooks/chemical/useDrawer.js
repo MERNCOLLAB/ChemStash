@@ -20,6 +20,9 @@ const useDrawer = (lists) => {
     handleDrawerOpen('consume');
     setCurrentItem(id);
   };
+  const handleAdd = () => {
+    handleDrawerOpen('add');
+  };
 
   const handleDrawerOpen = (type) => {
     setDrawerType(type);
@@ -40,6 +43,7 @@ const useDrawer = (lists) => {
     handleDrawerOpen,
     handleDrawerClose,
     handleConsume,
+    handleAdd,
   };
 };
 

@@ -1,27 +1,16 @@
-import { useNavigate } from 'react-router-dom';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import Button from './Button';
 
-const CustomToolbar = ({ currentUser }) => {
-  const navigate = useNavigate();
-
-  const handleNavigateAddChemical = () => {
-    if (currentUser.role === 'chemist') {
-      return;
-    }
-    navigate(`/${currentUser.role}/chemical`);
-  };
-
+const CustomToolbar = ({ handleAdd }) => {
   return (
-    <Button variant="primary" onClick={handleNavigateAddChemical}>
+    <Button variant="primary" onClick={handleAdd}>
       Add chemical
     </Button>
   );
 };
 
-const MTable = ({ data, columns, options, title, currentUser }) => {
+const MTable = ({ data, columns, options, title, handleAdd }) => {
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -73,7 +62,7 @@ const MTable = ({ data, columns, options, title, currentUser }) => {
 
   const customOptions = {
     ...options,
-    customToolbar: () => <CustomToolbar currentUser={currentUser} />,
+    customToolbar: () => <CustomToolbar handleAdd={handleAdd} />,
   };
 
   if (!data) return null;

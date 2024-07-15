@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 // UI and Components
 import Drawer from '../ui/Drawer';
-import { UpdateChemicalForm, DeleteChemicalForm, ConsumeChemicalForm } from '../ui';
+import { UpdateChemicalForm, DeleteChemicalForm, ConsumeChemicalForm, AddChemicalForm } from '../ui';
 import MTable from '../components/MTable';
 
 // Table Configurations
@@ -19,8 +19,16 @@ import useDeleteChemical from '../api/chemical/useDeleteChemical';
 
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
-  const { currentItem, drawerType, drawerOpen, handleConsume, handleUpdate, handleDelete, handleDrawerClose } =
-    useDrawer(lists);
+  const {
+    currentItem,
+    drawerType,
+    drawerOpen,
+    handleConsume,
+    handleAdd,
+    handleUpdate,
+    handleDelete,
+    handleDrawerClose,
+  } = useDrawer(lists);
   const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -42,12 +50,14 @@ function Inventory() {
   return (
     <div className="">
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
-        {drawerType === 'update' ? (
+        {drawerType === 'add' ? (
+          <AddChemicalForm />
+        ) : drawerType === 'update' ? (
           <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />
         ) : drawerType === 'delete' ? (
           <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
         ) : drawerType === 'consume' ? (
-          <ConsumeChemicalForm item={currentItem} getChemicalList={getChemicalList} />
+          <ConsumeChemicalForm item={currentItem} getChemicalList={getChemicalList} drawerType={drawerType} />
         ) : null}
       </Drawer>
       {loading ? (
@@ -55,7 +65,14 @@ function Inventory() {
       ) : error ? (
         <div>Something went wrong, {error.message}</div>
       ) : (
-        <MTable currentUser={currentUser} data={lists} columns={columns} options={paginationOptions} />
+        <MTable
+          type={drawerType}
+          currentUser={currentUser}
+          data={lists}
+          columns={columns}
+          options={paginationOptions}
+          handleAdd={handleAdd}
+        />
       )}
     </div>
   );

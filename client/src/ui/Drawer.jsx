@@ -1,7 +1,14 @@
+import { useEffect, useState } from 'react';
+
 function Drawer({ isOpen, children, onClose }) {
+  const [open, setOpen] = useState(isOpen);
+
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
   return (
     <div className={`drawer drawer-end z-10`}>
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" checked={isOpen} onChange={onClose} />
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" checked={open} onChange={onClose} />
       <div className="drawer-content">
         <label htmlFor="my-drawer-4" className="" onClick={onClose}></label>
       </div>
@@ -9,7 +16,7 @@ function Drawer({ isOpen, children, onClose }) {
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
-          className={`drawer-overlay ${isOpen ? 'backdrop-blur-[1px]' : ''}`}
+          className={`drawer-overlay ${open ? 'backdrop-blur-[1px]' : ''}`}
           onClick={onClose}
         ></label>
         {children}
