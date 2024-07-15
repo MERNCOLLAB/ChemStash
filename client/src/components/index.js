@@ -3,4 +3,6 @@ import Input from './Input';
 import FormulaInput from './FormulaInput';
 import Linker from './Linker';
 import MTable from './MTable';
-export { Button, Input, Linker, FormulaInput, MTable };
+import FormHeader from './FormHeader';
+import FormSubHeader from './FormSubHeader';
+export { Button, Input, Linker, FormulaInput, MTable, FormHeader, FormSubHeader };
