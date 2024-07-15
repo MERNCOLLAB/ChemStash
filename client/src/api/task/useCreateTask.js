@@ -3,6 +3,7 @@ import generateId from '../../helpers/GenerateId';
 import useBoardColumnList from '../board/useBoardColumnList';
 import { useSelector } from 'react-redux';
 import useBoardTaskList from '../board/useBoardTaskList';
+import useCreateNotification from '../notification/useCreateNotification';
 import toast from 'react-hot-toast';
 
 const useCreateTask = () => {
@@ -14,9 +15,11 @@ const useCreateTask = () => {
   // Local States
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { createNotification } = useCreateNotification();
 
   useEffect(() => {
     boardColumnList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const createTask = async (columnId, type) => {
     const currentColumn = columns.find((column) => column.id === columnId);
@@ -28,26 +31,7 @@ const useCreateTask = () => {
       type,
     });
 
-    try {
-      setLoading(true);
-      setError(false);
-      const response = await fetch('/api/notification/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ type, makerId, maker, title: currentColumn.title }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add notification');
-      }
-    } catch (error) {
-      setError(true);
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
+    createNotification(type, makerId, maker, currentColumn);
 
     // Filter tasks to find those that belong to the specified columnId
     const tasksInColumn = tasks.filter((task) => task.columnId === columnId);
