@@ -5,6 +5,7 @@ import LeftNavbar from './LeftNavbar';
 import OAuth from './OAuth';
 import PrivateRoute from './PrivateRoute';
 import Map from './Map';
+import AddChemicalForm from './AddChemicalForm';
 import UpdateChemicalForm from './UpdateChemicalForm';
 import DeleteChemicalForm from './DeleteChemicalForm';
 import SampleLineChart from './SampleLineChart';
@@ -24,6 +25,7 @@ export {
   OAuth,
   PrivateRoute,
   Map,
+  AddChemicalForm,
   UpdateChemicalForm,
   DeleteChemicalForm,
   SampleLineChart,

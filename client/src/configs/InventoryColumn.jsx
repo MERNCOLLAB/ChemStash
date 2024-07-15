@@ -1,5 +1,6 @@
 import { GoGear } from 'react-icons/go';
 import { CiEdit } from 'react-icons/ci';
+import { CiCircleMinus } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import getTagClass from '../helpers/TagColors';
@@ -73,7 +74,7 @@ export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handl
     label: 'SDS',
     options: {
       customBodyRender: (value) => (
-        <div className="btn btn-sm  bg-slate-800 hover:bg-slate-700">
+        <div className="btn btn-sm border-none bg-white-0 hover:bg-gray0">
           <a href={value}>
             <GoLink />
           </a>
@@ -95,21 +96,23 @@ export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handl
     options: {
       customBodyRender: (value) => (
         <div className="dropdown dropdown-end ">
-          <div tabIndex={0} role="button" className="btn btn-sm  bg-slate-800 hover:bg-slate-700 ">
+          <div tabIndex={0} role="button" className="btn btn-sm  border-none bg-white0 hover:bg-gray0 ">
             <GoGear />
           </div>
-          <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-slate-800 rounded-box w-52">
-            <li className="flex gap-2 hover:bg-slate-700">
+          <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-white0 rounded-box w-52">
+            <li className="flex gap-2 hover:bg-gray0">
               <p
                 onClick={() => {
                   handleConsume(value);
                 }}
               >
-                <span>➖</span>
+                <span>
+                  <CiCircleMinus />
+                </span>
                 <span>Consume </span>
               </p>
             </li>
-            <li className="flex gap-2 hover:bg-slate-700">
+            <li className="flex gap-2 hover:bg-gray0">
               <p
                 onClick={() => {
                   handleUpdate(value);
@@ -122,7 +125,7 @@ export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handl
               </p>
             </li>
             {currentUser.role === 'chemist' ? null : (
-              <li className="flex gap-2 hover:bg-slate-700">
+              <li className="flex gap-2 hover:bg-gray0">
                 <p
                   onClick={
                     currentUser.role === 'chemist'

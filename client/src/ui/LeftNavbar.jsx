@@ -11,7 +11,10 @@ function LeftNavbar() {
         <Linker to="inventory">Inventory</Linker>
       </li>
       <li>
-        <Linker to="board">Board</Linker>
+        <Linker to="chemical">Add Chemical</Linker>
+      </li>
+      <li>
+        <Linker to="board">Board Planner</Linker>
       </li>
       {currentUser.role === 'manager' ? (
         <li>

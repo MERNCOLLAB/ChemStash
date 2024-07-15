@@ -1,21 +1,20 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Button from './Button';
 
 const CustomToolbar = () => {
-  const handleClick = () => {
-    // Need to add link at Add Chemical Drawer
-    return;
+  const navigate = useNavigate();
+
+  const handleNavigateAddChemical = () => {
+    navigate('/manager/chemical');
   };
 
   return (
-    <React.Fragment>
-      <Button variant="primary" onClick={handleClick}>
-        Add chemical
-      </Button>
-    </React.Fragment>
+    <Button variant="primary" onClick={handleNavigateAddChemical}>
+      Add chemical
+    </Button>
   );
 };
 
