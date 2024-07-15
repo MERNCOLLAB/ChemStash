@@ -19,16 +19,8 @@ import useDeleteChemical from '../api/chemical/useDeleteChemical';
 
 function Inventory() {
   const { lists, getChemicalList, loading, error } = useGetChemical();
-  const {
-    currentItem,
-    drawerType,
-    drawerOpen,
-    handleConsume,
-    handleUpdate,
-    handleDelete,
-    handleDrawerClose,
-    handleAdd,
-  } = useDrawer(lists);
+  const { currentItem, drawerType, drawerOpen, handleConsume, handleUpdate, handleDelete, handleDrawerClose } =
+    useDrawer(lists);
   const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -48,7 +40,7 @@ function Inventory() {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="">
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
         {drawerType === 'update' ? (
           <UpdateChemicalForm item={currentItem} handleUpdate={updateItem} loading={updateLoading} />

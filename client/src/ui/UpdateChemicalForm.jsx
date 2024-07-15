@@ -1,4 +1,4 @@
-import { Input, Button } from '../components';
+import { Input, Button, FormHeader, FormSubHeader } from '../components';
 import CustomSelect from '../components/CustomSelect';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useUpdateChemicalDrawer from '../hooks/chemical/useUpdateChemicalDrawer';
@@ -8,7 +8,10 @@ function UpdateChemicalForm({ item, handleUpdate, loading }) {
   const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, handleUpdate);
 
   return (
-    <form className="menu p-4 w-[49%] min-h-full text-base-content bg-white0" onSubmit={onUpdate}>
+    <form className="p-7 w-[49%] min-h-full  bg-white0" onSubmit={onUpdate}>
+      <FormHeader title="Update Chemical Form" />
+      <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
+
       <ul>
         <li>
           {/* Chemical Name */}
