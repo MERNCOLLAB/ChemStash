@@ -29,6 +29,21 @@ export const tagColorUtilities = {
     backgroundColor: '#D6D3D1',
     fontSize: '10px',
   },
+  '.purpleTag': {
+    color: '#7C44C5',
+    backgroundColor: '#CDB0F4',
+    fontSize: '10px',
+  },
+  '.pinkTag': {
+    color: '#D233B8',
+    backgroundColor: '#EECBEE',
+    fontSize: '10px',
+  },
+  '.blueGreenTag': {
+    color: '#388BA5',
+    backgroundColor: '#7CC6E8',
+    fontSize: '10px',
+  },
 };
 
 // Function to be used at inventory column tags
@@ -36,10 +51,14 @@ function getTagClass(value) {
   switch (value) {
     case 'Flammable Storage Cabinet':
       return 'orangeTag';
+    case 'Acid Storage Cabinet':
+      return 'purpleTag';
     case 'Corrosive Storage Cabinet':
       return 'greenTag';
+    case 'Alkaline Storage Cabinet':
+      return 'pinkTag';
     case 'Refrigerator/Freezer':
-      return 'grayTag';
+      return 'blueGreenTag';
     case 'General Storage Shelf':
       return 'blueTag';
     case 'Oxidizer Storage Shelf':
