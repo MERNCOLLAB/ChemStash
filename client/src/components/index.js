@@ -7,4 +7,16 @@ import MTable from './MTable';
 import FormHeader from './FormHeader';
 import FormSubHeader from './FormSubHeader';
 import FormContainer from './FormContainer';
-export { Button, Input, Linker, MTable, ViewChemicalData, ChemicalFormula, FormHeader, FormSubHeader, FormContainer };
+import BigSpinner from './BigSpinner';
+export {
+  Button,
+  Input,
+  Linker,
+  MTable,
+  ViewChemicalData,
+  ChemicalFormula,
+  FormHeader,
+  FormSubHeader,
+  FormContainer,
+  BigSpinner,
+};
