@@ -71,14 +71,14 @@ export const updateChemical = async (req, res, next) => {
 
 export const saveConsumption = async (req, res, next) => {
   try {
-    const { unit } = req.body;
-    const currentChemical = await Chemical.findById(req.params.id);
+    const { id, amount, unit, user } = req.body;
+    const currentChemical = await Chemical.findById(id);
 
     if (!currentChemical) {
       return res.status(404).json({ message: 'Chemical not found' });
     }
 
-    const consumptionAmount = req.body.amount;
+    const consumptionAmount = amount;
 
     if (consumptionAmount <= 0) {
       return res.status(400).json({ message: 'Invalid consumption amount. It must be greater than 0.' });
@@ -89,11 +89,11 @@ export const saveConsumption = async (req, res, next) => {
     }
 
     const newConsumption = new ChemicalConsumption({
-      chemicalId: req.params.id,
+      chemicalId: id, // Use id from req.body
       amount: consumptionAmount,
       unit,
       date: new Date(),
-      user: req.body.user,
+      user,
     });
     await newConsumption.save();
 

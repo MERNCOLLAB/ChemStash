@@ -7,7 +7,7 @@ const useChemicalAmountUpdate = (item, getChemicalList) => {
   const { consumeChemical } = useConsumeChemical();
 
   const [update, setUpdate] = useState({
-    id: item,
+    id: item._id,
     amount: '',
     unit: null,
     user: currentUser,
@@ -26,9 +26,9 @@ const useChemicalAmountUpdate = (item, getChemicalList) => {
       unit: selectedOption ? selectedOption.value : null,
     }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
     consumeChemical(update, getChemicalList);
   };
 
