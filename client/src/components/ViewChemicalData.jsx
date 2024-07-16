@@ -1,8 +1,8 @@
-const ViewChemicalData = ({ label, children }) => {
+const ViewChemicalData = ({ label, children, gridColsClass }) => {
   return (
-    <div className="grid grid-cols-2 items-center gap-1 ">
-      <label className="font-semibold text-lg">{label}</label>
-      <p className="">{children}</p>
+    <div className={`grid ${gridColsClass} items-center gap-1 my-1`}>
+      <label className="text-base font-semibold text-gray2">{label}</label>
+      <p>{children}</p>
     </div>
   );
 };

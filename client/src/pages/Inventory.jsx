@@ -53,7 +53,7 @@ function Inventory() {
             loading={updateLoading}
           />
         ) : drawerType === 'delete' ? (
-          <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} getMuiTheme={getMuiTheme} />
+          <DeleteChemicalForm item={currentItem} onDelete={deleteChemical} handleDrawerClose={handleDrawerClose} />
         ) : drawerType === 'consume' ? (
           <ConsumeChemicalForm
             item={currentItem}
