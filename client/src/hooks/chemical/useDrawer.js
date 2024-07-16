@@ -18,7 +18,8 @@ const useDrawer = (lists) => {
 
   const handleConsume = (id) => {
     handleDrawerOpen('consume');
-    setCurrentItem(id);
+    const itemToConsume = lists.find((item) => item._id === id);
+    setCurrentItem(itemToConsume);
   };
   const handleAdd = () => {
     handleDrawerOpen('add');
