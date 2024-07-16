@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Drawer from '../ui/Drawer';
 import { UpdateChemicalForm, DeleteChemicalForm, ConsumeChemicalForm, AddChemicalForm } from '../ui';
 import MTable from '../components/MTable';
+import { BigSpinner } from '../components';
 
 // Table Configurations
 // import useFormatFormula from '../hooks/chemical/useFormatFormula';
@@ -63,7 +64,9 @@ function Inventory() {
         ) : null}
       </Drawer>
       {loading ? (
-        <div>Loading...</div>
+        <div class="flex justify-center items-center  min-h-[calc(100vh-80px)]">
+          <BigSpinner />
+        </div>
       ) : error ? (
         <div>Something went wrong, {error.message}</div>
       ) : (

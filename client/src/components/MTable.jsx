@@ -38,7 +38,9 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         MUIDataTableFilter: {
           styleOverrides: {
             root: {
-              backgroundColor: '#1e293b',
+              backgroundColor: '#F8FAFC',
+              fontSize: '16px',
+              color: '#64748B',
             },
           },
         },
