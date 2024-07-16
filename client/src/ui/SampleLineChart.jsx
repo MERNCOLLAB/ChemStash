@@ -1,77 +1,120 @@
-import { PureComponent } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useState, useEffect } from 'react';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import moment from 'moment';
+import CustomSelect from '../components/CustomSelect';
+import toast from 'react-hot-toast';
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const SampleLineChart = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [selectedChemical, setSelectedChemical] = useState('');
 
-export default class Example extends PureComponent {
-  static demoUrl = 'https://codesandbox.io/p/sandbox/stacked-area-chart-forked-5yjhcs';
+  useEffect(() => {
+    getAllConsumptionList();
+  }, []);
 
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          width={500}
-          height={400}
-          data={data}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+  const chemicalOptions = [
+    { value: '', label: 'All' },
+    ...Array.from(new Set(data.map((item) => item.chemicalName))).map((chemical) => ({
+      value: chemical,
+      label: chemical,
+    })),
+  ];
+
+  const tickFormatter = (tick) => {
+    return moment(tick).format('MMM YYYY');
+  };
+
+  const handleChangeChemical = (selectedOption) => {
+    if (selectedOption === null) return;
+
+    setSelectedChemical(selectedOption.value);
+  };
+
+  let filteredData = data;
+  if (selectedChemical !== '') {
+    filteredData = data.filter((item) => item.chemicalName === selectedChemical);
+  }
+
+  const getAllConsumptionList = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/chemical/consume/');
+      if (!response.ok) {
+        throw new Error('Failed to fetch consumption');
+      }
+
+      const responseData = await response.json();
+      const transformedData = responseData.data.map((item) => ({
+        ...item,
+        chemicalName: item.chemicalId.name,
+      }));
+
+      setData(transformedData);
+    } catch (error) {
+      setError(true);
+      toast.error('Failed to fetch consumption');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading data</p>;
+  }
+
+  return (
+    <div>
+      <CustomSelect
+        label="Chemical"
+        validation="Select a Chemical"
+        placeholder="Select a Chemical"
+        value={chemicalOptions.find((option) => option.value === selectedChemical)}
+        options={chemicalOptions}
+        onChange={handleChangeChemical}
+      />
+
+      <ResponsiveContainer width="100%" height={250}>
+        <AreaChart width={730} height={250} data={filteredData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+            {/* <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+            </linearGradient> */}
+          </defs>
+          <XAxis dataKey="date" tickFormatter={tickFormatter} />
           <YAxis />
-          <Tooltip />
-          <Area type="monotone" dataKey="uv" stackId="1" stroke="#8884d8" fill="#8884d8" />
-          <Area type="monotone" dataKey="pv" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-          <Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip content={<CustomTooltip />} />
+          <Area type="monotone" dataKey="amount" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
         </AreaChart>
       </ResponsiveContainer>
+    </div>
+  );
+};
+
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const { date, chemicalName, amount } = payload[0].payload;
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`Date: ${moment(date).format('MMM YYYY')}`}</p>
+        <p className="label">{`Chemical Name: ${chemicalName}`}</p>
+        <p className="label">{`Amount: ${amount}`}</p>
+      </div>
     );
   }
-}
+
+  return null;
+};
+
+export default SampleLineChart;

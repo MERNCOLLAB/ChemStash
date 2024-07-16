@@ -112,3 +112,16 @@ export const saveConsumption = async (req, res, next) => {
     console.error('Error in saveConsumption controller', error.message);
   }
 };
+
+export const getAllConsumptions = async (req, res, next) => {
+  try {
+    const consumptions = await ChemicalConsumption.find().populate('chemicalId', 'name').sort({ date: 1 });
+    res.status(200).json({
+      message: 'Consumptions retrieved successfully',
+      data: consumptions,
+    });
+  } catch (error) {
+    next(error);
+    console.error('Error in getAllConsumptions controller', error.message);
+  }
+};

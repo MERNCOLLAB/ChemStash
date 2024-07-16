@@ -10,7 +10,7 @@ import { BigSpinner } from '../components';
 // Table Configurations
 // import useFormatFormula from '../hooks/chemical/useFormatFormula';
 import { inventoryColumns } from '../configs/InventoryColumn';
-import { paginationOptions, getMuiTheme } from '../helpers/TableConfig';
+import { paginationOptions } from '../helpers/TableConfig';
 
 // Hooks
 import useDrawer from '../hooks/chemical/useDrawer';
@@ -64,7 +64,7 @@ function Inventory() {
         ) : null}
       </Drawer>
       {loading ? (
-        <div class="flex justify-center items-center  min-h-[calc(100vh-80px)]">
+        <div className="flex justify-center items-center  min-h-[calc(100vh-80px)]">
           <BigSpinner />
         </div>
       ) : error ? (

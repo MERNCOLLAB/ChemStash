@@ -2,8 +2,9 @@ import { RiBox1Line } from 'react-icons/ri';
 import { BsBoxes } from 'react-icons/bs';
 import { PiCodesandboxLogoLight } from 'react-icons/pi';
 import { LuBox } from 'react-icons/lu';
-import { SampleBarChart, SampleLineChart, SamplePieChart, SampleRadarChart } from '../ui';
+
 import { DashBoardCard } from '../ui';
+import SampleAreaChart from '../ui/SampleLineChart';
 function Dashboard() {
   return (
     <div className="w-full border p-2 h-[calc(100vh-66px)] mt-2">
@@ -46,23 +47,23 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-12  gap-2">
+      <div className="grid   gap-2">
         <div className=" h-[300px] mt-2 p-3 border col-span-4  ">
-          <SampleLineChart />
+          <SampleAreaChart />
         </div>
 
-        <div className=" h-[300px] mt-2 p-3 border flex-grow  col-span-4">
+        {/* <div className=" h-[300px] mt-2 p-3 border flex-grow  col-span-4">
           <SamplePieChart />
         </div>
         <div className=" h-[300px] mt-2 p-3 border  col-span-4 ">
           <SampleRadarChart />
-        </div>
+        </div> */}
       </div>
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <div className=" h-[400px] mt-2 p-3 border flex-grow  ">
           <SampleBarChart />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
