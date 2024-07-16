@@ -1,9 +1,7 @@
-import React from 'react';
-import useFormatFormula from './useFormatFormula';
+import useFormatFormula from '../hooks/chemical/useFormatFormula';
 
 const ChemicalFormula = ({ formula }) => {
   const { parseInput } = useFormatFormula();
-  const parsedFormula = parseInput(formula);
 
   const renderFormula = (elements) => {
     return elements.map((element, index) =>
@@ -11,7 +9,7 @@ const ChemicalFormula = ({ formula }) => {
     );
   };
 
-  return <>{renderFormula(parsedFormula)}</>;
+  return <>{renderFormula(parseInput(formula))}</>;
 };
 
 export default ChemicalFormula;
