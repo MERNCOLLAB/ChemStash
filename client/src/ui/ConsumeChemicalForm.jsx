@@ -8,22 +8,22 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
     <form onSubmit={handleSubmit} className="bg-white0 min-w-[30%] min-h-full p-7">
       <FormHeader title="Consume the Chemical" />
 
-      <div className="max-w-[90%] m-auto">
-        <div className="my-4">
-          <div className="grid grid-cols-2 gap-1">
-            <label>Batch</label>
-            <p>{item.batch}</p>
+      <div className="">
+        <div className="grid items-center gap-2 my-4">
+          <div className="grid grid-cols-2 items-center gap-1 ">
+            <label className="font-semibold text-lg">Batch</label>
+            <p className="">{item.batch}</p>
           </div>
           <div className="grid grid-cols-2 gap-1">
-            <label>Chemical</label>
+            <label className="font-semibold text-lg">Chemical</label>
             <p>{item.name}</p>
           </div>
           <div className="grid grid-cols-2 gap-1">
-            <label>Lot Number</label>
+            <label className="font-semibold text-lg">Lot Number</label>
             <p>{item.lotNumber}</p>
           </div>
           <div className="grid grid-cols-2 gap-1">
-            <label>Current Amount</label>
+            <label className="font-semibold text-lg">Current Amount</label>
             <p>
               {item.amount} &nbsp; {item.unit}
             </p>

@@ -7,7 +7,7 @@ import { UpdateChemicalForm, DeleteChemicalForm, ConsumeChemicalForm, AddChemica
 import MTable from '../components/MTable';
 
 // Table Configurations
-import useFormatFormula from '../hooks/chemical/useFormatFormula';
+// import useFormatFormula from '../hooks/chemical/useFormatFormula';
 import { inventoryColumns } from '../configs/InventoryColumn';
 import { paginationOptions, getMuiTheme } from '../helpers/TableConfig';
 
@@ -32,15 +32,8 @@ function Inventory() {
   const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
   const { deleteChemical } = useDeleteChemical(getChemicalList, handleDrawerClose);
   const currentUser = useSelector((state) => state.user.currentUser);
-  const { parseInput } = useFormatFormula();
 
-  const renderFormula = (formula) => {
-    return formula.map((element, index) =>
-      element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
-    );
-  };
-
-  const columns = inventoryColumns(currentUser, handleConsume, handleUpdate, handleDelete, parseInput, renderFormula);
+  const columns = inventoryColumns(currentUser, handleConsume, handleUpdate, handleDelete);
 
   useEffect(() => {
     getChemicalList();

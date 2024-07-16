@@ -4,8 +4,16 @@ import { CiCircleMinus } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import getTagClass from '../helpers/TagColors';
+import useFormatFormula from '../hooks/chemical/useFormatFormula';
 
-export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handleDelete, parseInput, renderFormula) => [
+const { parseInput } = useFormatFormula();
+
+const renderFormula = (formula) => {
+  return formula.map((element, index) =>
+    element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
+  );
+};
+export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handleDelete) => [
   {
     name: 'name',
     label: 'Name',
