@@ -1,5 +1,7 @@
 const useFormatFormula = () => {
   const parseInput = (input) => {
+    if (!input) return [];
+
     const regex = /(\d+)/g;
     const elements = [];
     let lastIndex = 0;

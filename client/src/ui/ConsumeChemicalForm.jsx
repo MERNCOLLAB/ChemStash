@@ -1,4 +1,4 @@
-import { Button, FormHeader, Input } from '../components';
+import { Button, FormHeader, Input, ViewChemicalData, ChemicalFormula } from '../components';
 import useChemicalAmountUpdate from '../hooks/chemical/useChemicalAmountUpdate';
 
 const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
@@ -7,29 +7,20 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
   return (
     <form onSubmit={handleSubmit} className="bg-white0 min-w-[30%] min-h-full p-7">
       <FormHeader title="Consume the Chemical" />
-
       <div className="">
         <div className="grid items-center gap-2 my-4">
-          <div className="grid grid-cols-2 items-center gap-1 ">
-            <label className="font-semibold text-lg">Batch</label>
-            <p className="">{item.batch}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <label className="font-semibold text-lg">Chemical</label>
-            <p>{item.name}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <label className="font-semibold text-lg">Lot Number</label>
-            <p>{item.lotNumber}</p>
-          </div>
-          <div className="grid grid-cols-2 gap-1">
-            <label className="font-semibold text-lg">Current Amount</label>
-            <p>
-              {item.amount} &nbsp; {item.unit}
-            </p>
-          </div>
-        </div>
+          <ViewChemicalData label="Batch Number">{item.batch}</ViewChemicalData>
+          <ViewChemicalData label="Chemical">{item.name}</ViewChemicalData>
+          <ViewChemicalData label="Formula">
+            <ChemicalFormula formula={item.molecularFormula} />
+          </ViewChemicalData>
 
+          <ViewChemicalData label="Lot Number">{item.lotNumber}</ViewChemicalData>
+
+          <ViewChemicalData label="Current Amount">
+            {item.amount} &nbsp; {item.unit}
+          </ViewChemicalData>
+        </div>
         <div className="mb-2">
           <Input
             id="consumption"
