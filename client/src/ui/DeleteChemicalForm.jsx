@@ -1,111 +1,102 @@
-import { Button } from '../components';
-import { ThemeProvider } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { Button, FormHeader, FormSubHeader, ViewChemicalData, ChemicalFormula } from '../components';
 
-function DeleteChemicalForm({ item, onDelete, getMuiTheme }) {
+function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
+  // Basic Information Section
+  // First Row: Chemical Name, Molecular Formula, Brand
+  const basicInfoFirstRow = (
+    <>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Chemical Name">
+        {item.name}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Molecular Formula">
+        <ChemicalFormula formula={item.molecularFormula} />
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Brand">
+        {item.brand}
+      </ViewChemicalData>
+    </>
+  );
+
+  // Second Row: Purity, Batch Number, Lot Number
+  const basicInfoSecondRow = (
+    <>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Purity">
+        {item.purity}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Batch Number">
+        {item.batch}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Lot Number">
+        {item.lotNumber}
+      </ViewChemicalData>
+    </>
+  );
+
+  // Storage Information Section
+  // First Row: Location, Date Received, Expiry Date
+  const storageInfoFirstRow = (
+    <>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Location">
+        {item.location}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Date Received">
+        {item.dateReceived}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Expiry Date">
+        {item.expiryDate}
+      </ViewChemicalData>
+    </>
+  );
+
+  // Second Row: Supply, Amount, Unit
+  const storageInfoSecondRow = (
+    <>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Number of Supply">
+        {item.supply}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Amount">
+        {item.amount} &nbsp; {item.unit}
+      </ViewChemicalData>
+    </>
+  );
+
+  // Safety Information Section
+  const safetyInfoRow = (
+    <>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Hazard Classification">
+        {item.hazardClassification}
+      </ViewChemicalData>
+      <ViewChemicalData gridColsClass="grid-cols-1" label="Remarks">
+        {item.remarks}
+      </ViewChemicalData>
+    </>
+  );
   return (
-    <div className="menu p-4 w-[49%] min-h-full text-base-content bg-white0">
-      <ThemeProvider theme={getMuiTheme()}>
-        <Table sx={{ minWidth: 80 }} size="small" aria-label="delete drawer">
-          <TableHead>
-            <TableRow>
-              <TableCell className="indent-1">List</TableCell>
-              <TableCell>Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* Name */}
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>{item.name}</TableCell>
-            </TableRow>
+    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={onDelete}>
+      <FormHeader title="Delete Chemical" />
+      {/* Basic Info */}
+      <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
+      <div className="grid grid-cols-3">{basicInfoFirstRow}</div>
+      <div className="grid grid-cols-3">{basicInfoSecondRow}</div>
 
-            {/* Batch */}
-            <TableRow>
-              <TableCell>Batch</TableCell>
-              <TableCell>{item.batch}</TableCell>
-            </TableRow>
+      {/* Storage Info */}
+      <FormSubHeader title="Storage Info" subtitle="Details about the storage and quantity of the chemical" />
+      <div className="grid grid-cols-3">{storageInfoFirstRow}</div>
+      <div className="grid grid-cols-3">{storageInfoSecondRow}</div>
 
-            {/* Molecular Formula */}
-            <TableRow>
-              <TableCell>Molecular Formula</TableCell>
-              <TableCell>{item.molecularFormula}</TableCell>
-            </TableRow>
+      {/* Safety Info */}
+      <FormSubHeader title="Safety Info" subtitle="Hazard classification and reference safety data sheet" />
+      <div className="grid grid-cols-3">{safetyInfoRow}</div>
 
-            {/*Lot Number */}
-            <TableRow>
-              <TableCell>Lot Number</TableCell>
-              <TableCell>{item.lotNumber}</TableCell>
-            </TableRow>
-
-            {/* Purity */}
-            <TableRow>
-              <TableCell>Purity</TableCell>
-              <TableCell>{item.purity}</TableCell>
-            </TableRow>
-
-            {/* Location */}
-            <TableRow>
-              <TableCell>Location</TableCell>
-              <TableCell>{item.location}</TableCell>
-            </TableRow>
-
-            {/* Brand */}
-            <TableRow>
-              <TableCell>Brand</TableCell>
-              <TableCell>{item.brand}</TableCell>
-            </TableRow>
-
-            {/* Supply */}
-            <TableRow>
-              <TableCell>Supply</TableCell>
-              <TableCell>{item.supply}</TableCell>
-            </TableRow>
-
-            {/* Amount  */}
-            <TableRow>
-              <TableCell>Amount</TableCell>
-              <TableCell>
-                {item.amount} &nbsp; {item.unit}
-              </TableCell>
-            </TableRow>
-
-            {/* Date Received */}
-            <TableRow>
-              <TableCell>Date Received</TableCell>
-              <TableCell>{item.dateReceived}</TableCell>
-            </TableRow>
-
-            {/* Expiry Date */}
-            <TableRow>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell>{item.expiryDate}</TableCell>
-            </TableRow>
-
-            {/* Hazard Classification */}
-            <TableRow>
-              <TableCell>Hazards</TableCell>
-              <TableCell>{item.hazardClassification}</TableCell>
-            </TableRow>
-
-            {/* Remarks */}
-            <TableRow>
-              <TableCell>Remarks</TableCell>
-              <TableCell>{item.remarks}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-        <div className="mt-2 text-center">
-          <Button type="button" variant="secondary" onClick={() => onDelete(item._id)}>
-            Delete
-          </Button>
-        </div>
-      </ThemeProvider>
-    </div>
+      <div className="flex justify-end mt-4 gap-2.5 p-2.5">
+        <Button type="button" variant="secondary" onClick={handleDrawerClose}>
+          Cancel
+        </Button>
+        <Button type="submit" variant="primary">
+          Delete
+        </Button>
+      </div>
+    </form>
   );
 }
 

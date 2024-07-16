@@ -9,15 +9,28 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
       <FormHeader title="Consume the Chemical" />
       <div className="">
         <div className="grid items-center gap-2 my-4">
-          <ViewChemicalData label="Batch Number">{item.batch}</ViewChemicalData>
-          <ViewChemicalData label="Chemical">{item.name}</ViewChemicalData>
-          <ViewChemicalData label="Formula">
+          {/* Batch Number */}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="Batch Number">
+            {item.batch}
+          </ViewChemicalData>
+
+          {/* Chemical Name */}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="Chemical">
+            {item.name}
+          </ViewChemicalData>
+
+          {/* Molecular Formula */}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="Formula">
             <ChemicalFormula formula={item.molecularFormula} />
           </ViewChemicalData>
 
-          <ViewChemicalData label="Lot Number">{item.lotNumber}</ViewChemicalData>
+          {/* Lot Number */}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="Lot Number">
+            {item.lotNumber}
+          </ViewChemicalData>
 
-          <ViewChemicalData label="Current Amount">
+          {/* Current Amount */}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="Current Amount">
             {item.amount} &nbsp; {item.unit}
           </ViewChemicalData>
         </div>
