@@ -11,8 +11,8 @@ const chemicalSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    lotNumber: {
-      type: Number,
+    casNumber: {
+      type: String,
       required: true,
     },
     molecularFormula: {
@@ -70,6 +70,7 @@ const chemicalSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+chemicalSchema.index({ name: 1, batch: 1, casNumber: 1 }, { unique: true });
 
 const Chemical = mongoose.model('Chemical', chemicalSchema);
 

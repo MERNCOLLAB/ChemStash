@@ -5,8 +5,14 @@ import ChemicalConsumption from '../models/chemicalConsumption.model.js';
 export const createChemical = async (req, res, next) => {
   const initialChemicalData = req.body;
 
-  const newChemical = new Chemical(initialChemicalData);
   try {
+    const {name,batch,casNumber} = initialChemicalData;
+    const existingChemical = await Chemical.findOne({ name, batch, casNumber });
+    if (existingChemical) {
+      return res.status(400).json({ error: 'Chemical with that batch number already exists' });
+    }
+
+    const newChemical = new Chemical(initialChemicalData);
     await newChemical.save();
     res.status(201).json({ message: 'Chemical Created successfully' });
   } catch (error) {
@@ -89,7 +95,7 @@ export const saveConsumption = async (req, res, next) => {
     }
 
     const newConsumption = new ChemicalConsumption({
-      chemicalId: id, // Use id from req.body
+      chemicalId: id, 
       amount: consumptionAmount,
       unit,
       date: new Date(),

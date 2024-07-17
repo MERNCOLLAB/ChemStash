@@ -1,6 +1,12 @@
 import { Button, FormHeader, FormSubHeader, ViewChemicalData, ChemicalFormula } from '../components';
 
 function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
+  const handleSubmitDelete = (e) =>{
+    e.preventDefault();
+    onDelete(item._id);
+  }
+  
+  
   // Basic Information Section
   // First Row: Chemical Name, Molecular Formula, Brand
   const basicInfoFirstRow = (
@@ -17,7 +23,7 @@ function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
     </>
   );
 
-  // Second Row: Purity, Batch Number, Lot Number
+  // Second Row: Purity, Batch Number, CAS Number
   const basicInfoSecondRow = (
     <>
       <ViewChemicalData gridColsClass="grid-cols-1" label="Purity">
@@ -27,7 +33,7 @@ function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
         {item.batch}
       </ViewChemicalData>
       <ViewChemicalData gridColsClass="grid-cols-1" label="Lot Number">
-        {item.lotNumber}
+        {item.casNumber}
       </ViewChemicalData>
     </>
   );
@@ -72,7 +78,7 @@ function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
     </>
   );
   return (
-    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={onDelete}>
+    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={handleSubmitDelete}>
       <FormHeader title="Delete Chemical" />
       {/* Basic Info */}
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
