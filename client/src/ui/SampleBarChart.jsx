@@ -1,78 +1,116 @@
-import { PureComponent } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useState, useEffect } from 'react';
+import { BarChart, Rectangle, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import moment from 'moment';
+import CustomSelect from '../components/CustomSelect';
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const SampleBarChart = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [selectedChemical, setSelectedChemical] = useState('');
 
-export default class Example extends PureComponent {
-  static demoUrl = 'https://codesandbox.io/p/sandbox/mixed-bar-chart-lv3l68';
+  useEffect(() => {
+    fetchChemicalList();
+  }, []);
 
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
+  const chemicalOptions = [
+    { value: '', label: 'All' },
+    ...Array.from(new Set(data.map((item) => item.name))).map((chemical) => ({
+      value: chemical,
+      label: chemical,
+    })),
+  ];
+
+  const handleChangeChemical = (selectedOption) => {
+    if (selectedOption === null) return;
+
+    setSelectedChemical(selectedOption.value);
+  };
+
+  let filteredData = data;
+  if (selectedChemical !== '') {
+    filteredData = data.filter((item) => item.name === selectedChemical);
+  }
+
+  const fetchChemicalList = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/chemical/list/barchart');
+      if (!response.ok) {
+        throw new Error('Failed to fetch chemical list');
+      }
+
+      const result = await response.json();
+      const formattedData = result.map((item) => ({
+        ...item,
+        dateReceived: moment(item.dateReceived).format('YYYY-MM-DD'),
+        supply: item.supply * 1000,
+      }));
+
+      setData(formattedData);
+    } catch (error) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading data</p>;
+  }
+
+  return (
+    <div>
+      <CustomSelect
+        label="Chemical"
+        validation="Select a Chemical"
+        placeholder="Select a Chemical"
+        value={chemicalOptions.find((option) => option.value === selectedChemical)}
+        options={chemicalOptions}
+        onChange={handleChangeChemical}
+      />
+
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          width={500}
-          height={300}
-          data={data}
+          data={filteredData}
           margin={{
-            top: 20,
+            top: 5,
             right: 30,
             left: 20,
             bottom: 5,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis />
           <YAxis />
-          <Tooltip cursor={{ fill: '#111827' }} />
+          <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-          <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-          <Bar dataKey="uv" fill="#ffc658" />
+          <Bar dataKey="amount" fill="#8884d8" activeShape={<Rectangle fill="pink" stroke="blue" />} />
+          <Bar dataKey="supply" fill="#82ca9d" activeShape={<Rectangle fill="gold" stroke="purple" />} />
         </BarChart>
       </ResponsiveContainer>
+    </div>
+  );
+};
+
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const { name, dateReceived, amount, supply } = payload[0].payload;
+    return (
+      <div className="custom-tooltip p-1 backdrop-sepia-0 bg-slate-100/40  rounded-md flex flex-col gap-1">
+        <div>{`Name: ${name}`}</div>
+        <div>{`Date Received: ${dateReceived}`}</div>
+        <div>{`Amount: ${amount}`}</div>
+        <div>{`Supply: ${supply}`}</div>
+      </div>
     );
   }
-}
+
+  return null;
+};
+
+export default SampleBarChart;

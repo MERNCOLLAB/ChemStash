@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
 import CustomSelect from '../components/CustomSelect';
-import toast from 'react-hot-toast';
 
 const SampleLineChart = () => {
   const [data, setData] = useState([]);
@@ -54,7 +53,6 @@ const SampleLineChart = () => {
       setData(transformedData);
     } catch (error) {
       setError(true);
-      toast.error('Failed to fetch consumption');
     } finally {
       setLoading(false);
     }
@@ -106,10 +104,10 @@ const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { date, chemicalName, amount } = payload[0].payload;
     return (
-      <div className="custom-tooltip">
-        <p className="label">{`Date: ${moment(date).format('MMM YYYY')}`}</p>
-        <p className="label">{`Chemical Name: ${chemicalName}`}</p>
-        <p className="label">{`Amount: ${amount}`}</p>
+      <div className=" p-1 backdrop-sepia-0 bg-slate-100/40  rounded-md flex flex-col gap-1">
+        <div>{`Date: ${moment(date).format('MMM YYYY')}`}</div>
+        <div>{`Chemical Name: ${chemicalName}`}</div>
+        <div>{`Amount: ${amount}`}</div>
       </div>
     );
   }

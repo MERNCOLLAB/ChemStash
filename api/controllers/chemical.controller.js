@@ -6,7 +6,7 @@ export const createChemical = async (req, res, next) => {
   const initialChemicalData = req.body;
 
   try {
-    const {name,batch,casNumber} = initialChemicalData;
+    const { name, batch, casNumber } = initialChemicalData;
     const existingChemical = await Chemical.findOne({ name, batch, casNumber });
     if (existingChemical) {
       return res.status(400).json({ error: 'Chemical with that batch number already exists' });
@@ -37,6 +37,10 @@ export const chemicalList = async (req, res, next) => {
     if (query === 'expired') {
       const currentDate = moment().startOf('day').toDate();
       const chemicals = await Chemical.find({ expiryDate: { $lt: currentDate } });
+      return res.json(chemicals);
+    }
+    if (query === 'barchart') {
+      const chemicals = await Chemical.find({}, 'name dateReceived supply amount unit');
       return res.json(chemicals);
     }
 
@@ -95,7 +99,7 @@ export const saveConsumption = async (req, res, next) => {
     }
 
     const newConsumption = new ChemicalConsumption({
-      chemicalId: id, 
+      chemicalId: id,
       amount: consumptionAmount,
       unit,
       date: new Date(),
