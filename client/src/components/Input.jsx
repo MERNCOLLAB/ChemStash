@@ -1,4 +1,6 @@
 function Input({ type, label, value, placeholder, id, onChange, defaultValue, validation }) {
+  const displayValue = type === 'number' && value === 0 ? '' : value;
+
   return (
     <div className="flex flex-col">
       <label className="text-sm font-semibold text-gray2 mb-2" htmlFor={id}>
@@ -7,7 +9,7 @@ function Input({ type, label, value, placeholder, id, onChange, defaultValue, va
       <input
         id={id}
         type={type}
-        value={value}
+        value={displayValue}
         placeholder={placeholder}
         defaultValue={defaultValue}
         onChange={onChange}
