@@ -69,13 +69,13 @@ function AddChemicalForm({ handleDrawerClose }) {
       />
       <Input
         disable={loading}
-        value={formData.lotNumber}
-        id="lotNumber"
-        type="number"
-        label="Lot Number"
-        placeholder="Enter Lot Number"
+        value={formData.casNumber}
+        id="casNumber"
+        type="tel"
+        label="CAS Registry Number"
+        placeholder="Enter CAS Number"
         onChange={handleChange}
-        validation="Please enter a valid lot number (e.g., 001, 002)"
+        validation="Please enter a valid CAS Number XXXXXX-XX-X"
       />
     </>
   );

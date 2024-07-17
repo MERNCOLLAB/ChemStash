@@ -25,8 +25,8 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
           </ViewChemicalData>
 
           {/* Lot Number */}
-          <ViewChemicalData gridColsClass="grid-cols-2" label="Lot Number">
-            {item.lotNumber}
+          <ViewChemicalData gridColsClass="grid-cols-2" label="CAS Registry Number">
+            {item.casNumber}
           </ViewChemicalData>
 
           {/* Current Amount */}

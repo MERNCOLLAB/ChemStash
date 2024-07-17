@@ -45,7 +45,7 @@ function Chemical() {
     </>
   );
 
-  // Second Row: Purity, Batch Number, Lot Number
+  // Second Row: Purity, Batch Number, CAS Number
   const basicInfoSecondRow = (
     <>
       <Input
@@ -70,11 +70,11 @@ function Chemical() {
       />
       <Input
         disable={loading}
-        value={formData.lotNumber}
-        id="lotNumber"
+        value={formData.casNumber}
+        id="casNumber"
         type="number"
-        label="Lot Number"
-        placeholder="Enter Lot Number"
+        label="CAS Registry Number"
+        placeholder="Enter CAS Number"
         onChange={handleChange}
         validation="Please enter a valid lot number (e.g., 001, 002)"
       />

@@ -68,13 +68,13 @@ function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) 
       />
       <Input
         disabled={loading}
-        value={updatedItem.lotNumber}
-        id="lotNumber"
-        type="number"
+        value={updatedItem.casNumber}
+        id="casNumber"
+        type="tel"
         label="Lot Number"
         placeholder="Enter Lot Number"
         onChange={handleChange}
-        validation="Please enter a valid lot number (e.g., 001, 002)"
+        validation="Please enter a valid CAS Number XXXXXX-XX-X"
       />
     </>
   );

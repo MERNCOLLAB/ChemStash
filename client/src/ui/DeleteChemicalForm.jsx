@@ -27,7 +27,7 @@ function DeleteChemicalForm({ item, onDelete, handleDrawerClose }) {
         {item.batch}
       </ViewChemicalData>
       <ViewChemicalData gridColsClass="grid-cols-1" label="Lot Number">
-        {item.lotNumber}
+        {item.casNumber}
       </ViewChemicalData>
     </>
   );
