@@ -28,6 +28,8 @@ export default {
         gray2: '#64748B',
         indigo0: '#4F46E5',
         indigo1: '#4338CA',
+        success:'#10B981',
+        danger:'#F43F5E'
       },
     },
   },
