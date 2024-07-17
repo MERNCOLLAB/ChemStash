@@ -1,35 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Button } from '../components';
+import { Button,BigSpinner } from '../components';
 import SignUp from './SignUp';
 import { Drawer } from '../ui';
+import useGetUsers from '../api/users/useGetUsers';
 
 const UserList = () => {
-  const [members, setMembers] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const {error,loading, members, fetchMembers} = useGetUsers();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/user/manager/members', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch members');
-        }
-        const data = await response.json();
-        setMembers(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(error);
-      }
-    };
     fetchMembers();
   }, []);
 
@@ -42,17 +21,18 @@ const UserList = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div className="text-center">
-          <h1>List of Users</h1>
-        </div>
+      <div className="p-8">
+        <h1 className="font-semibold pb-4">List of Users</h1>
+
         {loading ? (
-          <div>Loading...</div>
+                  <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">
+                  <BigSpinner />
+                </div>
         ) : error ? (
-          <div>Something went wrong: {error.message}</div>
+          <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">Something went wrong: {error.message}</div>
         ) : (
-          <table className="w-full border-collapse border border-gray-300">
-            <thead>
+          <table className="table table-zebra bg-white0">
+            <thead className='text-center font-semibold text-base p-4'>
               <tr>
                 <th>Profile Picture</th>
                 <th>Username</th>
@@ -62,7 +42,7 @@ const UserList = () => {
             </thead>
             <tbody>
               {members.map((member) => (
-                <tr key={member._id}>
+                <tr className="hover:bg-gray0 duration-500 ease-out" key={member._id}>
                   <td className="flex justify-center p-2">
                     <img src={member.profilePicture} alt={member.username} className="h-10 w-10 rounded-full" />
                   </td>
@@ -74,14 +54,15 @@ const UserList = () => {
             </tbody>
           </table>
         )}
-      </div>
-      <Button customClass="mt-4" onClick={handleDrawerOpen}>
+      <div className="mt-4">
+      <Button variant="primary"  onClick={handleDrawerOpen}>
         Add user
       </Button>
-
+      </div>
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
         <SignUp />
       </Drawer>
+      </div>
     </>
   );
 };
