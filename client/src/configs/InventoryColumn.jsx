@@ -28,8 +28,8 @@ export const inventoryColumns = (currentUser, handleConsume, handleUpdate, handl
     options: { customBodyRender: (value) => renderFormula(parseInput(value)) },
   },
   {
-    name: 'lotNumber',
-    label: 'Lot Number',
+    name: 'casNumber',
+    label: 'CAS Number',
   },
 
   {

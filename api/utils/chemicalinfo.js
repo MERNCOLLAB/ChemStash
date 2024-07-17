@@ -2,7 +2,7 @@ export const initialChemicalData = {
   name: '',
   batch: '',
   molecularFormula: '',
-  lotNumber: '',
+  casNumber: '',
   purity: '',
   location: '',
   brand: '',

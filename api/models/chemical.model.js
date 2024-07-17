@@ -11,7 +11,7 @@ const chemicalSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    lotNumber: {
+    casNumber: {
       type: Number,
       required: true,
     },
