@@ -10,8 +10,6 @@ import UpdateChemicalForm from './UpdateChemicalForm';
 import DeleteChemicalForm from './DeleteChemicalForm';
 import SampleLineChart from './SampleLineChart';
 import SampleBarChart from './SampleBarChart';
-import SamplePieChart from './SamplePieChart';
-import SampleRadarChart from './SampleRadarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
 import DashBoardCard from './DashBoardCard';
@@ -30,8 +28,6 @@ export {
   DeleteChemicalForm,
   SampleLineChart,
   SampleBarChart,
-  SamplePieChart,
-  SampleRadarChart,
   NotificationList,
   NotificationLayout,
   DashBoardCard,

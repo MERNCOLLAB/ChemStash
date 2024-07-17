@@ -6,10 +6,10 @@ import { LuBox } from 'react-icons/lu';
 import { DashBoardCard } from '../ui';
 import SampleAreaChart from '../ui/SampleLineChart';
 import SampleBarChart from '../ui/SampleBarChart';
-
+import SamplePieChart from '../ui/SamplePieChart';
 function Dashboard() {
   return (
-    <div className="w-full border p-2 h-[calc(100vh-66px)] mt-2">
+    <div className="w-full  p-2  mt-2">
       <div className="flex flex-wrap justify-between gap-2 ">
         <div className="border p-3 flex items-center gap-2  flex-grow">
           <div className="text-4xl">
@@ -49,9 +49,12 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col   gap-40">
-        <div className=" h-[300px] mt-2 p-3 border col-span-4  ">
+      <div className="grid  md:grid-cols-3  gap-2 ">
+        <div className=" h-[300px] mt-2 p-3 col-span-2   border  ">
           <SampleAreaChart />
+        </div>
+        <div className=" h-[300px] col-span-1  mt-2 p-3 border  ">
+          <SamplePieChart />
         </div>
 
         {/* <div className=" h-[300px] mt-2 p-3 border flex-grow  col-span-4">
@@ -60,11 +63,10 @@ function Dashboard() {
         <div className=" h-[300px] mt-2 p-3 border  col-span-4 ">
           <SampleRadarChart />
         </div> */}
-
-        <div className=" h-[600px] mt-2 p-3 border flex-grow w-full  ">
-          <SampleBarChart />
-          {/* <Bar dataKey="supply" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
-        </div>
+      </div>
+      <div className=" h-[600px] mt-16 p-3 border flex-grow w-full  ">
+        <SampleBarChart />
+        {/* <Bar dataKey="supply" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} /> */}
       </div>
     </div>
   );
