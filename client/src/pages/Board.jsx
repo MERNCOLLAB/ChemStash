@@ -22,7 +22,7 @@ import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/board/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
 import useDeleteColumn from '../api/board/useDeleteColumn';
-import useUpdateColumnTitle from '../api/board/useUpdateColumnTitle';
+import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 
 // Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
@@ -30,16 +30,17 @@ import useUpdateTask from '../api/task/useUpdateTask';
 import useDeleteTask from '../api/task/useDeleteTask';
 import useDrawer from '../hooks/board/useDrawer';
 import ToastProvider from '../configs/ToastProvider';
+import UpdateColumn from '../ui/UpdateColumn';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const { openDrawer, taskItem, openTask, handleDrawerClose } = useDrawer();
+  const { openDrawer, taskItem, openTask, handleDrawerClose, drawerType, columnItem, openColumn } = useDrawer();
 
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
   const { deleteColumn } = useDeleteColumn();
-  const { updateColumnTitle } = useUpdateColumnTitle();
+  const { updateColumnContent } = useUpdateColumnContent();
   const [activeColumn, setActiveColumn] = useState(null);
 
   // Tasks
@@ -80,9 +81,9 @@ function Board() {
 
   return (
     <>
-      <div className="border p-8 flex flex-col min-h-[calc(100vh-100px)] w-full overflow-x-auto overflow-y-hidden ">       
-        <h1 className='font-semibold'>Board Task Assignment and Planner</h1>
-        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
+      <div className="border p-8 flex flex-col min-h-[calc(100vh-100px)] w-full overflow-x-auto overflow-y-hidden ">
+        <h1 className="font-semibold">Board Task Assignment and Planner</h1>
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <DndContext
           sensors={sensors}
           onDragStart={(event) => onDragStart(event, setActiveColumn, setActiveTask)}
@@ -96,10 +97,11 @@ function Board() {
                   <ColumnContainer
                     key={col.id}
                     column={col}
+                    openDrawer={openDrawer}
                     currentUser={currentUser}
                     deleteColumn={deleteColumn}
-                    updateColumn={updateColumnTitle}
                     createTask={createTask}
+                    openColumn={openColumn}
                     openTask={openTask}
                     open={openDrawer}
                     tasks={tasks.filter((task) => task.columnId === col.id)}
@@ -126,10 +128,10 @@ function Board() {
                 <ColumnContainer
                   column={activeColumn}
                   deleteColumn={deleteColumn}
-                  updateColumn={updateColumnTitle}
                   createTask={createTask}
                   currentUser={currentUser}
                   deleteTask={deleteTask}
+                  openColumn={openColumn}
                   openTask={openTask}
                   open={openDrawer}
                   tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
@@ -142,7 +144,8 @@ function Board() {
         </DndContext>
       </div>
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
-        <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} />
+        {drawerType === 'updateTask' && <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} />}
+        {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} />}
       </Drawer>
     </>
   );

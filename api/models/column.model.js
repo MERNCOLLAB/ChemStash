@@ -7,11 +7,14 @@ const boardColumnSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    color: {
+      type: String,
+    },
     title: {
       type: String,
       required: true,
     },
-    order: { type: Number, required: true }, // Add this field
+    order: { type: Number, required: true },
   },
   { timestamps: true }
 );

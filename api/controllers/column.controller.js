@@ -8,11 +8,12 @@ export const test = (req, res) => {
 };
 // add column
 export const createColumn = async (req, res, next) => {
-  const { id, title, order } = req.body; // Ensure to receive the order as well
+  const { id, title, order, color } = req.body; // Ensure to receive the order as well
   const newColumn = new ColumnBoard({
     id,
     title,
     order, // Set the order field
+    color,
   });
 
   try {
@@ -76,19 +77,19 @@ export const updateColumnOrder = async (req, res, next) => {
 
 // update column title
 
-export const updateColumnTitle = async (req, res, next) => {
-  const { id, title } = req.body;
+export const updateColumnContent = async (req, res, next) => {
+  const { id, title, color } = req.body;
 
   try {
-    const updatedColumn = await ColumnBoard.findOneAndUpdate({ id }, { title }, { new: true });
+    const updatedColumn = await ColumnBoard.findOneAndUpdate({ id }, { title, color }, { new: true });
 
     if (!updatedColumn) {
       return res.status(404).json({ message: 'Column not found' });
     }
 
-    io.emit('columnTitleUpdated', updatedColumn); // Emit event to all connected clients
+    io.emit('columnUpdated', updatedColumn);
 
-    res.status(200).json({ message: 'Column title updated successfully', updatedColumn });
+    res.status(200).json({ message: 'Column updated successfully', updatedColumn });
   } catch (error) {
     next(error);
   }

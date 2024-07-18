@@ -3,7 +3,7 @@ import TrashIcon from '../icons/TrashIcon';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-function TaskCard({ task, deleteTask, openTask }) {
+function TaskCard({ task, deleteTask, openTask, openDrawer }) {
   const [editMode, setIsEditMode] = useState(false);
   const [content, setContent] = useState(task.content);
   const [au, setAu] = useState(task.assignedUsers);
@@ -18,7 +18,7 @@ function TaskCard({ task, deleteTask, openTask }) {
   }, [task]);
 
   const toggleEditMode = () => {
-    setIsEditMode((prev) => !prev);
+    setIsEditMode(openDrawer);
     openTask(task);
   };
 

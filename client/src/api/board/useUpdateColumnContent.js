@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import useBoardColumnList from './useBoardColumnList';
 
-const useUpdateColumnTitle = () => {
+const useUpdateColumnContent = () => {
   const { boardColumnList } = useBoardColumnList();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const updateColumnTitle = async (id, title) => {
+  const updateColumnContent = async (id, title, color) => {
     try {
       setLoading(true);
-      const response = await fetch('/api/board/column/updateTitle', {
+      const response = await fetch('/api/board/column/updateColumnContent', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, title }),
+        body: JSON.stringify({ id, title, color }),
       });
       const data = await response.json();
 
@@ -28,7 +28,7 @@ const useUpdateColumnTitle = () => {
       setLoading(false);
     }
   };
-  return { loading, error, updateColumnTitle };
+  return { loading, error, updateColumnContent };
 };
 
-export default useUpdateColumnTitle;
+export default useUpdateColumnContent;

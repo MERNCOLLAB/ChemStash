@@ -10,6 +10,7 @@ const useCreateNewColumn = (columns) => {
     const columnToAdd = {
       id: generateId(),
       title: `Column ${columns.length + 1}`,
+      color: '',
       order: columns.length + 1,
     };
 

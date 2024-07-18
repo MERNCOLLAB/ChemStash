@@ -3,13 +3,36 @@ import { useState } from 'react';
 const useDrawer = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [taskItem, setTaskItem] = useState({ id: null, content: '', dueDate: '', assignedUsers: [] });
+  const [columnItem, setColumnItem] = useState({
+    id: null,
+    color: '',
+    title: '',
+  });
+  const [drawerType, setDrawerType] = useState('');
 
   const openTask = (task) => {
-    setOpenDrawer((prev) => !prev);
+    handleDrawerOpen('updateTask');
     setTaskItem(task);
   };
+
+  const openColumn = (column) => {
+    handleDrawerOpen('updateColumn');
+    setColumnItem(column);
+  };
+
+  const handleDrawerOpen = (type) => {
+    setDrawerType(type);
+    setOpenDrawer(true);
+  };
+
   const handleDrawerClose = () => {
     setOpenDrawer(false);
+    setTaskItem({ id: null, content: '', dueDate: '', assignedUsers: [] });
+    setColumnItem({
+      id: null,
+      color: '',
+      title: '',
+    });
   };
 
   return {
@@ -17,7 +40,10 @@ const useDrawer = () => {
     setOpenDrawer,
     taskItem,
     openTask,
+    openColumn,
+    columnItem,
     handleDrawerClose,
+    drawerType,
   };
 };
 
