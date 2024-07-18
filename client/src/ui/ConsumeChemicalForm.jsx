@@ -1,11 +1,15 @@
+import useConsumeChemical from '../api/chemical/useConsumeChemical';
 import { Button, FormHeader, Input, ViewChemicalData, ChemicalFormula } from '../components';
 import useChemicalAmountUpdate from '../hooks/chemical/useChemicalAmountUpdate';
+import ToastProvider from '../configs/ToastProvider';
 
 const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
-  const { update, handleAmountChange, handleSubmit } = useChemicalAmountUpdate(item, getChemicalList);
+  const {loading, consumeChemical, toastMessage, toastType, clearToast } = useConsumeChemical(getChemicalList);
+  const { updateAmount, handleAmountChange, handleSubmit } = useChemicalAmountUpdate(item, consumeChemical);
 
   return (
     <form onSubmit={handleSubmit} className="bg-white0 min-w-[30%] min-h-full p-7">
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/> 
       <FormHeader title="Consume the Chemical" />
       <div className="">
         <div className="grid items-center gap-2 my-4">
@@ -39,9 +43,10 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
             id="consumption"
             validation="Amount must be a number"
             placeholder="Enter Amount"
+            disabled={loading}
             type="number"
             label="Enter the consumed amount"
-            value={update.amount}
+            value={updateAmount.amount}
             onChange={handleAmountChange}
           />
         </div>

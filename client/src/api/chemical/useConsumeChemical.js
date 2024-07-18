@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
-const useConsumeChemical = () => {
+
+
+const useConsumeChemical = (getChemicalList) => {
   const [loading, setLoading] = useState(false);
-  const consumeChemical = async (update, getChemicalList) => {
+  const [error,setError] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
+
+  const consumeChemical = async (update) => {
     const { id, amount, unit, user } = update;
 
     try {
@@ -14,20 +19,26 @@ const useConsumeChemical = () => {
         },
         body: JSON.stringify({ id, amount, unit, user }),
       });
-
-      if (!response.ok) {
-        toast.error('Failed to update chemical amount');
-        throw new Error('Network response was not ok');
+      const data = await response.json();
+      if (data.success === false) {
+        setToastMessage('Failed to update the selected chemical');
+        setToastType('error');
       }
-      toast.success('Chemical amount reduced');
       getChemicalList();
+      setToastMessage('Chemical Amount has been reduced');
+      setToastType('success');
     } catch (error) {
-      console.error('Error consuming chemical:', error);
+      setError(error);
     } finally {
       setLoading(false);
     }
   };
-  return { loading, consumeChemical };
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+
+  return { loading, error, consumeChemical, toastMessage, toastType, clearToast };
 };
 
 export default useConsumeChemical;

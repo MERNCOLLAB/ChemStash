@@ -7,7 +7,7 @@ import ToastProvider from '../configs/ToastProvider';
 
 function UpdateChemicalForm({ item,getChemicalList, handleDrawerClose }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
-  const {loading,updateChemical, toastMessage,toastType,clearToast} = useUpdateChemical(getChemicalList);
+  const {loading, updateChemical, toastMessage,toastType,clearToast} = useUpdateChemical(getChemicalList);
   const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, updateChemical);
 
   // Basic Information Section

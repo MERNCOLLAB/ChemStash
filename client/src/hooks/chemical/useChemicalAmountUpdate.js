@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import useConsumeChemical from '../../api/chemical/useConsumeChemical';
 
-const useChemicalAmountUpdate = (item, getChemicalList) => {
+
+const useChemicalAmountUpdate = (item, consumeChemical) => {
   const { currentUser } = useSelector((state) => state.user);
-  const { consumeChemical } = useConsumeChemical();
-
-  const [update, setUpdate] = useState({
+  const [updateAmount, setUpdateAmount] = useState({
     id: item._id,
     amount: '',
     unit: null,
@@ -14,25 +12,18 @@ const useChemicalAmountUpdate = (item, getChemicalList) => {
   });
 
   const handleAmountChange = (event) => {
-    setUpdate((prevState) => ({
+    setUpdateAmount((prevState) => ({
       ...prevState,
       amount: Number(event.target.value),
     }));
   };
 
-  const handleUnitChange = (selectedOption) => {
-    setUpdate((prevState) => ({
-      ...prevState,
-      unit: selectedOption ? selectedOption.value : null,
-    }));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    consumeChemical(update, getChemicalList);
+    consumeChemical(updateAmount);
   };
 
-  return { update, handleAmountChange, handleUnitChange, handleSubmit };
+  return { updateAmount, handleAmountChange,handleSubmit };
 };
 
 export default useChemicalAmountUpdate;

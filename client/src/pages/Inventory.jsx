@@ -45,7 +45,8 @@ function Inventory() {
         {drawerType === 'add' ? (
           <AddChemicalForm 
           getChemicalList={getChemicalList}
-          handleDrawerClose={handleDrawerClose} />
+          handleDrawerClose={handleDrawerClose} 
+          />
         ) : drawerType === 'update' ? (
           <UpdateChemicalForm
             item={currentItem}
