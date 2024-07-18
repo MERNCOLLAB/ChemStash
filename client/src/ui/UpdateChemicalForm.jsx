@@ -195,15 +195,16 @@ function UpdateChemicalForm({ item,getChemicalList, handleDrawerClose }) {
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
       <FormContainer gridColsClass="grid-cols-3">{basicInfoFirstRow}</FormContainer>
       <FormContainer gridColsClass="grid-cols-3">{basicInfoSecondRow}</FormContainer>
+      <hr className="bg-gray1 my-5" />
       {/* Storage Info */}
       <FormSubHeader title="Storage Info" subtitle="Details about the storage and quantity of the chemical" />
       <FormContainer gridColsClass="grid-cols-3">{storageInfoFirstRow}</FormContainer>
       <FormContainer gridColsClass="grid-cols-3">{storageInfoSecondRow}</FormContainer>
-
+      <hr className="bg-gray1 my-5" />
       {/* Safety Info */}
       <FormSubHeader title="Safety Info" subtitle="Hazard classification and reference safety data sheet" />
       <FormContainer gridColsClass="grid-cols-3">{safetyInfoRow}</FormContainer>
-
+      <hr className="bg-gray1 my-5" />
       <div className="flex justify-end mt-4 gap-2.5 p-2.5">
         <Button type="button" variant="secondary" onClick={handleDrawerClose}>
           Cancel
