@@ -1,46 +1,45 @@
 import { useState } from 'react';
 import { location, hazardClassifications, initialChemicalData } from '../../constants';
 import { transformArrayToOptions } from '../../helpers/transformArray';
-import useAddChemical from '../../api/chemical/useAddChemical';
 
-const useChemicalForm = () => {
-  const { addChemical } = useAddChemical();
+
+const useChemicalForm = (addChemical) => {
   // Select Element Options
   const locationOptions = transformArrayToOptions(location);
   const hazardClassificationOptions = transformArrayToOptions(hazardClassifications);
 
   // Chemical Form Fields
-  const [formData, setFormData] = useState(initialChemicalData);
+  const [chemicalData, setChemicalData] = useState(initialChemicalData);
 
   const handleChange = (e) => {
     const { id, value, type } = e.target;
-    setFormData({
-      ...formData,
+    setChemicalData({
+      ...chemicalData,
       [e.target.id]: e.target.value,
       [id]: type === 'number' ? Number(value) : value,
     });
   };
 
   const handleChangeOption = (selectedOption, field) => {
-    setFormData({
-      ...formData,
+    setChemicalData({
+      ...chemicalData,
       [field]: selectedOption ? selectedOption.value : '',
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
-    setFormData(formData);
-    await addChemical(formData);
+    setChemicalData(chemicalData);
+    await addChemical(chemicalData);
   };
 
   return {
     locationOptions,
     hazardClassificationOptions,
-    formData,
+    chemicalData,
     handleChange,
     handleChangeOption,
-    handleSubmit,
+    handleAdd,
   };
 };
 
