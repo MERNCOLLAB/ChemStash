@@ -4,18 +4,20 @@ import useBoardColumnList from '../board/useBoardColumnList';
 import { useSelector } from 'react-redux';
 import useBoardTaskList from '../board/useBoardTaskList';
 import useCreateNotification from '../notification/useCreateNotification';
-import toast from 'react-hot-toast';
+
 
 const useCreateTask = () => {
   // External States
   const { columns, boardColumnList } = useBoardColumnList();
+  const { createNotification } = useCreateNotification();
   const { tasks, boardTaskList } = useBoardTaskList();
   const { user, socket } = useSelector((state) => state.notification);
   const { currentUser } = useSelector((state) => state.user);
   // Local States
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const { createNotification } = useCreateNotification();
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
 
   useEffect(() => {
     boardColumnList();
@@ -61,20 +63,29 @@ const useCreateTask = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to add task');
+        setToastMessage('Failed to create a task');
+        setToastType('error');
+        throw new Error(data.message );
       }
 
       boardTaskList();
-      toast.success('A task has been created');
+      setToastMessage('A Task has been created');
+      setToastType('success');
     } catch (error) {
       setError(true);
+      setToastMessage('Failed to create a task');
+      setToastType('error');
       setError(error.message || 'Failed to add task');
     } finally {
       setLoading(false);
     }
   };
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
 
-  return { loading, error, createTask };
+  return { loading, error, createTask, toastMessage, toastType, clearToast };
 };
 
 export default useCreateTask;
