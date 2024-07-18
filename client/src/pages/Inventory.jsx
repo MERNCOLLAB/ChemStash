@@ -15,7 +15,6 @@ import { paginationOptions } from '../helpers/TableConfig';
 // Hooks
 import useDrawer from '../hooks/chemical/useDrawer';
 import useGetChemical from '../api/chemical/useGetChemical';
-import useUpdateChemical from '../api/chemical/useUpdateChemical';
 
 
 function Inventory() {
@@ -30,7 +29,6 @@ function Inventory() {
     handleDelete,
     handleDrawerClose,
   } = useDrawer(lists);
-  const { loading: updateLoading, updateItem } = useUpdateChemical(getChemicalList, handleDrawerClose);
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
@@ -49,14 +47,14 @@ function Inventory() {
         ) : drawerType === 'update' ? (
           <UpdateChemicalForm
             item={currentItem}
-            handleUpdate={updateItem}
+            getChemicalList={getChemicalList}
             handleDrawerClose={handleDrawerClose}
-            loading={updateLoading}
           />
         ) : drawerType === 'delete' ? (
-          <DeleteChemicalForm item={currentItem} 
-          getChemicalList={getChemicalList}
-          handleDrawerClose={handleDrawerClose}
+          <DeleteChemicalForm 
+            item={currentItem} 
+            getChemicalList={getChemicalList}
+            handleDrawerClose={handleDrawerClose}
           />
         ) : drawerType === 'consume' ? (
           <ConsumeChemicalForm

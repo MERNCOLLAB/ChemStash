@@ -2,10 +2,13 @@ import { Input, Button, FormHeader, FormSubHeader, FormContainer } from '../comp
 import CustomSelect from '../components/CustomSelect';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useUpdateChemicalDrawer from '../hooks/chemical/useUpdateChemicalDrawer';
+import useUpdateChemical from '../api/chemical/useUpdateChemical';
+import ToastProvider from '../configs/ToastProvider';
 
-function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) {
+function UpdateChemicalForm({ item,getChemicalList, handleDrawerClose }) {
   const { locationOptions, hazardClassificationOptions } = useChemicalForm();
-  const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, handleUpdate);
+  const {loading,updateChemical, toastMessage,toastType,clearToast} = useUpdateChemical(getChemicalList);
+  const { updatedItem, handleChange, handleChangeOption, onUpdate } = useUpdateChemicalDrawer(item, updateChemical);
 
   // Basic Information Section
   // First Row: Chemical Name, Molecular Formula, Brand
@@ -43,7 +46,7 @@ function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) 
     </>
   );
 
-  // Second Row: Purity, Batch Number, Lot Number
+  // Second Row: Purity, Batch Number, CAS Number
   const basicInfoSecondRow = (
     <>
       <Input
@@ -71,8 +74,8 @@ function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) 
         value={updatedItem.casNumber}
         id="casNumber"
         type="tel"
-        label="Lot Number"
-        placeholder="Enter Lot Number"
+        label="CAS Registry Number"
+        placeholder="Enter CAS Number"
         onChange={handleChange}
         validation="Please enter a valid CAS Number XXXXXX-XX-X"
       />
@@ -186,6 +189,7 @@ function UpdateChemicalForm({ item, handleUpdate, handleDrawerClose, loading }) 
 
   return (
     <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={onUpdate}>
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
       <FormHeader title="Update Chemical Form" />
       {/* Basic Info */}
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 
-const useUpdateChemical = (getChemicalList, handleDrawerClose) => {
+const useUpdateChemical = (getChemicalList) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const updateItem = async (currentItem) => {
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
+
+  const updateChemical = async (currentItem) => {
     try {
       setLoading(true);
       const res = await fetch(`/api/chemical/update/${currentItem._id}`, {
@@ -18,20 +20,28 @@ const useUpdateChemical = (getChemicalList, handleDrawerClose) => {
 
       const data = await res.json();
       if (data.success === false) {
-        setLoading(false);
-        toast.error('Failed to update the selected chemical');
+
+        setToastMessage('Failed to update the selected chemical');
+        setToastType('error');
         return;
       }
 
       getChemicalList();
-      handleDrawerClose();
-      toast.success('Chemical successfully updated');
+      setToastMessage('Chemical has been updated');
+      setToastType('success');
     } catch (error) {
-      setLoading(false);
+
       setError(error);
+    }finally{
+      setLoading(false);
     }
   };
-  return { loading, error, updateItem };
+
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+  return { loading, error, updateChemical, toastMessage, toastType, clearToast };
 };
 
 export default useUpdateChemical;

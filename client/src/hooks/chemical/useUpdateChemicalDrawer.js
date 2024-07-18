@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { initialChemicalData } from '../../constants';
 import { formatDate } from '../../helpers/FormatDate';
 
-const useUpdateChemicalDrawer = (item, handleUpdate) => {
+const useUpdateChemicalDrawer = (item, updateChemical) => {
   const [updatedItem, setUpdatedItem] = useState({ ...initialChemicalData, ...item });
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ const useUpdateChemicalDrawer = (item, handleUpdate) => {
 
   const onUpdate = (e) => {
     e.preventDefault();
-    handleUpdate(updatedItem);
+    updateChemical(updatedItem);
   };
 
   useEffect(() => {
