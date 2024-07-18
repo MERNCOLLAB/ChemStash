@@ -83,7 +83,7 @@ function DeleteChemicalForm({ item, getChemicalList, handleDrawerClose}) {
   );
   return (
     <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={handleSubmitDelete}>
-      {<ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>}
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
       <FormHeader title="Delete Chemical" />
       {/* Basic Info */}
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
