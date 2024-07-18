@@ -3,9 +3,10 @@ import { useState } from 'react';
 
 const useDeleteChemical = (getChemicalList) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [toastType, setToastType] = useState(null);
+  
   const deleteChemical = async (id) => {
     try {
       setLoading(true);

@@ -1,5 +1,4 @@
-import ToastSuccess from "../components/ToastSuccess";
-import ToastError from "../components/ToastError";
+import Toast from "../components/Toast";
 
 const ToastProvider = ({ toastType, toastMessage, clearToast }) => {
     if(!toastType) return null;
@@ -9,10 +8,7 @@ const ToastProvider = ({ toastType, toastMessage, clearToast }) => {
     },2500)
     
     return (
-    <>
-    {toastType === 'success' && <ToastSuccess message={toastMessage}/>}
-    {toastType === 'error' && <ToastError message={toastMessage}/>}
-    </>
+      <Toast toastType={toastType} message={toastMessage}/>
   )
 }
 
