@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 
-const useAddChemical = () => {
+const useAddChemical = (getChemicalList) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
 
-  const addChemical = async (formData) => {
+  const addChemical = async (chemicalData) => {
     try {
       setLoading(true);
       setError(false);
@@ -14,24 +15,32 @@ const useAddChemical = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(chemicalData),
       });
 
-      if (!res.ok) {
-        toast.error('Failed to add the chemical');
-      }
       const data = await res.json();
-
-      setLoading(false);
-
-      toast.success(data.message);
+      if (data.success === false) {
+        setToastMessage('Failed to add the chemical');
+        setToastType('error');
+        return;
+      }
+      
+      getChemicalList();
+      setToastMessage('Chemical has been added');
+      setToastType('success');
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
   };
-  return { loading, error, addChemical };
+
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+
+  return { loading, error, addChemical, toastMessage, toastType, clearToast };
 };
 
 export default useAddChemical;

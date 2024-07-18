@@ -2,11 +2,12 @@ import CustomSelect from '../components/CustomSelect';
 import { Button, Input, FormHeader, FormSubHeader, FormContainer } from '../components';
 import useChemicalForm from '../hooks/chemical/useChemicalForm';
 import useAddChemical from '../api/chemical/useAddChemical';
+import ToastProvider from '../configs/ToastProvider';
 
-function AddChemicalForm({ handleDrawerClose }) {
-  const { locationOptions, hazardClassificationOptions, formData, handleSubmit, handleChange, handleChangeOption } =
-    useChemicalForm();
-  const { loading } = useAddChemical();
+function AddChemicalForm({ getChemicalList, handleDrawerClose }) {
+  const { loading, addChemical, toastMessage, toastType, clearToast } = useAddChemical(getChemicalList);
+  const { locationOptions, hazardClassificationOptions, chemicalData, handleAdd, handleChange, handleChangeOption } =
+    useChemicalForm(addChemical);
 
   // Basic Information Section
   // First Row: Chemical Name, Molecular Formula, Brand
@@ -14,7 +15,7 @@ function AddChemicalForm({ handleDrawerClose }) {
     <>
       <Input
         disable={loading}
-        value={formData.name}
+        value={chemicalData.name}
         id="name"
         type="text"
         label="Chemical Name"
@@ -24,7 +25,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       />
       <Input
         disable={loading}
-        value={formData.molecularFormula}
+        value={chemicalData.molecularFormula}
         id="molecularFormula"
         label="Molecular Formula"
         placeholder="Enter Molecular Formula"
@@ -34,7 +35,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Brand"
         disable={loading}
-        value={formData.brand}
+        value={chemicalData.brand}
         id="brand"
         type="text"
         placeholder="Enter Brand"
@@ -44,13 +45,13 @@ function AddChemicalForm({ handleDrawerClose }) {
     </>
   );
 
-  // Second Row: Purity, Batch Number, Lot Number
+  // Second Row: Purity, Batch Number, CAS Number
   const basicInfoSecondRow = (
     <>
       <Input
         label="Purity"
         disable={loading}
-        value={formData.purity}
+        value={chemicalData.purity}
         id="purity"
         type="text"
         placeholder="Enter Purity"
@@ -59,7 +60,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       />
       <Input
         disable={loading}
-        value={formData.batch}
+        value={chemicalData.batch}
         id="batch"
         type="number"
         label="Batch Number"
@@ -69,7 +70,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       />
       <Input
         disable={loading}
-        value={formData.casNumber}
+        value={chemicalData.casNumber}
         id="casNumber"
         type="tel"
         label="CAS Registry Number"
@@ -88,14 +89,14 @@ function AddChemicalForm({ handleDrawerClose }) {
         label="Storage Location"
         validation="Enter where are you going to store the chemical"
         placeholder="Select a location"
-        value={locationOptions.find((opt) => opt.value === formData.location)}
+        value={locationOptions.find((opt) => opt.value === chemicalData.location)}
         options={locationOptions}
         onChange={(selectedLocation) => handleChangeOption(selectedLocation, 'location')}
       />
       <Input
         label="Date Received"
         disable={loading}
-        value={formData.dateReceived}
+        value={chemicalData.dateReceived}
         id="dateReceived"
         type="date"
         onChange={handleChange}
@@ -104,7 +105,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Expiry Date"
         disable={loading}
-        value={formData.expiryDate}
+        value={chemicalData.expiryDate}
         id="expiryDate"
         type="date"
         onChange={handleChange}
@@ -118,7 +119,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Supply"
         disable={loading}
-        value={formData.supply}
+        value={chemicalData.supply}
         id="supply"
         type="number"
         placeholder="Enter the Number of Supply"
@@ -128,7 +129,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Amount"
         disable={loading}
-        value={formData.amount}
+        value={chemicalData.amount}
         id="amount"
         type="number"
         placeholder="Enter Amount"
@@ -138,7 +139,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Expression Unit"
         disable={loading}
-        value={formData.unit}
+        value={chemicalData.unit}
         id="unit"
         type="text"
         placeholder="Enter Unit"
@@ -156,14 +157,14 @@ function AddChemicalForm({ handleDrawerClose }) {
         label="Hazard Classification"
         validation="Enter the chemical hazard classification (GHS Standard)"
         placeholder="Select a classification"
-        value={hazardClassificationOptions.find((opt) => opt.value === formData.hazardClassification)}
+        value={hazardClassificationOptions.find((opt) => opt.value === chemicalData.hazardClassification)}
         options={hazardClassificationOptions}
         onChange={(selectedClassification) => handleChangeOption(selectedClassification, 'hazardClassification')}
       />
       <Input
         label="Safety Data Sheet"
         disable={loading}
-        value={formData.sds}
+        value={chemicalData.sds}
         id="sds"
         type="text"
         placeholder="SDS Link"
@@ -173,7 +174,7 @@ function AddChemicalForm({ handleDrawerClose }) {
       <Input
         label="Additional Notes"
         disable={loading}
-        value={formData.remarks}
+        value={chemicalData.remarks}
         id="remarks"
         type="text"
         placeholder="Enter Remarks"
@@ -183,7 +184,8 @@ function AddChemicalForm({ handleDrawerClose }) {
     </>
   );
   return (
-    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={handleSubmit}>
+    <form className="p-7 min-w-[49%]  min-h-full bg-white0" onSubmit={handleAdd}>
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
       <FormHeader title="Add Chemical Form" />
       {/* Basic Info */}
       <FormSubHeader title="Basic Info" subtitle="Basic information of the chemical" />
