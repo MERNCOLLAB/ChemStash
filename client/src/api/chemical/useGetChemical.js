@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
+
 
 const useGetChemical = (query = '') => {
+  const [lists, setLists] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [lists, setLists] = useState([]);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
 
   const getChemicalList = async () => {
     setLoading(true);
     try {
       const response = await fetch(`/api/chemical/list/${query}`);
       if (!response.ok) {
-        toast.error('Failed to fetch the Chemical Lists');
+        setToastMessage('Failed to fetch the chemical inventory data');
+        setToastType('error');
       }
       const data = await response.json();
       const transformedData = data.map((item) => ({
@@ -26,6 +29,11 @@ const useGetChemical = (query = '') => {
       setLoading(false);
     }
   };
-  return { loading, error, lists, getChemicalList };
+
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+  return { loading, error, lists, getChemicalList, toastMessage, toastType, clearToast };
 };
 export default useGetChemical;

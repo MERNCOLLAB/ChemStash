@@ -1,6 +1,8 @@
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from './Button';
+import ToastProvider from '../configs/ToastProvider';
+import useGetChemical from '../api/chemical/useGetChemical';
 
 const CustomToolbar = ({ handleAdd }) => {
   return (
@@ -11,6 +13,7 @@ const CustomToolbar = ({ handleAdd }) => {
 };
 
 const MTable = ({ data, columns, options, title, handleAdd }) => {
+  const {toastMessage, toastType, clearToast} = useGetChemical();
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -80,6 +83,7 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
     <ThemeProvider theme={getMuiTheme()}>
       <div className="p-8">
         <h1 className="font-semibold pb-4">Chemical Inventory Table</h1>
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
         <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />
       </div>
     </ThemeProvider>

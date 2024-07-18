@@ -20,7 +20,7 @@ function Button({ loading, children, type, variant, onClick }) {
       {loading && (
         <div className="flex items-center gap-0.5">
           <svg
-            class="animate-spin size-4 mr-2 border-white1 border-t-gray1 border-2 rounded-full"
+            className="animate-spin size-4 mr-2 border-white1 border-t-gray1 border-2 rounded-full"
             viewBox="0 0 24 24"
           />
           <span className="font-semibold text-base">Loading</span>
