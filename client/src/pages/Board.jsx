@@ -29,6 +29,7 @@ import useCreateTask from '../api/task/useCreateTask';
 import useUpdateTask from '../api/task/useUpdateTask';
 import useDeleteTask from '../api/task/useDeleteTask';
 import useDrawer from '../hooks/board/useDrawer';
+import ToastProvider from '../configs/ToastProvider';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
@@ -42,7 +43,7 @@ function Board() {
   const [activeColumn, setActiveColumn] = useState(null);
 
   // Tasks
-  const { createTask } = useCreateTask();
+  const { createTask, toastMessage, toastType, clearToast } = useCreateTask();
   const { updateTask } = useUpdateTask();
   const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
@@ -79,7 +80,9 @@ function Board() {
 
   return (
     <>
-      <div className="border p-2 flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden ">
+      <div className="border p-8 flex flex-col min-h-[calc(100vh-100px)] w-full overflow-x-auto overflow-y-hidden ">       
+        <h1 className='font-semibold'>Board Task Assignment and Planner</h1>
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
         <DndContext
           sensors={sensors}
           onDragStart={(event) => onDragStart(event, setActiveColumn, setActiveTask)}
