@@ -1,60 +1,23 @@
-import { useState, useEffect } from 'react';
-import { BarChart, Rectangle, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import moment from 'moment';
+import { 
+  BarChart, 
+  Rectangle, 
+  Bar, 
+  XAxis,
+  YAxis,
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer } from 'recharts';
 import CustomSelect from '../components/CustomSelect';
+import useBarChartData from '../api/dashboard/useChemicalBarChart';
+import useChemicalBarChart from '../hooks/dashboard/useChemicalBarChart';
 
 const SampleBarChart = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [selectedChemical, setSelectedChemical] = useState('');
+  const {loading,error, data, barChartData} = useBarChartData();
+  const {selectedChemical, chemicalOptions, filteredData, handleChangeChemical} = useChemicalBarChart(data, barChartData)
 
-  useEffect(() => {
-    fetchChemicalList();
-  }, []);
 
-  const chemicalOptions = [
-    { value: '', label: 'All' },
-    ...Array.from(new Set(data.map((item) => item.name))).map((chemical) => ({
-      value: chemical,
-      label: chemical,
-    })),
-  ];
-
-  const handleChangeChemical = (selectedOption) => {
-    if (selectedOption === null) return;
-
-    setSelectedChemical(selectedOption.value);
-  };
-
-  let filteredData = data;
-  if (selectedChemical !== '') {
-    filteredData = data.filter((item) => item.name === selectedChemical);
-  }
-
-  const fetchChemicalList = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/chemical/list/barchart');
-      if (!response.ok) {
-        throw new Error('Failed to fetch chemical list');
-      }
-
-      const result = await response.json();
-      const formattedData = result.map((item) => ({
-        ...item,
-        dateReceived: moment(item.dateReceived).format('YYYY-MM-DD'),
-        supply: item.supply * 1000,
-      }));
-
-      setData(formattedData);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -66,7 +29,7 @@ const SampleBarChart = () => {
   return (
     <div>
       <CustomSelect
-        label="Chemical"
+        label="Chemical Amount and Supply"
         validation="Select a Chemical"
         placeholder="Select a Chemical"
         value={chemicalOptions.find((option) => option.value === selectedChemical)}
@@ -85,8 +48,11 @@ const SampleBarChart = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis />
-          <YAxis />
+          <XAxis 
+          type='category'
+          dataKey="name"
+          />
+          <YAxis/>
           <Tooltip content={<CustomTooltip />} />
           <Legend />
           <Bar dataKey="amount" fill="#8884d8" activeShape={<Rectangle fill="pink" stroke="blue" />} />
@@ -99,13 +65,13 @@ const SampleBarChart = () => {
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const { name, dateReceived, amount, supply } = payload[0].payload;
+    const { name, dateReceived, amount, supply, unit} = payload[0].payload;
     return (
       <div className="custom-tooltip p-1 backdrop-sepia-0 bg-slate-100/40  rounded-md flex flex-col gap-1">
         <div>{`Name: ${name}`}</div>
         <div>{`Date Received: ${dateReceived}`}</div>
-        <div>{`Amount: ${amount}`}</div>
-        <div>{`Supply: ${supply}`}</div>
+        <div>{`Amount per Supply: ${amount} ${unit}`}</div>
+        <div>{`Total Supply: ${supply}`}</div>
       </div>
     );
   }

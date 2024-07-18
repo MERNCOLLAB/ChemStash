@@ -8,7 +8,7 @@ import MTable from '../components/MTable';
 import { BigSpinner } from '../components';
 
 // Table Configurations
-// import useFormatFormula from '../hooks/chemical/useFormatFormula';
+import useFormatFormula from '../hooks/chemical/useFormatFormula';
 import { inventoryColumns } from '../configs/InventoryColumn';
 import { paginationOptions } from '../helpers/TableConfig';
 
@@ -31,8 +31,8 @@ function Inventory() {
   } = useDrawer(lists);
 
   const currentUser = useSelector((state) => state.user.currentUser);
-
-  const columns = inventoryColumns(currentUser, handleConsume, handleUpdate, handleDelete);
+  const { parseInput } = useFormatFormula();
+  const columns = inventoryColumns(currentUser,parseInput, handleConsume, handleUpdate, handleDelete);
 
   useEffect(() => {
     getChemicalList();
