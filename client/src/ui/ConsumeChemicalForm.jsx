@@ -38,6 +38,7 @@ const ConsumeChemicalForm = ({ item, getChemicalList, handleDrawerClose }) => {
             {item.amount} &nbsp; {item.unit}
           </ViewChemicalData>
         </div>
+        <hr className="bg-gray1 my-5" />
         <div className="mb-2">
           <Input
             id="consumption"

@@ -127,7 +127,7 @@ function Chemical() {
         validation="Please enter the number of bottles or container"
       />
       <Input
-        label="Amount"
+        label="Amount per Supply"
         disable={loading}
         value={formData.amount}
         id="amount"
