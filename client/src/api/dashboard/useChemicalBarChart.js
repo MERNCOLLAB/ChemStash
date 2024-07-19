@@ -4,7 +4,7 @@ import moment from 'moment'
 const useBarChartData = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
 
     const barChartData = async () => {
         setLoading(true);
@@ -23,7 +23,7 @@ const useBarChartData = () => {
     
           setData(formattedData);
         } catch (error) {
-          setError(true);
+          setError(error);
         } finally {
           setLoading(false);
         }
