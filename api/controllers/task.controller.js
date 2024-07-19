@@ -12,9 +12,9 @@ export const taskList = async (req, res, next) => {
 };
 
 export const createTask = async (req, res, next) => {
-  const { id, username, columnId, content, order } = req.body;
+  const { id, username, columnId, order } = req.body;
 
-  if (!id || !username || !columnId || !content || !order === undefined) {
+  if (!id || !username || !columnId || !order === undefined) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
@@ -27,7 +27,7 @@ export const createTask = async (req, res, next) => {
     const newTask = new Task({
       id,
       columnId,
-      content,
+
       username,
       order,
     });
@@ -60,14 +60,14 @@ export const deleteTask = async (req, res, next) => {
 
 export const updateTask = async (req, res, next) => {
   const { id } = req.params;
-  const { content, dueDate, assignedUsers, priority } = req.body;
+  const { content, dueDate, assignedUsers, priority, desc } = req.body;
 
   if (!id) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
   try {
-    const updatedTask = await Task.findOneAndUpdate({ id }, { content, dueDate, assignedUsers, priority });
+    const updatedTask = await Task.findOneAndUpdate({ id }, { content, dueDate, assignedUsers, priority, desc });
 
     if (!updatedTask) {
       return res.status(404).json({ message: 'Task not found' });

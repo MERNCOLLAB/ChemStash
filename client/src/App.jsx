@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
-import { Header, PrivateRoute, AppLayout, Map } from './ui';
+import { PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

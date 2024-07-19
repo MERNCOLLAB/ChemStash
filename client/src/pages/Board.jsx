@@ -75,14 +75,13 @@ function Board() {
     })
   );
 
-  const handleUpdate = (id, update, date, selectedMembers, priority) => {
-    updateTask(id, update, date, selectedMembers, priority);
+  const handleUpdate = (id, update, date, selectedMembers, priority, desc) => {
+    updateTask(id, update, date, selectedMembers, priority, desc);
   };
-
   return (
     <>
-      <div className="border p-8 flex flex-col min-h-[calc(100vh-100px)] w-full overflow-x-auto overflow-y-hidden ">
-        <h1 className="font-semibold">Board Task Assignment and Planner</h1>
+      <div className="border p-8 flex flex-col min-h-[calc(100vh-88px)] w-full overflow-x-auto overflow-y-hidden ">
+        {/* <h1 className="font-semibold">Board Task Assignment and Planner</h1> */}
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <DndContext
           sensors={sensors}
@@ -90,7 +89,7 @@ function Board() {
           onDragEnd={(event) => onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask)}
           onDragOver={(event) => onDragOver(event, tasks, setTasks)}
         >
-          <div className="m-auto flex gap-4">
+          <div className=" flex gap-6">
             <div className="flex gap-4">
               <SortableContext items={columnsId}>
                 {columns.map((col) => (
@@ -111,14 +110,17 @@ function Board() {
               </SortableContext>
             </div>
             {currentUser.role === 'chemist' ? null : (
-              <button
-                className=" p-2 flex gap-2 border border-transparent hover:border-white h-fit"
-                onClick={() => {
-                  createNewColumn();
-                }}
-              >
-                <PlusIcon /> Add Column
-              </button>
+              <div className="shadow-lg  bg-white1 rounded-lg h-[40px]  min-w-[300px] flex items-center">
+                <button
+                  className=" gap-2   font-semibold     flex  px-2 "
+                  onClick={() => {
+                    createNewColumn();
+                  }}
+                >
+                  <PlusIcon />
+                  Add Column
+                </button>
+              </div>
             )}
           </div>
 

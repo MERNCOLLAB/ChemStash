@@ -9,7 +9,7 @@ const useUpdateTask = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const updateTask = async (taskId, content, dueDate, assignedUsers, priority) => {
+  const updateTask = async (taskId, content, dueDate, assignedUsers, priority, desc) => {
     try {
       setLoading(true);
       setError(false);
@@ -18,7 +18,7 @@ const useUpdateTask = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content, dueDate, assignedUsers, priority }),
+        body: JSON.stringify({ content, dueDate, assignedUsers, priority, desc }),
       });
       const data = await response.json();
 

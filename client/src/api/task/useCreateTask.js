@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import useBoardTaskList from '../board/useBoardTaskList';
 import useCreateNotification from '../notification/useCreateNotification';
 
-
 const useCreateTask = () => {
   // External States
   const { columns, boardColumnList } = useBoardColumnList();
@@ -45,7 +44,6 @@ const useCreateTask = () => {
       id: generateId(),
       columnId,
       username: maker,
-      content: `Task ${tasks.length + 1}`,
       order: newOrder,
     };
 
@@ -65,7 +63,7 @@ const useCreateTask = () => {
       if (!response.ok) {
         setToastMessage('Failed to create a task');
         setToastType('error');
-        throw new Error(data.message );
+        throw new Error(data.message);
       }
 
       boardTaskList();
@@ -80,10 +78,10 @@ const useCreateTask = () => {
       setLoading(false);
     }
   };
-  const clearToast = () =>{
+  const clearToast = () => {
     setToastMessage(null);
     setToastType(null);
-  }
+  };
 
   return { loading, error, createTask, toastMessage, toastType, clearToast };
 };

@@ -13,6 +13,11 @@ const taskSchema = new mongoose.Schema(
     },
     content: {
       type: String,
+      default: 'Title',
+    },
+    desc: {
+      type: String,
+      default: 'Description',
     },
     columnId: {
       type: Number,

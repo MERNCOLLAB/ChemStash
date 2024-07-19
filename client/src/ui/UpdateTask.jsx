@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import useGetUser from '../api/users/useGetUsers';
+
 const UpdateTask = ({ taskitem, onUpdate }) => {
   const [update, setUpdate] = useState({
     content: '',
     dueDate: '',
     assignedUsers: [],
     priority: null,
+    desc: '',
   });
 
   const animatedComponents = makeAnimated();
@@ -22,6 +24,7 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
       setUpdate({
         content: taskitem.content,
         dueDate: taskitem.dueDate,
+        desc: taskitem.desc,
         assignedUsers: taskitem.assignedUsers.map((user) => ({
           label: user.username,
           value: user.img,
@@ -56,7 +59,7 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
       username: member.label,
       img: member.value,
     }));
-    onUpdate(taskitem.id, update.content, update.dueDate, formattedMembers, update.priority);
+    onUpdate(taskitem.id, update.content, update.dueDate, formattedMembers, update.priority, update.desc);
   };
 
   const handleChange = (e) => {
@@ -84,6 +87,8 @@ const UpdateTask = ({ taskitem, onUpdate }) => {
         />
         <input value={update.content} name="content" type="text" onChange={handleChange} />
         <input type="date" name="dueDate" value={update.dueDate || ''} onChange={handleChange} />
+        <textarea name="desc" value={update.desc} onChange={handleChange}></textarea>
+
         {loading ? (
           <p>Loading...</p>
         ) : error ? (

@@ -54,7 +54,7 @@ function Header() {
   };
 
   return (
-    <div className="mx-auto border relative">
+    <div className="mx-auto border  bg-white0 ">
       <div className="flex justify-between items-center mx-auto px-7 py-5">
         <Linker to="/">
           <h1 className="font-semibold text-md">ChemStack</h1>
