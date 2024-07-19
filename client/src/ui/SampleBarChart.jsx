@@ -11,6 +11,7 @@ import {
 import CustomSelect from '../components/CustomSelect';
 import useBarChartData from '../api/dashboard/useChemicalBarChart';
 import useChemicalBarChart from '../hooks/dashboard/useChemicalBarChart';
+import { BigSpinner } from '../components';
 
 const SampleBarChart = () => {
   const {loading,error, data, barChartData} = useBarChartData();
@@ -19,11 +20,14 @@ const SampleBarChart = () => {
 
   
   if (loading) {
-    return <p>Loading...</p>;
+    return (<div className="flex justify-center items-center  min-h-[50vh]">
+    <BigSpinner />
+  </div>);
   }
 
   if (error) {
-    return <p>Error loading data</p>;
+    return <div className="flex justify-center items-center  min-h-[50vh]">
+      Something went wrong, {error.message}</div>;
   }
 
   return (

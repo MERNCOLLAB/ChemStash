@@ -12,7 +12,11 @@ export const selectStyle = {
     borderColor: state.isFocused ? '#4F46E5' : '#94A3B8',
     borderRadius: '8px',
     padding: '0px',
-    color: '#64748B',
+    border: '1px solid #94A3B8',
+    boxShadow: 'none',
+    '&:hover': {
+        border: '1px solid #4F46E5',
+    }
   }),
 
   singleValue: (defaultStyle) => ({
