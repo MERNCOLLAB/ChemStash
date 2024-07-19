@@ -85,15 +85,14 @@ export const updateChemical = async (req, res, next) => {
 
 export const saveConsumption = async (req, res, next) => {
   try {
-    const { id, amount, unit, user } = req.body;
+    const { id, totalAmount,  consumptionAmount,supply, unit, user } = req.body;
     const currentChemical = await Chemical.findById(id);
 
     if (!currentChemical) {
       return res.status(404).json({ message: 'Chemical not found' });
     }
 
-    const consumptionAmount = amount;
-
+   
     if (consumptionAmount <= 0) {
       return res.status(400).json({ message: 'Invalid consumption amount. It must be greater than 0.' });
     }
@@ -102,15 +101,21 @@ export const saveConsumption = async (req, res, next) => {
       return res.status(400).json({ message: 'Consumption amount exceeds available chemical amount.' });
     }
 
+    const percentageConsumed = (totalAmount - consumptionAmount)/totalAmount;
+
+    const updatedSupply = (percentageConsumed*supply).toFixed(1);
+
     const newConsumption = new ChemicalConsumption({
       chemicalId: id,
-      amount: consumptionAmount,
+      supply,
+      consumptionAmount,
       unit,
       date: new Date(),
       user,
     });
     await newConsumption.save();
 
+    currentChemical.supply = updatedSupply;
     currentChemical.amount -= consumptionAmount;
     await currentChemical.save();
 
@@ -119,7 +124,8 @@ export const saveConsumption = async (req, res, next) => {
       data: {
         consumption: newConsumption,
         updatedChemical: currentChemical,
-      },
+        updatedSupply,
+      }
     });
   } catch (error) {
     next(error);

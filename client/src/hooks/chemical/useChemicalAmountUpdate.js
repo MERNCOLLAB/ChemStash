@@ -4,9 +4,12 @@ import { useSelector } from 'react-redux';
 
 const useChemicalAmountUpdate = (item, consumeChemical) => {
   const { currentUser } = useSelector((state) => state.user);
+  const amount = Number(item.supply*item.amount);
   const [updateAmount, setUpdateAmount] = useState({
     id: item._id,
-    amount: '',
+    supply:item.supply,
+    totalAmount:amount,
+    consumptionAmount: null,
     unit: null,
     user: currentUser,
   });
@@ -14,7 +17,8 @@ const useChemicalAmountUpdate = (item, consumeChemical) => {
   const handleAmountChange = (event) => {
     setUpdateAmount((prevState) => ({
       ...prevState,
-      amount: Number(event.target.value),
+      consumptionAmount: Number(event.target.value),
+      unit:item.unit,
     }));
   };
 
