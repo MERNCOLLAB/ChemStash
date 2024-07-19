@@ -7,10 +7,18 @@ const useUpdateChemicalDrawer = (item, updateChemical) => {
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setUpdatedItem((prevItem) => ({
-      ...prevItem,
-      [id]: value,
-    }));
+    setUpdatedItem((prevItem) => {
+      const newItem = {
+        ...prevItem,
+        [id]: value,
+      };
+      
+      if (id === 'supply') {
+        newItem.updatedSupply = value;
+      }
+      
+      return newItem;
+    });
   };
 
   const handleChangeOption = (selectedOption, field) => {

@@ -69,6 +69,18 @@ export const deleteChemical = async (req, res, next) => {
 // update Chemical
 export const updateChemical = async (req, res, next) => {
   try {
+    const { supply, ...otherFields } = req.body;
+    
+    let updateFields = otherFields;
+    
+    // To reset updatedSupply data whenever supply is changed
+    if (supply !== undefined) {
+      updateFields = {
+        ...updateFields,
+        supply,
+        updatedSupply: supply
+      };
+    }
     const updateChemical = await Chemical.findByIdAndUpdate(
       req.params.id,
       {
@@ -76,7 +88,7 @@ export const updateChemical = async (req, res, next) => {
       },
       { new: true }
     );
-    res.status(200).json({ data: updateChemical, message: 'Item successfully updated' });
+    res.status(200).json({ data: updateChemical, message: 'Chemical successfully updated' });
   } catch (error) {
     next(error);
     console.error('Error in updateChemical controller', error.message);
@@ -101,9 +113,17 @@ export const saveConsumption = async (req, res, next) => {
       return res.status(400).json({ message: 'Consumption amount exceeds available chemical amount.' });
     }
 
-    const percentageConsumed = (totalAmount - consumptionAmount)/totalAmount;
 
-    const updatedSupply = (percentageConsumed*supply).toFixed(1);
+      const fractionRemaining = (totalAmount - consumptionAmount) / totalAmount;
+
+
+      const newAmount = currentChemical.amount - consumptionAmount;
+      const newSupply = supply * fractionRemaining;
+  
+
+      if (Math.abs(newAmount / newSupply - currentChemical.amount / supply) > 0.0001) {
+        return res.status(400).json({ message: 'Inconsistency detected in amount and supply ratio.' });
+      }
 
     const newConsumption = new ChemicalConsumption({
       chemicalId: id,
@@ -115,8 +135,8 @@ export const saveConsumption = async (req, res, next) => {
     });
     await newConsumption.save();
 
-    currentChemical.supply = updatedSupply;
-    currentChemical.amount -= consumptionAmount;
+    currentChemical.updatedSupply = Number(newSupply.toFixed(2));
+    currentChemical.amount = Number(newAmount);
     await currentChemical.save();
 
     res.status(200).json({
@@ -124,7 +144,7 @@ export const saveConsumption = async (req, res, next) => {
       data: {
         consumption: newConsumption,
         updatedChemical: currentChemical,
-        updatedSupply,
+        updatedSupply: currentChemical.updatedSupply,
       }
     });
   } catch (error) {

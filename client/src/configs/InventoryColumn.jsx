@@ -54,6 +54,20 @@ export const inventoryColumns = (currentUser,parseInput, handleConsume, handleUp
   {
     name: 'supply',
     label: 'Supply',
+    options: {
+      customBodyRender: (value, anotherData) => {
+        const rowData = anotherData.rowData;
+        const updatedSupply = rowData[anotherData.columnIndex + 1];
+        return <p>{`${updatedSupply} out of ${value}`}</p>;
+      }
+    }
+  },
+  {
+    name: 'updatedSupply',
+    label: 'Updated Supply',
+    options: {
+      display: false, 
+    }
   },
   {
     name: 'amount',

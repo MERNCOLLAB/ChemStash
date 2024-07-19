@@ -15,6 +15,7 @@ const useChemicalForm = (addChemical) => {
     const { id, value, type } = e.target;
     setChemicalData({
       ...chemicalData,
+      updatedSupply:chemicalData.supply,
       [e.target.id]: e.target.value,
       [id]: type === 'number' ? Number(value) : value,
     });

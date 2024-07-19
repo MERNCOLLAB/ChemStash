@@ -12,7 +12,7 @@ const CustomToolbar = ({ handleAdd }) => {
   );
 };
 
-const MTable = ({ data, columns, options, title, handleAdd }) => {
+const MTable = ({ data, columns, options, title, handleAdd }) => { 
   const {toastMessage, toastType, clearToast} = useGetChemical();
   const getMuiTheme = () =>
     createTheme({
