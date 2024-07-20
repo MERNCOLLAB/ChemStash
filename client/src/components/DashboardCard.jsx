@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import useGetChemical from '../api/chemical/useGetChemical';
-import BigSpinner from './BigSpinner';
 
 const DashboardCard = ({ query, title, icon }) => {
   const { lists, loading, error, getChemicalList } = useGetChemical(query);
@@ -11,11 +10,7 @@ const DashboardCard = ({ query, title, icon }) => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center ">
-        <BigSpinner />
-      </div>
-    );
+    return <div className="w-full min-h-24 bg-indigo1/50 animate-pulse " />;
   }
 
   if (error) {
@@ -23,7 +18,7 @@ const DashboardCard = ({ query, title, icon }) => {
   }
 
   return (
-    <div className="border bg-gray0 p-4 flex items-center gap-2  flex-grow">
+    <div className="border bg-white1 p-4 flex items-center gap-2  flex-grow">
       <div className="text-4xl">{icon}</div>
       <div className="group min-w-fit relative">
         <p>{title}</p>

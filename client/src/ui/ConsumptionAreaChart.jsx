@@ -5,7 +5,6 @@ import useLineChartData from '../api/dashboard/useChemicalLineChartData';
 import useChemicalLineChart from '../hooks/dashboard/useChemicalLineChart';
 
 import CustomSelect from '../components/CustomSelect';
-import { BigSpinner } from '../components';
 
 const ConsumptionAreaChart = () => {
   const { loading, error, data, lineChartData } = useLineChartData();
@@ -15,11 +14,7 @@ const ConsumptionAreaChart = () => {
   );
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center  min-h-[50vh]">
-        <BigSpinner />
-      </div>
-    );
+    return <div className="w-full min-h-[350px] bg-indigo1/50 animate-pulse " />;
   }
 
   if (error) {
