@@ -69,30 +69,38 @@ export const deleteChemical = async (req, res, next) => {
 // update Chemical
 export const updateChemical = async (req, res, next) => {
   try {
+    const updatedItems = { ...req.body };
+    if (updatedItems.supply !== undefined && updatedItems.updatedSupply === undefined) {
+      updatedItems.updatedSupply = updatedItems.supply;
+    }
+
     const updateChemical = await Chemical.findByIdAndUpdate(
       req.params.id,
-      {
-        $set: req.body,
-      },
-      { new: true }
+      { $set: updatedItems },
+      { new: true, runValidators: true }
     );
+
+    if (!updateChemical) {
+      return res.status(404).json({ message: 'Chemical not found' });
+    }
+
     res.status(200).json({ data: updateChemical, message: 'Item successfully updated' });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ message: error.message });
+    }
     next(error);
-    console.error('Error in updateChemical controller', error.message);
   }
 };
 
 export const saveConsumption = async (req, res, next) => {
   try {
-    const { id, amount, unit, user } = req.body;
+    const { id, consumptionAmount, updatedSupply, unit, user } = req.body;
     const currentChemical = await Chemical.findById(id);
 
     if (!currentChemical) {
       return res.status(404).json({ message: 'Chemical not found' });
     }
-
-    const consumptionAmount = amount;
 
     if (consumptionAmount <= 0) {
       return res.status(400).json({ message: 'Invalid consumption amount. It must be greater than 0.' });
@@ -102,16 +110,24 @@ export const saveConsumption = async (req, res, next) => {
       return res.status(400).json({ message: 'Consumption amount exceeds available chemical amount.' });
     }
 
+    const totalAmount = currentChemical.updatedSupply * currentChemical.amount;
+    const fractionRemaining = (totalAmount - consumptionAmount) / totalAmount;
+    const newAmount = currentChemical.amount - consumptionAmount;
+    const newSupply = updatedSupply * fractionRemaining;
+
     const newConsumption = new ChemicalConsumption({
       chemicalId: id,
-      amount: consumptionAmount,
+      updatedSupply,
+      consumptionAmount,
       unit,
       date: new Date(),
       user,
     });
     await newConsumption.save();
 
-    currentChemical.amount -= consumptionAmount;
+    currentChemical.updatedSupply = Number(newSupply.toFixed(1));
+    currentChemical.amount = Number(newAmount);
+    currentChemical.amount = newAmount;
     await currentChemical.save();
 
     res.status(200).json({
@@ -123,7 +139,7 @@ export const saveConsumption = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
-    console.error('Error in saveConsumption controller', error.message);
+    console.error('Error in saveConsumption controller', error);
   }
 };
 

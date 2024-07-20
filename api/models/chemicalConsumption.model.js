@@ -6,13 +6,16 @@ const ChemicalConsumptionSchema = new mongoose.Schema({
     ref: 'Chemical',
     required: true,
   },
-  amount: {
+  consumptionAmount: {
     type: Number,
     required: true,
   },
-
-  unit: {
+  updatedSupply: {
     type: Number,
+    required: true,
+  },
+  unit: {
+    type: String,
   },
 
   date: {

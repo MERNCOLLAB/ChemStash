@@ -37,6 +37,9 @@ const chemicalSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    updatedSupply: {
+      type: Number,
+    },
     amount: {
       type: Number,
       required: true,
