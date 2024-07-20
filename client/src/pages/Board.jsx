@@ -80,7 +80,7 @@ function Board() {
   };
   return (
     <>
-      <div className="border p-8 flex flex-col min-h-[calc(100vh-88px)] w-full overflow-x-auto overflow-y-hidden ">
+      <div className="border p-8  min-h-[calc(100vh-88px)]  overflow-x-auto overflow-y-hidden ">
         {/* <h1 className="font-semibold">Board Task Assignment and Planner</h1> */}
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <DndContext
@@ -89,7 +89,7 @@ function Board() {
           onDragEnd={(event) => onDragEnd(event, columns, setColumns, setActiveColumn, tasks, setTasks, setActiveTask)}
           onDragOver={(event) => onDragOver(event, tasks, setTasks)}
         >
-          <div className=" flex gap-6">
+          <div className=" flex gap-4    ">
             <div className="flex gap-4">
               <SortableContext items={columnsId}>
                 {columns.map((col) => (
@@ -110,7 +110,7 @@ function Board() {
               </SortableContext>
             </div>
             {currentUser.role === 'chemist' ? null : (
-              <div className="shadow-lg  bg-white1 rounded-lg h-[40px]  min-w-[300px] flex items-center">
+              <div className="shadow-lg  bg-white1 rounded-lg h-[40px] w-[300px] min-w-[300px] flex items-center ">
                 <button
                   className=" gap-2   font-semibold     flex  px-2 "
                   onClick={() => {
@@ -122,6 +122,7 @@ function Board() {
                 </button>
               </div>
             )}
+            <div className="w-[24px] min-w-[24px] h-full border  border-transparent   block"></div>
           </div>
 
           {createPortal(
