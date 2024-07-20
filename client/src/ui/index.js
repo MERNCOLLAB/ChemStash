@@ -8,8 +8,9 @@ import Map from './Map';
 import AddChemicalForm from './AddChemicalForm';
 import UpdateChemicalForm from './UpdateChemicalForm';
 import DeleteChemicalForm from './DeleteChemicalForm';
-import SampleLineChart from './SampleLineChart';
-import SampleBarChart from './SampleBarChart';
+import ConsumptionAreaChart from './ConsumptionAreaChart';
+import HazardsPieChart from './HazardsPieChart';
+import SupplyBarChart from './SupplyBarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
 import DashBoardCard from './DashBoardCard';
@@ -26,8 +27,9 @@ export {
   AddChemicalForm,
   UpdateChemicalForm,
   DeleteChemicalForm,
-  SampleLineChart,
-  SampleBarChart,
+  ConsumptionAreaChart,
+  HazardsPieChart,
+  SupplyBarChart,
   NotificationList,
   NotificationLayout,
   DashBoardCard,

@@ -16,7 +16,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
-const SamplePieChart = () => {
+const HazardsPieChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -67,4 +67,4 @@ const SamplePieChart = () => {
   );
 };
 
-export default SamplePieChart;
+export default HazardsPieChart;
