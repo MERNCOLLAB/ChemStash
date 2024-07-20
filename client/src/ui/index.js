@@ -14,7 +14,6 @@ import LocationPieChart from './LocationPieChart';
 import SupplyBarChart from './SupplyBarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
-import DashBoardCard from './DashBoardCard';
 import ConsumeChemicalForm from './ConsumeChemicalForm';
 
 export {
@@ -34,6 +33,5 @@ export {
   LocationPieChart,
   NotificationList,
   NotificationLayout,
-  DashBoardCard,
   ConsumeChemicalForm,
 };
