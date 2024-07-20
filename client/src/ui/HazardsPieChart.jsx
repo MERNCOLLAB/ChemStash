@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
+import useHazardPieChartData from '../api/dashboard/useHazardPieChartData';
 
-const COLORS = ['#a5c4e7', '#70c5bb', '#fdba74', '#f0abfc', '#94a3b8', '#a1a7e4', '#fb7185'];
+import pieColors from '../helpers/PieColors';
+import { BigSpinner } from '../components';
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
   const RADIAN = Math.PI / 180;
@@ -10,45 +12,38 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   return (
-    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+    <text x={x} y={y} fill="#F1F5F9" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
 };
 
 const HazardsPieChart = () => {
-  const [data, setData] = useState([]);
+  const { loading, error, hazardData, hazardPieChartData } = useHazardPieChartData();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/chemical/list/hazardClassification');
-        const result = await response.json();
-
-        const hazardCount = result.reduce((acc, item) => {
-          acc[item.hazardClassification] = (acc[item.hazardClassification] || 0) + 1;
-          return acc;
-        }, {});
-
-        const formattedData = Object.keys(hazardCount).map((hazard) => ({
-          name: hazard,
-          value: hazardCount[hazard],
-        }));
-
-        setData(formattedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
+    hazardPieChartData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center  min-h-[50vh]">
+        <BigSpinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="flex justify-center items-center  min-h-[50vh]">Something went wrong, {error.message}</div>;
+  }
 
   return (
     <ResponsiveContainer width="100%" height={400}>
+      <h1 className="font-semibold text-sm">Chemicals by Hazard Classification</h1>
       <PieChart>
         <Pie
-          data={data}
+          data={hazardData}
           cx="50%"
           cy="40%"
           labelLine={false}
@@ -57,8 +52,8 @@ const HazardsPieChart = () => {
           fill="#8884d8"
           dataKey="value"
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {hazardData.map((_entry, index) => (
+            <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
           ))}
         </Pie>
         <Legend layout="horizontal" verticalAlign="bottom" align="left" wrapperStyle={{ bottom: 60 }} />
