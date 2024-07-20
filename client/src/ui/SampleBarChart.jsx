@@ -1,33 +1,28 @@
-import { 
-  BarChart, 
-  Rectangle, 
-  Bar, 
-  XAxis,
-  YAxis,
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer } from 'recharts';
-import CustomSelect from '../components/CustomSelect';
-import useBarChartData from '../api/dashboard/useChemicalBarChart';
+import { BarChart, Rectangle, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+import useBarChartData from '../api/dashboard/useChemicalBarChartData';
 import useChemicalBarChart from '../hooks/dashboard/useChemicalBarChart';
+
+import CustomSelect from '../components/CustomSelect';
 import { BigSpinner } from '../components';
 
 const SampleBarChart = () => {
-  const {loading,error, data, barChartData} = useBarChartData();
-  const {selectedChemical, chemicalOptions, filteredData, handleChangeChemical} = useChemicalBarChart(data, barChartData)
+  const { loading, error, data, barChartData } = useBarChartData();
+  const { selectedChemical, chemicalOptions, filteredData, handleChangeChemical } = useChemicalBarChart(
+    data,
+    barChartData
+  );
 
-
-  
   if (loading) {
-    return (<div className="flex justify-center items-center  min-h-[50vh]">
-    <BigSpinner />
-  </div>);
+    return (
+      <div className="flex justify-center items-center  min-h-[50vh]">
+        <BigSpinner />
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="flex justify-center items-center  min-h-[50vh]">
-      Something went wrong, {error.message}</div>;
+    return <div className="flex justify-center items-center  min-h-[50vh]">Something went wrong, {error.message}</div>;
   }
 
   return (
@@ -52,11 +47,8 @@ const SampleBarChart = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-          type='category'
-          dataKey="name"
-          />
-          <YAxis/>
+          <XAxis type="category" dataKey="name" />
+          <YAxis />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
           <Bar dataKey="amount" fill="#8884d8" activeShape={<Rectangle fill="pink" stroke="blue" />} />
@@ -69,7 +61,7 @@ const SampleBarChart = () => {
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
-    const { name, dateReceived, amount, supply, unit} = payload[0].payload;
+    const { name, dateReceived, amount, supply, unit } = payload[0].payload;
     return (
       <div className="custom-tooltip p-1 backdrop-sepia-0 bg-slate-100/40  rounded-md flex flex-col gap-1">
         <div>{`Name: ${name}`}</div>
