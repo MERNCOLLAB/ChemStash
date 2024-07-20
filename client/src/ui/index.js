@@ -10,6 +10,7 @@ import UpdateChemicalForm from './UpdateChemicalForm';
 import DeleteChemicalForm from './DeleteChemicalForm';
 import ConsumptionAreaChart from './ConsumptionAreaChart';
 import HazardsPieChart from './HazardsPieChart';
+import LocationPieChart from './LocationPieChart';
 import SupplyBarChart from './SupplyBarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
@@ -30,6 +31,7 @@ export {
   ConsumptionAreaChart,
   HazardsPieChart,
   SupplyBarChart,
+  LocationPieChart,
   NotificationList,
   NotificationLayout,
   DashBoardCard,
