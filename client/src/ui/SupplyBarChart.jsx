@@ -6,7 +6,7 @@ import useChemicalBarChart from '../hooks/dashboard/useChemicalBarChart';
 import CustomSelect from '../components/CustomSelect';
 import { BigSpinner } from '../components';
 
-const SampleBarChart = () => {
+const SupplyBarChart = () => {
   const { loading, error, data, barChartData } = useBarChartData();
   const { selectedChemical, chemicalOptions, filteredData, handleChangeChemical } = useChemicalBarChart(
     data,
@@ -75,4 +75,4 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export default SampleBarChart;
+export default SupplyBarChart;

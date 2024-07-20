@@ -48,6 +48,11 @@ export const chemicalList = async (req, res, next) => {
       return res.json(chemicals);
     }
 
+    if (query === 'location') {
+      const chemicals = await Chemical.find({}, 'location');
+      return res.json(chemicals);
+    }
+
     const chemicals = await Chemical.find();
     res.json(chemicals);
   } catch (err) {

@@ -7,7 +7,7 @@ import useChemicalLineChart from '../hooks/dashboard/useChemicalLineChart';
 import CustomSelect from '../components/CustomSelect';
 import { BigSpinner } from '../components';
 
-const SampleLineChart = () => {
+const ConsumptionAreaChart = () => {
   const { loading, error, data, lineChartData } = useLineChartData();
   const { selectedChemical, chemicalOptions, filteredData, tickFormatter, handleChangeChemical } = useChemicalLineChart(
     data,
@@ -75,4 +75,4 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export default SampleLineChart;
+export default ConsumptionAreaChart;
