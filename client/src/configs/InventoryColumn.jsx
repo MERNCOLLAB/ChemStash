@@ -5,13 +5,12 @@ import { GoLink } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
 import getTagClass from '../helpers/TagColors';
 
-
 const renderFormula = (formula) => {
   return formula.map((element, index) =>
     element.isSub ? <sub key={index}>{element.text}</sub> : <span key={index}>{element.text}</span>
   );
 };
-export const inventoryColumns = (currentUser,parseInput, handleConsume, handleUpdate, handleDelete) => [
+export const inventoryColumns = (currentUser, parseInput, handleConsume, handleUpdate, handleDelete) => [
   {
     name: 'name',
     label: 'Name',
@@ -54,6 +53,20 @@ export const inventoryColumns = (currentUser,parseInput, handleConsume, handleUp
   {
     name: 'supply',
     label: 'Supply',
+    options: {
+      customBodyRender: (value, anotherData) => {
+        const rowData = anotherData.rowData;
+        const updatedSupply = rowData[anotherData.columnIndex + 1];
+        return <p>{`${updatedSupply} out of ${value}`}</p>;
+      },
+    },
+  },
+  {
+    name: 'updatedSupply',
+    label: 'Updated Supply',
+    options: {
+      display: false,
+    },
   },
   {
     name: 'amount',
