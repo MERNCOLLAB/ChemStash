@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-
 const useConsumeChemical = (getChemicalList) => {
   const [loading, setLoading] = useState(false);
-  const [error,setError] = useState(false);
+  const [error, setError] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
   const [toastType, setToastType] = useState(null);
 
   const consumeChemical = async (updateAmount) => {
-    const { id,totalAmount, consumptionAmount,supply, unit, user } = updateAmount;
+    const { id, consumptionAmount, updatedSupply, unit, user } = updateAmount;
     try {
       setLoading(true);
       const response = await fetch(`/api/chemical/${id}/consume`, {
@@ -16,7 +15,7 @@ const useConsumeChemical = (getChemicalList) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, totalAmount, consumptionAmount, supply, unit, user }),
+        body: JSON.stringify({ id, consumptionAmount, updatedSupply, unit, user }),
       });
       const data = await response.json();
       if (data.success === false) {
@@ -32,10 +31,10 @@ const useConsumeChemical = (getChemicalList) => {
       setLoading(false);
     }
   };
-  const clearToast = () =>{
+  const clearToast = () => {
     setToastMessage(null);
-    setToastType(null); 
-  }
+    setToastType(null);
+  };
 
   return { loading, error, consumeChemical, toastMessage, toastType, clearToast };
 };

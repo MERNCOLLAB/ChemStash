@@ -70,15 +70,15 @@ export const deleteChemical = async (req, res, next) => {
 export const updateChemical = async (req, res, next) => {
   try {
     const { supply, ...otherFields } = req.body;
-    
+
     let updateFields = otherFields;
-    
+
     // To reset updatedSupply data whenever supply is changed
     if (supply !== undefined) {
       updateFields = {
         ...updateFields,
         supply,
-        updatedSupply: supply
+        updatedSupply: supply,
       };
     }
     const updateChemical = await Chemical.findByIdAndUpdate(
@@ -97,14 +97,13 @@ export const updateChemical = async (req, res, next) => {
 
 export const saveConsumption = async (req, res, next) => {
   try {
-    const { id, totalAmount,  consumptionAmount,supply, unit, user } = req.body;
+    const { id, consumptionAmount, updatedSupply, unit, user } = req.body;
     const currentChemical = await Chemical.findById(id);
 
     if (!currentChemical) {
       return res.status(404).json({ message: 'Chemical not found' });
     }
 
-   
     if (consumptionAmount <= 0) {
       return res.status(400).json({ message: 'Invalid consumption amount. It must be greater than 0.' });
     }
@@ -113,21 +112,14 @@ export const saveConsumption = async (req, res, next) => {
       return res.status(400).json({ message: 'Consumption amount exceeds available chemical amount.' });
     }
 
-
-      const fractionRemaining = (totalAmount - consumptionAmount) / totalAmount;
-
-
-      const newAmount = currentChemical.amount - consumptionAmount;
-      const newSupply = supply * fractionRemaining;
-  
-
-      if (Math.abs(newAmount / newSupply - currentChemical.amount / supply) > 0.0001) {
-        return res.status(400).json({ message: 'Inconsistency detected in amount and supply ratio.' });
-      }
+    const totalAmount = currentChemical.updatedSupply * currentChemical.amount;
+    const fractionRemaining = (totalAmount - consumptionAmount) / totalAmount;
+    const newAmount = currentChemical.amount - consumptionAmount;
+    const newSupply = updatedSupply * fractionRemaining;
 
     const newConsumption = new ChemicalConsumption({
       chemicalId: id,
-      supply,
+      updatedSupply,
       consumptionAmount,
       unit,
       date: new Date(),
@@ -135,7 +127,7 @@ export const saveConsumption = async (req, res, next) => {
     });
     await newConsumption.save();
 
-    currentChemical.updatedSupply = Number(newSupply.toFixed(2));
+    currentChemical.updatedSupply = Number(newSupply.toFixed(1));
     currentChemical.amount = Number(newAmount);
     await currentChemical.save();
 
@@ -145,11 +137,11 @@ export const saveConsumption = async (req, res, next) => {
         consumption: newConsumption,
         updatedChemical: currentChemical,
         updatedSupply: currentChemical.updatedSupply,
-      }
+      },
     });
   } catch (error) {
     next(error);
-    console.error('Error in saveConsumption controller', error.message);
+    console.error('Error in saveConsumption controller', error);
   }
 };
 
