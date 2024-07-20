@@ -3,7 +3,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import useLocationPieChartData from '../api/dashboard/useLocationPieChart';
 
 import pieColors from '../helpers/PieColors';
-import { BigSpinner } from '../components';
 import { renderCustomizedLabel } from '../configs/CustomizePieLabel';
 
 const LocationPieChart = () => {
@@ -15,11 +14,7 @@ const LocationPieChart = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center  min-h-[50vh]">
-        <BigSpinner />
-      </div>
-    );
+    return <div className="w-full min-h-[300px] bg-indigo1/50 animate-pulse " />;
   }
 
   if (error) {

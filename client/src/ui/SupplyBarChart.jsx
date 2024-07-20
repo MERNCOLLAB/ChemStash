@@ -4,7 +4,6 @@ import useBarChartData from '../api/dashboard/useChemicalBarChartData';
 import useChemicalBarChart from '../hooks/dashboard/useChemicalBarChart';
 
 import CustomSelect from '../components/CustomSelect';
-import { BigSpinner } from '../components';
 
 const SupplyBarChart = () => {
   const { loading, error, data, barChartData } = useBarChartData();
@@ -14,11 +13,7 @@ const SupplyBarChart = () => {
   );
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center  min-h-[50vh]">
-        <BigSpinner />
-      </div>
-    );
+    return <div className="w-full min-h-[300px] bg-indigo1/50 animate-pulse " />;
   }
 
   if (error) {
