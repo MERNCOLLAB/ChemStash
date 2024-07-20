@@ -8,6 +8,8 @@ import FormHeader from './FormHeader';
 import FormSubHeader from './FormSubHeader';
 import FormContainer from './FormContainer';
 import BigSpinner from './BigSpinner';
+import DashboardCard from './DashboardCard';
+
 export {
   Button,
   Input,
@@ -19,4 +21,5 @@ export {
   FormSubHeader,
   FormContainer,
   BigSpinner,
+  DashboardCard,
 };
