@@ -1,109 +1,83 @@
-import { useEffect, useState } from 'react';
-import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import useGetUser from '../api/users/useGetUsers';
+import { priorityOptions } from '../constants/board';
+import useHandleUpdateTask from '../hooks/board/useHandleUpdateTask';
+import { FormHeader, Input, CustomSelect, FormContainer, Button } from '../components';
+import { selectStyle } from '../helpers/selectStyle';
 
-const UpdateTask = ({ taskitem, onUpdate }) => {
-  const [update, setUpdate] = useState({
-    content: '',
-    dueDate: '',
-    assignedUsers: [],
-    priority: null,
-    desc: '',
-  });
-
+const UpdateTask = ({ taskitem, onUpdate, handleDrawerClose }) => {
   const animatedComponents = makeAnimated();
   const { loading, error, members, fetchMembers } = useGetUser();
+  const { update, membersOptions, handleMemberSelectChange, handlePriorityChange, handleUpdate, handleChange } =
+    useHandleUpdateTask(taskitem, onUpdate, members, fetchMembers);
 
-  useEffect(() => {
-    fetchMembers();
-  }, []);
+  const taskInfoFirstRow = (
+    <>
+      <Input
+        type="text"
+        label="Task Title"
+        value={update.content}
+        id="content"
+        onChange={handleChange}
+        validation="Enter the title of the task"
+      />
+      <Input
+        type="date"
+        label="Due date"
+        id="dueDate"
+        value={update.dueDate || ''}
+        onChange={handleChange}
+        validation="Enter the task deadline in mm-dd-yyyy"
+      />
+      <CustomSelect
+        label="Task Priority Level"
+        validation="Select the task priority level"
+        options={priorityOptions}
+        value={priorityOptions.find((option) => option.value === update.priority)}
+        onChange={handlePriorityChange}
+      />
+    </>
+  );
 
-  useEffect(() => {
-    if (taskitem && members.length > 0) {
-      setUpdate({
-        content: taskitem.content,
-        dueDate: taskitem.dueDate,
-        desc: taskitem.desc,
-        assignedUsers: taskitem.assignedUsers.map((user) => ({
-          label: user.username,
-          value: user.img,
-        })),
-        priority: taskitem.priority,
-      });
-    }
-  }, [taskitem, members]);
-
-  const options = members.map((member) => ({
-    label: member.username,
-    value: member.profilePicture,
-  }));
-
-  const handleSelectChange = (selectedOptions) => {
-    setUpdate((prevState) => ({
-      ...prevState,
-      assignedUsers: selectedOptions || [],
-    }));
-  };
-
-  const handlePriorityChange = (selectedOption) => {
-    setUpdate((prevState) => ({
-      ...prevState,
-      priority: selectedOption ? selectedOption.value : null,
-    }));
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    const formattedMembers = update.assignedUsers.map((member) => ({
-      username: member.label,
-      img: member.value,
-    }));
-    onUpdate(taskitem.id, update.content, update.dueDate, formattedMembers, update.priority, update.desc);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdate((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const priorityOptions = [
-    { value: 1, label: 'Urgent' },
-    { value: 2, label: 'High Priority' },
-    { value: 3, label: 'Medium' },
-    { value: 4, label: 'Low' },
-  ];
+  const taskInfoSecondRow = (
+    <>
+      {loading ? (
+        <div className="h-14 w-full bg-indigo1 animate-pulse" />
+      ) : error ? (
+        <p>Error fetching members</p>
+      ) : (
+        <CustomSelect
+          label="Assign Tasks to"
+          value={update.assignedUsers}
+          options={membersOptions}
+          onChange={handleMemberSelectChange}
+          style={selectStyle}
+          validation="Select the name/s of the task recipient"
+          isMulti={true}
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+        />
+      )}
+    </>
+  );
 
   return (
-    <div className="bg-slate-400 h-screen w-1/3 text-slate-500">
+    <div className="bg-white0 min-w-fit min-h-full p-7">
       <form onSubmit={handleUpdate} className="flex flex-col gap-2">
-        <Select
-          options={priorityOptions}
-          onChange={handlePriorityChange}
-          value={priorityOptions.find((option) => option.value === update.priority)}
-        />
-        <input value={update.content} name="content" type="text" onChange={handleChange} />
-        <input type="date" name="dueDate" value={update.dueDate || ''} onChange={handleChange} />
-        <textarea name="desc" value={update.desc} onChange={handleChange}></textarea>
+        <FormHeader title="Update Task" />
+        <FormContainer gridColsClass="grid-cols-3">{taskInfoFirstRow}</FormContainer>
+        <FormContainer gridColsClass="grid-cols-1">{taskInfoSecondRow}</FormContainer>
+        <textarea className="w-[750px] min-h-20 mx-auto" id="desc" value={update.desc} onChange={handleChange} />
 
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>Error fetching members</p>
-        ) : (
-          <Select
-            closeMenuOnSelect={false}
-            isMulti
-            components={animatedComponents}
-            options={options}
-            onChange={handleSelectChange}
-            value={update.assignedUsers}
-          />
-        )}
-        <button type="submit">Submit</button>
+        <hr className="bg-gray1 my-5" />
+        <div className="flex justify-end mt-4 gap-2.5 p-2.5">
+          <Button type="button" variant="secondary" onClick={handleDrawerClose}>
+            Cancel
+          </Button>
+          <Button type="submit" variant="primary">
+            Update
+          </Button>
+        </div>
       </form>
     </div>
   );

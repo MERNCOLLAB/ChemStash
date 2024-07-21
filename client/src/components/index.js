@@ -9,6 +9,7 @@ import FormSubHeader from './FormSubHeader';
 import FormContainer from './FormContainer';
 import BigSpinner from './BigSpinner';
 import DashboardCard from './DashboardCard';
+import CustomSelect from './CustomSelect';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   FormContainer,
   BigSpinner,
   DashboardCard,
+  CustomSelect,
 };
