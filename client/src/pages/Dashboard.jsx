@@ -1,8 +1,5 @@
-import { BsBoxes } from 'react-icons/bs';
-import { GiMaterialsScience } from 'react-icons/gi';
-import { IoWarningOutline } from 'react-icons/io5';
-import { FaSkullCrossbones } from 'react-icons/fa';
 import { SupplyBarChart, ConsumptionAreaChart, HazardsPieChart, LocationPieChart } from '../ui';
+import { FlaskIcon, DropIcon, OutOfStockIcon, ExpiredIcon } from '../icons';
 import { DashboardCard } from '../components';
 
 function Dashboard() {
@@ -10,10 +7,10 @@ function Dashboard() {
     <div className="w-full  p-2  mt-2">
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between gap-2 ">
-        <DashboardCard title="Total Chemicals" icon={<GiMaterialsScience />} />
-        <DashboardCard title="Chemicals Running Low" query="low-amount" icon={<IoWarningOutline />} />
-        <DashboardCard title="Out of Stock" query="out-of-stock" icon={<BsBoxes />} />
-        <DashboardCard title="Expired Chemicals" query="expired" icon={<FaSkullCrossbones />} />
+        <DashboardCard title="Total Chemicals" icon={<FlaskIcon />} />
+        <DashboardCard title="Chemicals Running Low" query="low-amount" icon={<DropIcon />} />
+        <DashboardCard title="Out of Stock" query="out-of-stock" icon={<OutOfStockIcon />} />
+        <DashboardCard title="Expired Chemicals" query="expired" icon={<ExpiredIcon />} />
       </div>
 
       {/* Charts */}
