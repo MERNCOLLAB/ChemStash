@@ -13,13 +13,12 @@ const CustomToolbar = ({ handleAdd }) => {
 };
 
 const MTable = ({ data, columns, options, title, handleAdd }) => {
-  const {toastMessage, toastType, clearToast} = useGetChemical();
+  const { toastMessage, toastType, clearToast } = useGetChemical();
   const getMuiTheme = () =>
     createTheme({
       palette: {
         background: {
           paper: '#E2E8F0',
-          default: '#64748B',
         },
         mode: 'light',
       },
@@ -27,14 +26,14 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: '10px 14px',
               color: '#F8FAFC',
             },
             body: {
-              padding: '10px 14px',
+              textAlign: 'left',
+              minWidth: '175px',
               backgroundColor: '#F8FAFC',
               color: '#64748B',
-              fontSize: '12px',
+              fontSize: '16px',
             },
           },
         },
@@ -56,8 +55,12 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         },
         MUIDataTableHeadCell: {
           styleOverrides: {
+            root: {
+              backgroundColor: '#E2E8F0',
+            },
             data: {
               whiteSpace: 'pre',
+              fontWeight: '600',
               color: '#64748B',
             },
           },
@@ -67,6 +70,16 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
             root: {
               borderRadius: '8px',
               overflow: 'hidden',
+            },
+          },
+        },
+        MuiToolbar: {
+          styleOverrides: {
+            root: {
+              backgroundColor: '#F1F5F9',
+            },
+            gutters: {
+              backgroundColor: '#E2E8F0',
             },
           },
         },
@@ -82,8 +95,8 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
   return (
     <ThemeProvider theme={getMuiTheme()}>
       <div className="p-8">
-        <h1 className="font-semibold pb-4">Chemical Inventory Table</h1>
-        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
+        <h1 className="font-semibold text-xl pb-2">Chemical Inventory Table</h1>
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />
       </div>
     </ThemeProvider>

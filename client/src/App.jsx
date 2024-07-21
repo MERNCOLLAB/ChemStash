@@ -14,6 +14,7 @@ function App() {
         {/* manager */}
         <Route element={<PrivateRoute role="manager" />}>
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/manager" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
@@ -26,6 +27,7 @@ function App() {
         {/* chemist */}
         <Route element={<PrivateRoute role="chemist" />}>
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/chemist" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
@@ -38,6 +40,7 @@ function App() {
         {/* team leader */}
         <Route element={<PrivateRoute role="tl" />}>
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/teamleader" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
