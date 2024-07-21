@@ -147,7 +147,9 @@ function Board() {
         </DndContext>
       </div>
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
-        {drawerType === 'updateTask' && <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} />}
+        {drawerType === 'updateTask' && (
+          <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} handleDrawerClose={handleDrawerClose} />
+        )}
         {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} />}
       </Drawer>
     </>
