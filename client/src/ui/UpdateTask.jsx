@@ -2,7 +2,7 @@ import makeAnimated from 'react-select/animated';
 import useGetUser from '../api/users/useGetUsers';
 import { priorityOptions } from '../constants/board';
 import useHandleUpdateTask from '../hooks/board/useHandleUpdateTask';
-import { FormHeader, Input, CustomSelect, FormContainer, Button } from '../components';
+import { FormHeader, Input, CustomSelect, FormContainer, Button, TextArea } from '../components';
 import { selectStyle } from '../helpers/selectStyle';
 
 const UpdateTask = ({ taskitem, onUpdate, handleDrawerClose }) => {
@@ -67,7 +67,14 @@ const UpdateTask = ({ taskitem, onUpdate, handleDrawerClose }) => {
         <FormHeader title="Update Task" />
         <FormContainer gridColsClass="grid-cols-3">{taskInfoFirstRow}</FormContainer>
         <FormContainer gridColsClass="grid-cols-1">{taskInfoSecondRow}</FormContainer>
-        <textarea className="w-[750px] min-h-20 mx-auto" id="desc" value={update.desc} onChange={handleChange} />
+        <hr className="bg-gray1 my-4" />
+        <TextArea 
+        label="Task Description"
+        id="desc"
+        value={update.desc}
+        onChange={handleChange}
+        validation="Please enter the task description. Max 200 characters."
+        />
 
         <hr className="bg-gray1 my-5" />
         <div className="flex justify-end mt-4 gap-2.5 p-2.5">
