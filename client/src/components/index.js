@@ -10,6 +10,7 @@ import FormContainer from './FormContainer';
 import BigSpinner from './BigSpinner';
 import DashboardCard from './DashboardCard';
 import CustomSelect from './CustomSelect';
+import TextArea from './TextArea';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   BigSpinner,
   DashboardCard,
   CustomSelect,
+  TextArea
 };
