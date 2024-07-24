@@ -6,6 +6,7 @@ const NotificationList = ({ userId }) => {
   const [notifications, setNotifications] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { socket } = useSelector((state) => state.notification);
 
   useEffect(() => {
@@ -77,6 +78,10 @@ const NotificationList = ({ userId }) => {
     }
   };
 
+  const handleNotificationClick = () => {
+    setIsDropdownOpen(false);
+  };
+
   const unseenCount = notifications.filter((notification) => !notification.isSeen).length;
   const sortedNotifications = [...notifications].sort((a, b) => {
     return new Date(b.notification.createdAt) - new Date(a.notification.createdAt);
@@ -86,20 +91,39 @@ const NotificationList = ({ userId }) => {
   if (error) return <p>Error...</p>;
 
   return (
-    <div className="relative">
+    <div className="dropdown dropdown-bottom dropdown-end relative" onBlur={() => setIsDropdownOpen(false)}>
       {unseenCount >= 1 ? (
         <small className="absolute -left-1 -top-2 bg-sky-500 px-[.35rem] rounded-full font-semibold">
           {unseenCount}
         </small>
       ) : null}
 
-      <details className="dropdown dropdown-end relative">
-        <summary className="btn border-none p-0" onClick={markAllAsSeen}>
-          Notification
-        </summary>
-        <ul className="menu dropdown-content bg-columnBackGroundColor z-[1] min-w-[320px] w-full p-2 shadow border">
+      <div
+        tabIndex={0}
+        role="button"
+        onClick={() => {
+          if (sortedNotifications.length === 0) {
+            setIsDropdownOpen(false);
+          } else {
+            setIsDropdownOpen(!isDropdownOpen);
+            markAllAsSeen();
+          }
+        }}
+      >
+        Notifications
+      </div>
+
+      {isDropdownOpen && (
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-gray0 rounded-md z-[1] min-w-[320px] w-full p-2 shadow-sm shadow-slate-500 border"
+        >
           {sortedNotifications.map((feed) => (
-            <li key={feed._id} className="cursor-pointer hover:bg-mainBackGroundColor w-full">
+            <li
+              key={feed._id}
+              className="cursor-pointer hover:bg-slate-100 rounded-md w-full text-sm"
+              onClick={handleNotificationClick}
+            >
               <NotificationLayout
                 maker={feed.notification.maker}
                 text={feed.notification.text}
@@ -108,7 +132,7 @@ const NotificationList = ({ userId }) => {
             </li>
           ))}
         </ul>
-      </details>
+      )}
     </div>
   );
 };
