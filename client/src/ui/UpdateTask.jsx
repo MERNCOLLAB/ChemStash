@@ -1,11 +1,19 @@
 import makeAnimated from 'react-select/animated';
 import useGetUser from '../api/users/useGetUsers';
+import useUpdateTask from '../api/task/useUpdateTask';
 import { priorityOptions } from '../constants/board';
 import useHandleUpdateTask from '../hooks/board/useHandleUpdateTask';
 import { FormHeader, Input, CustomSelect, FormContainer, Button, TextArea } from '../components';
+import ToastProvider from '../configs/ToastProvider';
 import { selectStyle } from '../helpers/selectStyle';
 
-const UpdateTask = ({ taskitem, onUpdate, handleDrawerClose }) => {
+
+const UpdateTask = ({ taskitem,  handleDrawerClose }) => {
+  const { updateTask, toastMessage, toastType, clearToast } = useUpdateTask();  
+  const onUpdate = (id, update, date, selectedMembers, priority, desc) => {
+    updateTask(id, update, date, selectedMembers, priority, desc);
+  };
+
   const animatedComponents = makeAnimated();
   const { loading, error, members, fetchMembers } = useGetUser();
   const { update, membersOptions, handleMemberSelectChange, handlePriorityChange, handleUpdate, handleChange } =
@@ -64,6 +72,7 @@ const UpdateTask = ({ taskitem, onUpdate, handleDrawerClose }) => {
   return (
     <div className="bg-white0 min-w-fit min-h-full p-7">
       <form onSubmit={handleUpdate} className="flex flex-col gap-2">
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
         <FormHeader title="Update Task" />
         <FormContainer gridColsClass="grid-cols-3">{taskInfoFirstRow}</FormContainer>
         <FormContainer gridColsClass="grid-cols-1">{taskInfoSecondRow}</FormContainer>

@@ -26,7 +26,6 @@ import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 
 // Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
-import useUpdateTask from '../api/task/useUpdateTask';
 import useDeleteTask from '../api/task/useDeleteTask';
 import useDrawer from '../hooks/board/useDrawer';
 import ToastProvider from '../configs/ToastProvider';
@@ -45,7 +44,6 @@ function Board() {
 
   // Tasks
   const { createTask, toastMessage, toastType, clearToast } = useCreateTask();
-  const { updateTask } = useUpdateTask();
   const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
 
@@ -75,9 +73,7 @@ function Board() {
     })
   );
 
-  const handleUpdate = (id, update, date, selectedMembers, priority, desc) => {
-    updateTask(id, update, date, selectedMembers, priority, desc);
-  };
+
   return (
     <>
       <div className="border p-8  min-h-[calc(100vh-88px)]  overflow-x-auto overflow-y-hidden ">
@@ -140,7 +136,7 @@ function Board() {
                   tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 />
               )}
-              {activeTask && <TaskCard task={activeTask} updateTask={updateTask} deleteTask={deleteTask} />}
+              {activeTask && <TaskCard task={activeTask}  deleteTask={deleteTask} />}
             </DragOverlay>,
             document.body
           )}
@@ -148,7 +144,7 @@ function Board() {
       </div>
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
         {drawerType === 'updateTask' && (
-          <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} handleDrawerClose={handleDrawerClose} />
+          <UpdateTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />
         )}
         {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} handleDrawerClose={handleDrawerClose} />}
       </Drawer>
