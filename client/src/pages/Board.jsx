@@ -150,7 +150,7 @@ function Board() {
         {drawerType === 'updateTask' && (
           <UpdateTask taskitem={taskItem} onUpdate={handleUpdate} handleDrawerClose={handleDrawerClose} />
         )}
-        {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} />}
+        {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} handleDrawerClose={handleDrawerClose} />}
       </Drawer>
     </>
   );
