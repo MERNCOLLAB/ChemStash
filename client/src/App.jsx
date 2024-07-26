@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
 import { PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
-import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -53,7 +52,6 @@ function App() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-      <Toaster />
     </BrowserRouter>
   );
 }

@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import useBoardTaskList from '../board/useBoardTaskList';
-import toast from 'react-hot-toast';
+
 const useDeleteTask = () => {
   const { boardTaskList } = useBoardTaskList();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
+
   const deleteTask = async (id) => {
     try {
       setLoading(true);
@@ -12,13 +15,15 @@ const useDeleteTask = () => {
         method: 'DELETE',
       });
 
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to delete the task');
-      }
       const data = await res.json();
+      if(data.success === false){
+        setToastMessage('Failed to delete the selected task');
+        setToastType('error');
+      }
 
-      toast.success('A task has been deleted');
       boardTaskList();
+      setToastMessage('Task has been deleted');
+      setToastType('success');
     } catch (error) {
       setError(true);
       setError(error.message || 'Failed to delete the task');
@@ -27,7 +32,12 @@ const useDeleteTask = () => {
     }
   };
 
-  return { loading, error, deleteTask };
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+
+  return { loading, error, deleteTask, toastType, toastMessage, clearToast };
 };
 
 export default useDeleteTask;
