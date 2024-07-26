@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import useBoardTaskList from '../board/useBoardTaskList';
-import toast from 'react-hot-toast';
-import useDrawer from '../../hooks/board/useDrawer';
 
 const useUpdateTask = () => {
-  const { setOpenDrawer } = useDrawer();
   const { boardTaskList } = useBoardTaskList();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
 
   const updateTask = async (taskId, content, dueDate, assignedUsers, priority, desc) => {
     try {
@@ -23,19 +22,26 @@ const useUpdateTask = () => {
       const data = await response.json();
 
       setLoading(false);
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to update task');
+      if(data.success === false){
+        setToastMessage('Failed to update the task');
+        setToastType('error');
+        return;
       }
 
       boardTaskList();
-      toast.success('Task has been updated');
-      setOpenDrawer(false);
+      setToastMessage('Task has been updated');
+      setToastType('success');
     } catch (error) {
       setLoading(false);
       setError(error.message || 'Failed to update task');
     }
   };
-  return { loading, error, updateTask };
+
+  const clearToast = () =>{
+    setToastMessage(null);
+    setToastType(null);
+  }
+  return { loading, error, updateTask, toastMessage, toastType, clearToast };
 };
 
 export default useUpdateTask;
