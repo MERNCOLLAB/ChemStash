@@ -61,7 +61,7 @@ const UserList = () => {
       </Button>
       </div>
       <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
-        <SignUp />
+        <SignUp handleDrawerClose={handleDrawerClose} />
       </Drawer>
       </div>
     </>

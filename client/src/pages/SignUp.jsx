@@ -1,87 +1,78 @@
-import { useState } from 'react';
-import Select from 'react-select';
-import { selectStyle } from '../helpers/selectStyle';
+import ToastProvider from '../configs/ToastProvider';
 import { roleOptions } from '../constants';
-import OAuth from '../ui/OAuth';
-import { Button, Input, Linker } from '../components';
+import { Button, CustomSelect, FormHeader, FormSubHeader, FormContainer, Input } from '../components';
+import useAddUser from '../api/auth/useAddUser';
+import useHandleAddUser from '../hooks/auth/useHandleAddUser';
 
-function SignUp() {
-  const [formData, setFormData] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(null);
+function SignUp({handleDrawerClose}) {
+  const {loading, error, addUser, toastMessage, toastType, clearToast} = useAddUser();
+  const {selectedRole, handleChange, handleChangeRole, handleSubmit} = useHandleAddUser(addUser);
 
-  const handleChangeRole = (selectedOption) => {
-    setSelectedRole(selectedOption);
-    setFormData({ ...formData, role: selectedOption ? selectedOption.value : '' });
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setLoading(true);
-      setError(false);
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-
-      setLoading(false);
-      if (data.success === false) {
-        setError(true);
-        return;
-      }
-      // navigate("/sign-in");
-      alert('user created');
-      setFormData({});
-    } catch (error) {
-      setLoading(false);
-      setError(true);
-    }
-  };
-
-  return (
-    <div className="p-3 bg-slate-800 h-full max-w-2xl w-full">
-      <h1 className="text-3xl text-center font-bold my-7">Sign Up</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
-        <Input id="username" type="text" placeholder="Username" onChange={handleChange} />
-
-        <Input id="email" type="email" placeholder="Email" onChange={handleChange} />
-
-        <Input id="password" type="password" placeholder="Password" onChange={handleChange} />
-
-        <Select
-          placeholder="Select a role"
-          value={selectedRole}
-          options={roleOptions}
-          onChange={handleChangeRole}
-          styles={selectStyle}
-          isClearable
+  const userInfoFirstRow = (
+    <>
+       <Input
+          type="text"
+          disabled={loading}
+          id="username"
+          label="Username"
+          placeholder="Enter username"
+          onChange={handleChange}
+          validation="Provide appropriate username"
         />
+        
+      <Input
+        type="email"
+        disabled={loading}
+        id="email"
+        label="Email"
+        placeholder="Enter e-mail"
+        onChange={handleChange}
+        validation="Enter a valid e-mail address"
+      />
+    </>
+  )
 
-        <Button type="submit" loading={loading}>
-          {loading ? 'Loading' : 'Sign Up'}
+  const userInfoSecondRow = (
+    <>
+     <CustomSelect
+        label="User Role"
+        validation="Select the user role"
+        placeholder="Select a role"
+        value={selectedRole}
+        options={roleOptions}
+        onChange={handleChangeRole}
+      />
+
+      <Input
+      type="password"
+      disabled={loading}
+      id="password"
+      label="Password"
+      placeholder="Enter password"
+      onChange={handleChange}
+      validation="Enter the user's password"
+      />
+    </>
+  )
+  return (
+      <form onSubmit={handleSubmit} className="p-7 min-w-[49%] min-h-full bg-white0">
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
+      <FormHeader title="Add User" />
+      <FormSubHeader title="Basic Info" subtitle="Basic information of the new user" />
+      <FormContainer gridColsClass="grid-cols-2">{userInfoFirstRow}</FormContainer>
+      <FormContainer gridColsClass="grid-cols-2">{userInfoSecondRow}</FormContainer>
+      <hr className="bg-gray1 my-5" />
+      <div className="flex justify-end mt-4 gap-2.5 p-2.5">
+        <Button type="button" variant="secondary" onClick={handleDrawerClose}>
+          Cancel
         </Button>
-        <OAuth />
-      </form>
-      <div className="flex gap-2 mt-5">
-        <p>Have an account?</p>
-
-        <Linker to="/sign-in/">
-          <span className="text-sky-500">Sign in</span>
-        </Linker>
+        <Button type="submit" variant="primary">
+          Add
+        </Button>
+        <p className="text-red-700">{error && 'Something went wrong!'}</p>
       </div>
-      <p className="text-red-700">{error && 'Something went wrong!'}</p>
-    </div>
+      </form>
+
   );
 }
 
