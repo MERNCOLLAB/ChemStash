@@ -73,10 +73,9 @@ function Board() {
     })
   );
 
-
   return (
     <>
-      <div className="border p-8  min-h-[calc(100vh-88px)]  overflow-x-auto overflow-y-hidden ">
+      <div className="border p-2  min-h-[calc(100vh-88px)]  overflow-x-auto overflow-y-hidden ">
         {/* <h1 className="font-semibold">Board Task Assignment and Planner</h1> */}
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <DndContext
@@ -136,17 +135,21 @@ function Board() {
                   tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 />
               )}
-              {activeTask && <TaskCard task={activeTask}  deleteTask={deleteTask} />}
+              {activeTask && <TaskCard task={activeTask} deleteTask={deleteTask} />}
             </DragOverlay>,
             document.body
           )}
         </DndContext>
       </div>
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
-        {drawerType === 'updateTask' && (
-          <UpdateTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />
+        {drawerType === 'updateTask' && <UpdateTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />}
+        {drawerType === 'updateColumn' && (
+          <UpdateColumn
+            columnItem={columnItem}
+            updateColumn={updateColumnContent}
+            handleDrawerClose={handleDrawerClose}
+          />
         )}
-        {drawerType === 'updateColumn' && <UpdateColumn columnItem={columnItem} updateColumn={updateColumnContent} handleDrawerClose={handleDrawerClose} />}
       </Drawer>
     </>
   );

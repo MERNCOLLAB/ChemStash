@@ -25,23 +25,34 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
       components: {
         MuiTableCell: {
           styleOverrides: {
+            root: {
+              fontFamily: 'Poppins',
+            },
+
             head: {
               color: '#F8FAFC',
+              padding: '8px 2px',
             },
             body: {
               textAlign: 'left',
-              minWidth: '175px',
+              padding: '4px 8px',
               backgroundColor: '#F8FAFC',
-              color: '#64748B',
-              fontSize: '16px',
+
+              color: '#94A3B8',
+              fontSize: '12px',
+              border: '1px solid #E3E7EF',
+            },
+            footer: {
+              padding: '8px',
             },
           },
         },
+
         MUIDataTableFilter: {
           styleOverrides: {
             root: {
               backgroundColor: '#F8FAFC',
-              fontSize: '16px',
+              fontSize: '12px',
               color: '#64748B',
             },
           },
@@ -59,9 +70,10 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
               backgroundColor: '#E2E8F0',
             },
             data: {
-              whiteSpace: 'pre',
-              fontWeight: '600',
+              paddingLeft: '6px',
               color: '#64748B',
+              fontSize: '12px',
+              fontFamily: 'Poppins',
             },
           },
         },
@@ -75,11 +87,43 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         },
         MuiToolbar: {
           styleOverrides: {
-            root: {
-              backgroundColor: '#F1F5F9',
-            },
             gutters: {
-              backgroundColor: '#E2E8F0',
+              backgroundColor: '#F2F5F9',
+              fontFamily: 'Poppins',
+            },
+          },
+        },
+
+        MuiButtonBase: {
+          styleOverrides: {
+            root: {
+              justifyContent: 'left',
+            },
+          },
+        },
+        MuiTablePagination: {
+          styleOverrides: {
+            root: {},
+
+            toolbar: {
+              background: '#E3E7F0',
+              color: '#64748B',
+            },
+            selectLabel: {
+              fontFamily: 'Poppins',
+              fontWeight: '600',
+            },
+            input: {
+              fontFamily: 'Poppins',
+              fontWeight: '600',
+            },
+            displayedRows: {
+              fontFamily: 'Poppins',
+              fontWeight: '600',
+            },
+            actions: {
+              fontFamily: 'Poppins',
+              fontWeight: '600',
             },
           },
         },
@@ -94,7 +138,7 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
   if (!data) return null;
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <div className="p-8">
+      <div className=" p-2 ">
         <h1 className="font-semibold text-xl pb-2">Chemical Inventory Table</h1>
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />

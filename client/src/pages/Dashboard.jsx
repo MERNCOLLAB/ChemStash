@@ -4,7 +4,7 @@ import { DashboardCard } from '../components';
 
 function Dashboard() {
   return (
-    <div className="w-full  p-2  mt-2">
+    <div className="w-full  p-2  ">
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-between gap-2 ">
         <DashboardCard title="Total Chemicals" icon={<FlaskIcon />} />

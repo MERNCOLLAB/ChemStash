@@ -89,3 +89,7 @@ input[type='number'] {
     inset 2px 2px 3px #cbd5e1,
     inset -2px -2px 3px #ffffff;
 }
+
+.css-qz2nkl-MuiToolbar-root {
+  @apply p-0 !important;
+}

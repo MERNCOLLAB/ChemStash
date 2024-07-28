@@ -10,7 +10,7 @@ function AppLayout() {
       </div>
 
       <div className="flex">
-        <div className="sticky top-[90px] h-[calc(100vh-90px)] min-h-[calc(100vh-90px)] w-[200px] p-7 bg-white0 border">
+        <div className="sticky top-[90px]  min-h-[calc(100vh-90px)] w-[200px] p-7 bg-white0 border">
           <LeftNavbar />
         </div>
         <div className="w-full overflow-y-scroll no-scrollbar bg-white1 min-h-[calc(100vh-90px)]">

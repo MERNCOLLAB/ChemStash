@@ -102,13 +102,13 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
       filter: false,
     },
   },
-  {
-    name: 'remarks',
-    label: 'Remarks',
-    options: {
-      filter: false,
-    },
-  },
+  // {
+  //   name: 'remarks',
+  //   label: 'Remarks',
+  //   options: {
+  //     filter: false,
+  //   },
+  // },
   {
     name: '_id',
     label: 'Action',

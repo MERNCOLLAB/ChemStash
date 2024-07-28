@@ -2,47 +2,38 @@ export const tagColorUtilities = {
   '.orangeTag': {
     color: '#F59E0B',
     backgroundColor: '#FDF0BC',
-    fontSize: '10px',
   },
   '.redTag': {
     color: '#F43F5E',
     backgroundColor: '#FFDDE0',
-    fontSize: '10px',
   },
   '.grayTag': {
     color: '#64748B',
     backgroundColor: '#CBD5E1',
-    fontSize: '10px',
   },
   '.greenTag': {
     color: '#059669',
     backgroundColor: '#A7F3D0',
-    fontSize: '10px',
   },
   '.blueTag': {
     color: '#3B82F6',
     backgroundColor: '#93C5FD',
-    fontSize: '10px',
   },
   '.lightGrayTag': {
     color: '#78716C',
     backgroundColor: '#D6D3D1',
-    fontSize: '10px',
   },
   '.purpleTag': {
     color: '#7C44C5',
     backgroundColor: '#CDB0F4',
-    fontSize: '10px',
   },
   '.pinkTag': {
     color: '#D233B8',
     backgroundColor: '#EECBEE',
-    fontSize: '10px',
   },
   '.blueGreenTag': {
     color: '#388BA5',
     backgroundColor: '#7CC6E8',
-    fontSize: '10px',
   },
 };
 
