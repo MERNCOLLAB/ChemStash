@@ -3,6 +3,7 @@ import { Linker } from '../components';
 import { useEffect } from 'react';
 import { setUser } from '../redux/notification/notificationSlice';
 import NotificationList from './NotificationList';
+import Logo from "../assets/app-logo.png";
 
 function Header() {
   const { currentUser } = useSelector((state) => state.user);
@@ -38,7 +39,7 @@ function Header() {
     <div className="mx-auto border bg-white0">
       <div className="flex justify-between items-end mx-auto px-7 py-5">
         <Linker to="/">
-          <h1 className="font-semibold text-md">ChemStack</h1>
+          <img src={Logo} className='h-10'  alt="app-logo" />
         </Linker>
 
         <ul className="flex gap-4 items-end">
