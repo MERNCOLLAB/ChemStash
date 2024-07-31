@@ -4,7 +4,7 @@ function Button({ loading, children, type, variant, onClick }) {
       case 'primary':
         return 'text-white px-3 py-2 bg-indigo0 hover:bg-indigo1';
       case 'secondary':
-        return 'text-gray2 px-3 py-2 bg-gray0 hover:border-[2px] hover:border-gray1 hover:bg-transparent';
+        return 'text-gray2 px-3 py-2 bg-gray0 border-2  hover:border-[2px] hover:border-gray1 hover:bg-transparent';
       default:
         return 'text-white px-3 py-2 bg-[#059669] hover:bg-[#A7F3D0]';
     }
@@ -15,7 +15,7 @@ function Button({ loading, children, type, variant, onClick }) {
       type={type}
       onClick={onClick}
       disabled={loading}
-      className={`rounded-xl font-semibold text-base ${getClassVariant(variant)}  `}
+      className={`rounded-xl font-semibold text-base  ${getClassVariant(variant)}  `}
     >
       {loading && (
         <div className="flex items-center gap-0.5">
