@@ -9,11 +9,11 @@ function AppLayout() {
         <Header />
       </div>
 
-      <div className="flex">
-        <div className="sticky top-[90px]  min-h-[calc(100vh-90px)] w-[200px] p-7 bg-white0 border">
+      <div className="grid grid-cols-[200px_1fr]">
+        <div className="sticky top-[80px]  h-screen bg-white0 max-h-[calc(100vh-82px)] w-[200px] py-7 px-4  border">
           <LeftNavbar />
         </div>
-        <div className="w-full overflow-y-scroll no-scrollbar bg-white1 min-h-[calc(100vh-90px)]">
+        <div className="  overflow-y-scroll no-scrollbar bg-white1 ">
           <Outlet />
         </div>
       </div>
