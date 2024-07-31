@@ -5,14 +5,16 @@ const About = () => {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col w-full min-h-screen p-4">
-      <div className="">
+      <div className="border border-gray1  p-4">
+        {/* Title and Short Description */}
         <h1>About ChemStack</h1>
         <p>Simplifying chemical tracking & enhancing lab productivity</p>
         <p>ChemStack is a web application designed as a user-friendly and robust platform for the assistance in your
           chemical inventory management
         </p>
       </div>
-      <div className="">
+      <div className="border border-gray1  p-4">
+        {/* Cards UI with Icons on top */}
         <h1>Key Features</h1>
         <p>Inventory management is crucial for good laboratory practices</p>
         <p>Boost productivity by tracking chemicals with ease</p>
@@ -20,7 +22,8 @@ const About = () => {
         <p>Ensure safety by handling chemicals with the safety standards</p>
       </div>
 
-      <div className="">
+      <div className="border border-gray1  p-4">
+        {/* Accordion UI */}
         <h1>FAQs</h1>
         <p>How does ChemStack simplify chemical inventory management?</p>
         <p>Users can record and oversee chemicals easily, analyze chemical usage patterns, and be notified for low or expired inventories</p>
@@ -33,7 +36,10 @@ const About = () => {
           efficient laboratory operation.
         </p>
       </div>
-      <div className="max-w-[90%] mx-auto">
+      <div className="max-w-[90%] mx-auto flex gap-4 mt-4 border">
+      <Button onClick={()=>{}} type="button" variant="primary">
+            Get Started
+          </Button>
         <Button onClick={() => navigate('/')} type="button" variant="secondary">
               Back To Home
           </Button>
