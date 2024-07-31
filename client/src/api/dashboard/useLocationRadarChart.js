@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-const useLocationPieChartData = () => {
+const useLocationRadarChartData = () => {
   const [locData, setLocData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const locationPieChartData = async () => {
+  const locationRadarChartData = async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/chemical/list/location`);
@@ -32,7 +32,7 @@ const useLocationPieChartData = () => {
       setLoading(false);
     }
   };
-  return { loading, error, locData, locationPieChartData };
+  return { loading, error, locData, locationRadarChartData };
 };
 
-export default useLocationPieChartData;
+export default useLocationRadarChartData;
