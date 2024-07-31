@@ -1,63 +1,26 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signInStart, signInFailure, signInSuccess } from '../redux/user/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import OAuth from '../ui/OAuth';
-import { Button, Input, Linker } from '../components';
+
+import { useSelector } from 'react-redux';
+import { Button, Input } from '../components';
+import useSignIn from '../api/auth/useSignIn';
+import ToastProvider from '../configs/ToastProvider';
+import useHandleSignIn from '../hooks/auth/useHandleSignIn';
 
 function SignIn() {
-  const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(signInStart());
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-
-      if (data.success === false) {
-        dispatch(signInFailure(data));
-        return;
-      }
-      dispatch(signInSuccess(data));
-
-      data.role ? navigate(`/${data.role}/inventory`) : '';
-    } catch (error) {
-      dispatch(signInFailure(error));
-    }
-  };
+  const {signIn, toastMessage, toastType, clearToast} = useSignIn();
+  const {handleChange, handleSubmit} = useHandleSignIn(signIn);
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-bold my-7">Sign In</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <div className="p-3 max-w-lg min-h-screen mx-auto mt-20">
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
+      <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-indigo0'>ChemStack</span></h1>
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 place-items-center gap-4">
         <Input id="email" type="email" placeholder="Enter your email" onChange={handleChange} />
         <Input id="password" type="password" placeholder="Enter password" onChange={handleChange} />
-
-        <Button type="submit" loading={loading}>
-          {loading ? 'Loading' : 'Sign In'}
+        <Button type="submit" variant="primary" loading={loading}>
+          Sign In
         </Button>
-        <OAuth />
       </form>
-      <div className="flex gap-2 mt-5">
-        <p>Don&#39;t have an account?</p>
-
-        <Linker to="/sign-up/">
-          <span className="text-sky-500">Sign up</span>
-        </Linker>
-      </div>
       <p className="text-red-700">{error ? error.message || 'Something went wrong!' : ''}</p>
     </div>
   );
