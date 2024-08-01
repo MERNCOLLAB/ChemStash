@@ -19,7 +19,7 @@ function Map() {
     <div className='p-4 max-w-[90%] mx-auto'>
       <h1 className="text-3xl font-bold mt-4 mb-8">Laboratory Map</h1>
       <form onSubmit={handleSubmit}>
-        {currentUser.role === 'manager' ? (
+        {currentUser.role === 'manager' || currentUser.role === 'tl' ? (
           <>
             <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChange} />
             <div
