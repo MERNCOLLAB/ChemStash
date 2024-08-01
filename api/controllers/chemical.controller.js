@@ -39,6 +39,13 @@ export const chemicalList = async (req, res, next) => {
       const chemicals = await Chemical.find({ expiryDate: { $lt: currentDate } });
       return res.json(chemicals);
     }
+    if (query === 'near-expired') {
+      const currentDate = moment().startOf('day').toDate();
+      const oneMonthLater = moment().add(1, 'month').endOf('day').toDate();
+      const chemicals = await Chemical.find({ expiryDate: { $gte: currentDate, $lt: oneMonthLater } });
+      return res.json(chemicals);
+    }
+
     if (query === 'barchart') {
       const chemicals = await Chemical.find({}, 'name dateReceived supply amount unit');
       return res.json(chemicals);

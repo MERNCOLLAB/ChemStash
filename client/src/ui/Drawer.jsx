@@ -7,17 +7,16 @@ function Drawer({ isOpen, children, onClose }) {
     setOpen(isOpen);
   }, [isOpen]);
   return (
-    <div className={`drawer drawer-end z-10`}>
+    <div className={`drawer drawer-end z-50`}>
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" checked={open} onChange={onClose} />
       <div className="drawer-content">
         <label htmlFor="my-drawer-4" className="" onClick={onClose}></label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side ">
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
-          className={`drawer-overlay ${open ? 'backdrop-blur-[1px]' : ''}`}
-          onClick={onClose}
+          className={`drawer-overlay ${open ? 'backdrop-blur-[2px]' : ''}`}
         ></label>
         {children}
       </div>

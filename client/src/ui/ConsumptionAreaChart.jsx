@@ -22,7 +22,7 @@ const ConsumptionAreaChart = () => {
   }
 
   return (
-    <div>
+    <div className="text-sm h-full flex justify-center flex-col ">
       <CustomSelect
         label="Chemical Consumption over Time"
         validation="Select a Chemical"
@@ -32,12 +32,12 @@ const ConsumptionAreaChart = () => {
         onChange={handleChangeChemical}
       />
 
-      <ResponsiveContainer width="100%" height={250}>
-        <AreaChart width={730} height={250} data={filteredData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+      <ResponsiveContainer width="100%">
+        <AreaChart data={filteredData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
             </linearGradient>
             {/* <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
@@ -48,7 +48,7 @@ const ConsumptionAreaChart = () => {
           <YAxis />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip content={<CustomTooltip />} />
-          <Area type="monotone" dataKey="consumptionAmount" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+          <Area type="monotone" dataKey="consumptionAmount" stroke="#22d3ee" fillOpacity={1} fill="url(#colorUv)" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

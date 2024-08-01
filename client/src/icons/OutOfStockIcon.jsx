@@ -5,7 +5,7 @@ const OutOfStockIcon = () => {
       viewBox="0 0 2048 2048"
       width="40px"
       height="40px"
-      fill="#64748B"
+      fill="#fff"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

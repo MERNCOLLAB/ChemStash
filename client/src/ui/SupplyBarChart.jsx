@@ -21,7 +21,7 @@ const SupplyBarChart = () => {
   }
 
   return (
-    <div>
+    <div className="text-sm h-full flex justify-center flex-col">
       <CustomSelect
         label="Chemical Amount and Supply"
         validation="Select a Chemical"
@@ -31,23 +31,15 @@ const SupplyBarChart = () => {
         onChange={handleChangeChemical}
       />
 
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          data={filteredData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
+      <ResponsiveContainer width="100%">
+        <BarChart data={filteredData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="category" dataKey="name" />
           <YAxis />
           <Tooltip content={<CustomTooltip />} />
           <Legend />
-          <Bar dataKey="amount" fill="#8884d8" activeShape={<Rectangle fill="pink" stroke="blue" />} />
-          <Bar dataKey="supply" fill="#82ca9d" activeShape={<Rectangle fill="gold" stroke="purple" />} />
+          <Bar dataKey="amount" fill="#22d3ee" activeShape={<Rectangle fill="pink" stroke="blue" />} />
+          <Bar dataKey="supply" fill="#64748b" activeShape={<Rectangle fill="gold" stroke="purple" />} />
         </BarChart>
       </ResponsiveContainer>
     </div>

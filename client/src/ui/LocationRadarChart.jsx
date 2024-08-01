@@ -19,16 +19,23 @@ const LocationRadarChart = () => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <h1 className="font-semibold text-sm">Chemicals by Location</h1>
-      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={locData}>
-        <PolarGrid />
-        <PolarAngleAxis dataKey="name" tick={{ fontSize: 10 }} />
-        <PolarRadiusAxis />
-        <Radar name="Locations" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-        <Legend layout="horizontal" verticalAlign="bottom" align="left" wrapperStyle={{ bottom: 20, left: 20, fontSize: '12px', fontWeight: 'semibold' }} />
-      </RadarChart>
-    </ResponsiveContainer>
+    <div className="flex flex-col h-full w-full">
+      <ResponsiveContainer width="100%">
+        <h1 className="font-semibold text-sm">Chemicals by Location</h1>
+        <RadarChart data={locData}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="name" tick={{ fontSize: 10 }} />
+          <PolarRadiusAxis />
+          <Radar name="Locations" dataKey="value" stroke="#06b6d4" fill="#67e8f9" fillOpacity={0.6} />
+          <Legend
+            layout="horizontal"
+            verticalAlign="bottom"
+            align="left"
+            wrapperStyle={{ bottom: 20, left: 20, fontSize: '12px', fontWeight: 'semibold' }}
+          />
+        </RadarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
