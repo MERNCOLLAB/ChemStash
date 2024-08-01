@@ -1,5 +1,5 @@
 import { SupplyBarChart, ConsumptionAreaChart, HazardsPieChart, LocationRadarChart } from '../ui';
-import { FlaskIcon, DropIcon, OutOfStockIcon, ExpiredIcon } from '../icons';
+import { FlaskIcon, DropIcon, OutOfStockIcon, ExpiredIcon, ExpiredChemical } from '../icons';
 import { DashboardCard } from '../components';
 
 function Dashboard() {
@@ -10,8 +10,8 @@ function Dashboard() {
         <DashboardCard bg="bg-cyan-500" title="Total Chemicals" icon={<FlaskIcon />} />
         <DashboardCard bg="bg-slate-500" title="Chemicals Running Low" query="low-amount" icon={<DropIcon />} />
         <DashboardCard bg="bg-slate-700" title="Out of Stock" query="out-of-stock" icon={<OutOfStockIcon />} />
-        <DashboardCard bg="bg-neutral-500" title="Malapit na ma expired" query="near-expired" icon={<ExpiredIcon />} />
-        <DashboardCard bg="bg-pink-700" title="Expired Chemicals" query="expired" icon={<ExpiredIcon />} />
+        <DashboardCard bg="bg-neutral-500" title="Chemicals Near Expiry" query="near-expired" icon={<ExpiredIcon />} />
+        <DashboardCard bg="bg-pink-700" title="Expired Chemicals" query="expired" icon={<ExpiredChemical />} />
       </div>
 
       {/* Charts */}
