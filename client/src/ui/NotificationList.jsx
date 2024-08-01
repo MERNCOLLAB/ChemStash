@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import NotificationLayout from './NotificationLayout';
+import { BsFillBellFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
 
 const NotificationList = ({ userId }) => {
@@ -110,7 +111,7 @@ const NotificationList = ({ userId }) => {
           }
         }}
       >
-        Notifications
+       <BsFillBellFill size={24} color="#64748B" />
       </div>
 
       {isDropdownOpen && (

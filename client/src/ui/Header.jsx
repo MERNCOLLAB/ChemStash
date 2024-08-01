@@ -46,8 +46,8 @@ function Header() {
         </div>
 
         <ul className="flex gap-4 items-end">
+          <p>Welcome <span  className="underline">{currentUser.username}</span></p>
           {currentUser && <NotificationList userId={currentUser?._id} />}
-          <p className="underline ">Welcome, {currentUser.username}</p>
           <div>
             <Linker to={getProfileLink()}>
               {currentUser ? (
