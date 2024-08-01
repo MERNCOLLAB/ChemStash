@@ -29,10 +29,10 @@ const Home = () => {
     <div className="w-full grid grid-cols-1 md:grid-cols-2 items-center min-h-screen" style={HeroBackground}>
       <div className="p-8 grid grid-cols-1 justify-center items-center">
         <h1 className='text-2xl font-semibold tracking-wider text-center md:text-left'>
-          Revolutionize your chemical inventory management with <span className='text-indigo1'>ChemStack!</span>
+          Revolutionize your chemical inventory management with <span className='text-blue1'>ChemStack!</span>
         </h1>
         <p className='mt-4'> Streamline your chemical inventory management process with ease. 
-          Bringing <span className='text-indigo0 font-semibold'>efficiency</span> and <span className='font-semibold text-indigo0'> quality assurance</span> to laboratory management </p>
+          Bringing <span className='text-blue0 font-semibold'>efficiency</span> and <span className='font-semibold text-blue0'> quality assurance</span> to laboratory management </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-8 max-w-[70%] mx-auto md:mx-0">
           <Button onClick={handleGetStarted} type="button" variant="primary">
             Get Started

@@ -50,7 +50,7 @@ const UpdateTask = ({ taskitem,  handleDrawerClose }) => {
   const taskInfoSecondRow = (
     <>
       {loading ? (
-        <div className="h-14 w-full bg-indigo1 animate-pulse" />
+        <div className="h-14 w-full bg-blue1 animate-pulse" />
       ) : error ? (
         <p>Error fetching members</p>
       ) : (

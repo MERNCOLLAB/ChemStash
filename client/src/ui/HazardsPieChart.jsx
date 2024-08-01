@@ -14,7 +14,7 @@ const HazardsPieChart = () => {
   }, []);
 
   if (loading) {
-    return <div className="w-full min-h-[350px] bg-indigo1/50 animate-pulse " />;
+    return <div className="w-full min-h-[350px] bg-blue1/50 animate-pulse " />;
   }
 
   if (error) {

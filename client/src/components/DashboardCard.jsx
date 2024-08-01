@@ -17,7 +17,7 @@ const DashboardCard = ({ query, title, icon, bg }) => {
   };
 
   if (loading) {
-    return <div className="w-full min-h-24 bg-indigo1/50 animate-pulse " />;
+    return <div className="w-full min-h-24 bg-blue1/50 animate-pulse " />;
   }
 
   if (error) {

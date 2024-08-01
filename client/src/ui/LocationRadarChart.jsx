@@ -11,7 +11,7 @@ const LocationRadarChart = () => {
   }, []);
 
   if (loading) {
-    return <div className="w-full min-h-[300px] bg-indigo1/50 animate-pulse " />;
+    return <div className="w-full min-h-[300px] bg-blue1/50 animate-pulse " />;
   }
 
   if (error) {
