@@ -13,7 +13,7 @@ function SignIn() {
   return (
     <div className="p-3 max-w-lg min-h-screen mx-auto mt-20">
       <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
-      <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-indigo0'>ChemStack</span></h1>
+      <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-blue0'>ChemStack</span></h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 place-items-center gap-4">
         <Input id="email" type="email" placeholder="Enter your email" onChange={handleChange} />
         <Input id="password" type="password" placeholder="Enter password" onChange={handleChange} />
