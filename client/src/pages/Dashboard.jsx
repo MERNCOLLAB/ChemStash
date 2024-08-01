@@ -11,7 +11,7 @@ function Dashboard() {
         <DashboardCard bg="bg-slate-500" title="Chemicals Running Low" query="low-amount" icon={<DropIcon />} />
         <DashboardCard bg="bg-slate-700" title="Out of Stock" query="out-of-stock" icon={<OutOfStockIcon />} />
         <DashboardCard bg="bg-neutral-500" title="Malapit na ma expired" query="near-expired" icon={<ExpiredIcon />} />
-        <DashboardCard bg="bg-pink-400" title="Expired Chemicals" query="expired" icon={<ExpiredIcon />} />
+        <DashboardCard bg="bg-pink-700" title="Expired Chemicals" query="expired" icon={<ExpiredIcon />} />
       </div>
 
       {/* Charts */}
