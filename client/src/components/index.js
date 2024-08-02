@@ -11,6 +11,8 @@ import BigSpinner from './BigSpinner';
 import DashboardCard from './DashboardCard';
 import CustomSelect from './CustomSelect';
 import TextArea from './TextArea';
+import FeatureCards from './FeatureCards';
+import Accordion from './Accordion';
 
 export {
   Button,
@@ -25,5 +27,7 @@ export {
   BigSpinner,
   DashboardCard,
   CustomSelect,
-  TextArea
+  TextArea,
+  FeatureCards,
+  Accordion
 };
