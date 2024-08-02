@@ -3,19 +3,19 @@
 // #64748B  Gray2
 // #F8FAFC White0
 // #F1F5F9 White1
-// #4F46E5 blue0
+// #0072B2 blue0
 
 export const selectStyle = {
   control: (defaultStyle, state) => ({
     ...defaultStyle,
     backgroundColor: 'none',
-    borderColor: state.isFocused ? '#4F46E5' : '#94A3B8',
+    borderColor: state.isFocused ? '#0072B2' : '#94A3B8',
     borderRadius: '8px',
     padding: '0px',
     border: '1px solid #94A3B8',
     boxShadow: 'none',
     '&:hover': {
-        border: '1px solid #4F46E5',
+        border: '1px solid #0072B2',
     }
   }),
 
