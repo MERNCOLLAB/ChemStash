@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Button,BigSpinner } from '../components';
+import { Button, BigSpinner } from '../components';
 import SignUp from './SignUp';
 import { Drawer } from '../ui';
 import useGetUsers from '../api/users/useGetUsers';
-
+import Input from '../components/Input';
 const UserList = () => {
-  const {error,loading, members, fetchMembers} = useGetUsers();
+  const { error, loading, members, fetchMembers } = useGetUsers();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const [search, setSearch] = useState('');
+  const [searchUser, setSearchUser] = useState([]);
   useEffect(() => {
     fetchMembers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setSearchUser(members);
+  }, [members]);
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -20,49 +25,71 @@ const UserList = () => {
     setDrawerOpen(false);
   };
 
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    setSearch(search);
+    const filteredUser = members.filter((user) => user.username.toLowerCase().includes(search.toLowerCase()));
+    setSearchUser(filteredUser);
+  };
+
   return (
     <>
-      <div className="p-8">
-        <h1 className="font-semibold pb-4">List of Users</h1>
+      <div className=" ">
+        <div className=" bg-transparent  bg-white1 sticky top-0 p-2 z-10">
+          <h1 className="font-semibold pb-2">List of Users</h1>
+          <div className="flex gap-2  justify-between items-center">
+            <Input
+              type="text"
+              label="Search User"
+              value={search}
+              id="search"
+              onChange={handleSearch}
+              validation="Enter full name of user"
+            />
+            <div>
+              <Button variant="primary" onClick={handleDrawerOpen}>
+                Add user
+              </Button>
+            </div>
+          </div>
+          <hr className="bg-gray1 my-4" />
+        </div>
 
         {loading ? (
-                  <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">
-                  <BigSpinner />
-                </div>
+          <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">
+            <BigSpinner />
+          </div>
         ) : error ? (
-          <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">Something went wrong: {error.message}</div>
+          <div className="flex justify-center items-center  min-h-[calc(100vh-190px)]">
+            Something went wrong: {error.message}
+          </div>
         ) : (
-          <table className="table table-zebra bg-white0">
-            <thead className='text-center font-semibold text-base p-4'>
-              <tr>
-                <th>Profile Picture</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map((member) => (
-                <tr className="hover:bg-gray0 duration-500 ease-out" key={member._id}>
-                  <td className="flex justify-center p-2">
-                    <img src={member.profilePicture} alt={member.username} className="h-10 w-10 rounded-full" />
-                  </td>
-                  <td className="text-center">{member.username}</td>
-                  <td className="text-center">{member.role}</td>
-                  <td className="text-center">{member.email}</td>
-                </tr>
+          <div className="grid grid-cols-6  gap-2  justify-center max-h-[calc(100vh-250px)] h-full p-4 -z-10 overflow-y-scroll ">
+            <>
+              {searchUser.map((member) => (
+                <div className="card card-compact bg-base-100 shadow-md w-full" key={member._id}>
+                  <figure>
+                    <img className="" src={member.profilePicture} />
+                  </figure>
+                  <div className="card-body">
+                    <div className="grid">
+                      <p>{member.username}</p>
+                      <small className="text-gray1">{member.role}</small>
+                    </div>
+                    <div className="grid">
+                      <p className="">{member.email}</p>
+                      <small className="text-gray1">Email</small>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
+            </>
+          </div>
         )}
-      <div className="mt-4">
-      <Button variant="primary"  onClick={handleDrawerOpen}>
-        Add user
-      </Button>
-      </div>
-      <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
-        <SignUp handleDrawerClose={handleDrawerClose} />
-      </Drawer>
+
+        <Drawer isOpen={drawerOpen} onClose={handleDrawerClose}>
+          <SignUp handleDrawerClose={handleDrawerClose} />
+        </Drawer>
       </div>
     </>
   );

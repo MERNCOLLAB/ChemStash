@@ -31,7 +31,6 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
 
             head: {
               color: '#F8FAFC',
-              padding: '8px 2px',
             },
             body: {
               textAlign: 'left',
@@ -70,7 +69,6 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
               backgroundColor: '#E2E8F0',
             },
             data: {
-              paddingLeft: '6px',
               color: '#64748B',
               fontSize: '12px',
               fontFamily: 'Poppins',

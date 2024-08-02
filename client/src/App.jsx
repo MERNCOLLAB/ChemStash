@@ -40,7 +40,7 @@ function App() {
         <Route element={<PrivateRoute role="tl" />}>
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/teamleader" element={<AppLayout />}>
+          <Route path="/tl" element={<AppLayout />}>
             <Route path="dashboard" index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
             <Route path="board" element={<Board />} />

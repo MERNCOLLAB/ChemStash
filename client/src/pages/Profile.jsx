@@ -154,7 +154,7 @@ function Profile() {
           onChange={handleChange}
         />
 
-        <Button type="button" variant="primary" loading={loading}>
+        <Button variant="primary" loading={loading}>
           {loading ? 'Loading' : 'Update'}
         </Button>
       </form>

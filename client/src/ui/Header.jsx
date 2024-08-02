@@ -36,8 +36,8 @@ function Header() {
   };
 
   return (
-    <div className="mx-auto border bg-white0">
-      <div className="flex justify-between items-end mx-auto px-7 py-5">
+    <div className="mx-auto border bg-white0 ">
+      <div className="flex justify-between items-end mx-auto px-7 py-5 ">
         <div className="flex gap-1 items-center">
           <Linker to="/">
             <img src={Logo} className="h-10" alt="app-logo" />
@@ -46,7 +46,9 @@ function Header() {
         </div>
 
         <ul className="flex gap-4 items-end">
-          <p>Welcome <span  className="underline">{currentUser.username}</span></p>
+          <p>
+            Welcome <span className="underline">{currentUser.username}</span>
+          </p>
           {currentUser && <NotificationList userId={currentUser?._id} />}
           <div>
             <Linker to={getProfileLink()}>

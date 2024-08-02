@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import NotificationLayout from './NotificationLayout';
-import { BsFillBellFill } from "react-icons/bs";
-import { useSelector } from 'react-redux';
 
+import { useSelector } from 'react-redux';
+import { IoNotificationsOutline } from 'react-icons/io5';
 const NotificationList = ({ userId }) => {
   const [notifications, setNotifications] = useState([]);
   const [error, setError] = useState(false);
@@ -111,7 +111,7 @@ const NotificationList = ({ userId }) => {
           }
         }}
       >
-       <BsFillBellFill size={24} color="#64748B" />
+        <IoNotificationsOutline size={24} color="#64748B" />
       </div>
 
       {isDropdownOpen && (

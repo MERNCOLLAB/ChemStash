@@ -25,7 +25,7 @@ body {
 
 /* For Active Links */
 .active {
-  @apply text-blue1;
+  @apply text-blue1 font-semibold;
 }
 
 tr {
