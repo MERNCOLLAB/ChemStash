@@ -12,6 +12,7 @@ import DashboardCard from './DashboardCard';
 import CustomSelect from './CustomSelect';
 import TextArea from './TextArea';
 import FeatureCards from './FeatureCards';
+import Accordion from './Accordion';
 
 export {
   Button,
@@ -27,5 +28,6 @@ export {
   DashboardCard,
   CustomSelect,
   TextArea,
-  FeatureCards
+  FeatureCards,
+  Accordion
 };

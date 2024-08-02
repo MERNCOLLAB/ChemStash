@@ -4,8 +4,7 @@ import { GoGraph } from "react-icons/go";
 import { AiFillSafetyCertificate } from "react-icons/ai";
 import LabImg from "../assets/lab-home.png";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../components";
-import FeatureCards from "../components";
+import { Button, FeatureCards, Accordion } from "../components";
 
 const About = () => {
   const navigate = useNavigate();
@@ -34,7 +33,6 @@ const About = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="p-4">
-            {/* Cards UI with Icons on top */}
             <h1 className="font-semibold text-lg uppercase tracking-wide text-blue1 mb-2">Key Features</h1>  
             <section className="grid grid-cols-2 gap-x-2 gap-y-8 justify-evenly items-center">
             <FeatureCards
@@ -61,18 +59,8 @@ const About = () => {
           </div>
 
         <div className="p-4">
-          {/* Accordion UI */}
-          <h1 className="font-semibold text-lg uppercase tracking-wide text-blue1">FAQs</h1>
-          <p>How does ChemStack simplify chemical inventory management?</p>
-          <p>Users can record and oversee chemicals easily, analyze chemical usage patterns, and be notified for low or expired inventories</p>
-          <p>Can it help with regulatory compliance?</p>
-          <p>Yes, it can assist with th general regulatory compliances as it allows you to upload a schematic laboratory map,
-            safety data sheet URL links, and provide safety information about the chemicals
-          </p>
-          <p>What other features does the app offer</p>
-          <p>In ChemStack, managers and team leaders have the ability to assign tasks to anyone and get notified. This ensures a smooth and
-            efficient laboratory operation.
-          </p>
+          <h1 className="font-semibold text-lg uppercase tracking-wide text-blue1 mb-2">FAQs</h1>
+          <Accordion/>
         </div>
       </div>
     </div>
