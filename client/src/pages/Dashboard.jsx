@@ -4,13 +4,13 @@ import { DashboardCard } from '../components';
 
 function Dashboard() {
   return (
-    <div className="w-full  p-2   ">
+    <div className="w-full p-2">
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 justify-between gap-2 ">
         <DashboardCard bg="bg-sky-500" title="Total Chemicals" icon={<FlaskIcon />} />
         <DashboardCard bg="bg-slate-500" title="Chemicals Running Low" query="low-amount" icon={<DropIcon />} />
         <DashboardCard bg="bg-slate-700" title="Out of Stock" query="out-of-stock" icon={<OutOfStockIcon />} />
-        <DashboardCard bg="bg-sky-800" title="Chemicals Near Expiry" query="near-expired" icon={<ExpiredIcon />} />
+        <DashboardCard bg="bg-blue1" title="Chemicals Near Expiry" query="near-expired" icon={<ExpiredIcon />} />
         <DashboardCard bg="bg-neutral-500" title="Expired Chemicals" query="expired" icon={<ExpiredChemical />} />
       </div>
 
