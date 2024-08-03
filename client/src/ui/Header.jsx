@@ -25,11 +25,9 @@ function Header() {
       case 'manager':
         return '/manager/profile';
       case 'chemist':
-        return '/chemist-profile';
-      case 'purchacer':
-        return '/purchacer-profile';
+        return '/chemist/profile';
       case 'tl':
-        return '/tl-profile';
+        return '/tl/profile';
       default:
         return '/';
     }

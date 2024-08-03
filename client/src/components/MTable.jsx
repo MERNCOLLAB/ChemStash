@@ -1,14 +1,20 @@
 import MUIDataTable from 'mui-datatables';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 import Button from './Button';
 import ToastProvider from '../configs/ToastProvider';
 import useGetChemical from '../api/chemical/useGetChemical';
 
 const CustomToolbar = ({ handleAdd }) => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
+  <>
+    {  currentUser.role === 'manager' || currentUser.role === 'tl' ?  
     <Button variant="primary" onClick={handleAdd}>
       Add chemical
-    </Button>
+    </Button> 
+  : null}
+  </>
   );
 };
 
@@ -39,7 +45,7 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
 
               color: '#94A3B8',
               fontSize: '12px',
-              border: '1px solid #E3E7EF',
+              // border: '1px solid #E3E7EF',
             },
             footer: {
               padding: '8px',
