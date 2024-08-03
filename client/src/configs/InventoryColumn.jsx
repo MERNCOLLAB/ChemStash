@@ -1,4 +1,4 @@
-import { GoGear } from 'react-icons/go';
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiEdit } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
@@ -116,7 +116,7 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
       customBodyRender: (value) => (
         <div className="dropdown dropdown-end ">
           <div tabIndex={0} role="button" className="btn btn-sm  border-none bg-white0 hover:bg-gray0 ">
-            <GoGear />
+            <BsThreeDotsVertical />
           </div>
           <ul tabIndex={0} className="dropdown-content z-[1] menu   shadow bg-white0 rounded-box w-52">
             <li className="flex gap-2 hover:bg-gray0">
@@ -131,35 +131,37 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
                 <span>Consume </span>
               </p>
             </li>
-            <li className="flex gap-2 hover:bg-gray0">
-              <p
-                onClick={() => {
-                  handleUpdate(value);
-                }}
-              >
-                <span>
-                  <CiEdit />
-                </span>
-                <span>Edit </span>
-              </p>
-            </li>
             {currentUser.role === 'chemist' ? null : (
+            <>
               <li className="flex gap-2 hover:bg-gray0">
                 <p
-                  onClick={
-                    currentUser.role === 'chemist'
-                      ? null
-                      : () => {
-                          handleDelete(value);
-                        }
-                  }
+                  onClick={() => {
+                    handleUpdate(value);
+                  }}
                 >
                   <span>
-                    <MdDeleteOutline />
+                    <CiEdit />
                   </span>
-                  <span>Delete</span>
+                  <span>Edit </span>
                 </p>
               </li>
+              <li className="flex gap-2 hover:bg-gray0">
+                  <p
+                    onClick={
+                      currentUser.role === 'chemist'
+                        ? null
+                        : () => {
+                            handleDelete(value);
+                          }
+                    }
+                  >
+                    <span>
+                      <MdDeleteOutline />
+                    </span>
+                    <span>Delete</span>
+                  </p>
+                </li>
+              </>
             )}
           </ul>
         </div>

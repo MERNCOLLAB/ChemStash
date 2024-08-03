@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import useGetChemical from '../api/chemical/useGetChemical';
 import Drawer from '../ui/Drawer';
 import Button from './Button';
+import FormHeader from './FormHeader';
 
 const DashboardCard = ({ query, title, icon, bg }) => {
   const { lists, loading, error, getChemicalList } = useGetChemical(query);
@@ -37,8 +38,11 @@ const DashboardCard = ({ query, title, icon, bg }) => {
 
       <Drawer isOpen={isDrawerOpen} onClose={handleDrawerToggle}>
         <div className={`bg-white0 h-screen min-h-full z-50 text-gray2 p-7 max-w-lg w-full`}>
-          <h1 className="text-md font-semibold">{title}</h1>
-          <hr className="bg-gray1 my-5" />
+          <FormHeader title={title}/>
+          <div className="grid grid-cols-2 items-center align-middle mb-2">
+              <p className='font-semibold'>Chemical Name</p>
+              <p className='text-center'>No. of Supply</p>
+          </div>
           {lists.map((chemical) => (
             <div key={chemical._id} className="grid grid-cols-2  items-center align-middle">
               <div className="text-sm font-semibold ">{chemical.name}</div>
