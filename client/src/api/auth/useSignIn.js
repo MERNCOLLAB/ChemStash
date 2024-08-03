@@ -19,6 +19,7 @@ const useSignIn = () => {
             
             });
             if(!res.ok){
+                dispatch(signInFailure());
                 setToastMessage('Failed to sign in');
                 setToastType('error');
                 return;
@@ -33,8 +34,7 @@ const useSignIn = () => {
             dispatch(signInSuccess(data));
             if (data.role) {
               navigate(`/${data.role}/inventory`);
-            } else {
-            }
+            } 
 
             setToastMessage('Logged In. Welcome to Chemstack');
             setToastType('success');
