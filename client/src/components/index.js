@@ -13,6 +13,7 @@ import CustomSelect from './CustomSelect';
 import TextArea from './TextArea';
 import FeatureCards from './FeatureCards';
 import Accordion from './Accordion';
+import SearchInput from './SearchInput';
 
 export {
   Button,
@@ -29,5 +30,6 @@ export {
   CustomSelect,
   TextArea,
   FeatureCards,
-  Accordion
+  Accordion,
+  SearchInput
 };
