@@ -13,7 +13,7 @@ function AppLayout() {
         <div className="sticky top-[80px]  h-screen bg-white0 max-h-[calc(100vh-82px)] w-[200px] py-7 px-4  border">
           <LeftNavbar />
         </div>
-        <div className="  overflow-y-scroll no-scrollbar bg-white1 ">
+        <div className="  overflow-y-scroll no-scrollbar bg-white1 max-h-[calc(100vh-82px)] ">
           <Outlet />
         </div>
       </div>
