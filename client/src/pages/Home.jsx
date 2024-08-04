@@ -25,7 +25,7 @@ const Home = () => {
   //   backgroundRepeat: 'no-repeat',
   // };
   return (
-    <div className="h-screen overflow-y-scroll">
+    <div className="  ">
       <div className=" grid grid-cols-1 md:grid-cols-3 items-center  z-20  md:h-[761px] overflow-hidden relative ">
         <div className="bg-white1 h-full items-center justify-center flex order-3 md:order-1">
           <img src={boxes} alt="" />
@@ -46,7 +46,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="w-full h-full md:order-3 order-2">
+        <div className="w-full h-full  md:order-3 order-2">
           <svg width="100%" height="100%" viewBox="0 0 623 662" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               fill-rule="evenodd"
