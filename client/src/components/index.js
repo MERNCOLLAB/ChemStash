@@ -14,6 +14,7 @@ import TextArea from './TextArea';
 import FeatureCards from './FeatureCards';
 import Accordion from './Accordion';
 import SearchInput from './SearchInput';
+import MarqueeBackground from './MarqueeBackground';
 
 export {
   Button,
@@ -31,5 +32,6 @@ export {
   TextArea,
   FeatureCards,
   Accordion,
-  SearchInput
+  SearchInput,
+  MarqueeBackground
 };
