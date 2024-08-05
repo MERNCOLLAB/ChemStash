@@ -29,6 +29,13 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         mode: 'light',
       },
       components: {
+        MuiTable:{
+          styleOverrides:{
+            root:{
+              width:'100vw',
+            }
+          }
+        },
         MuiTableCell: {
           styleOverrides: {
             root: {
