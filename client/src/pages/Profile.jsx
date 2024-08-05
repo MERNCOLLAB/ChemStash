@@ -1,119 +1,36 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import { app } from '../firebase';
-import { useDispatch } from 'react-redux';
-import {
-  updateUserStart,
-  updateUserSuccess,
-  updateUserFailure,
-  deleteUserStart,
-  deleteUserSuccess,
-  deleteUserFailure,
-  signOut,
-} from '../redux/user/userSlice';
 import { Button, Input } from '../components';
+import useUpdateProfile from '../api/profile/useUpdateProfile';
+import useDeleteProfile from '../api/profile/useDeleteProfile';
+import useSignOut from '../api/auth/useSignOut';
+import useHandleProfile from '../hooks/profile/useHandleProfile';
 
 function Profile() {
-  const dispatch = useDispatch();
-  const fileRef = useRef(null);
-  const [image, setImage] = useState(undefined);
-  const [imagePercent, setImagePercent] = useState(0);
-  const [imageError, setImageError] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [updateSuccess, setUpdateSucess] = useState(false);
+  const {fileRef, imagePercent, imageError, formData, handleDataChange, handleChangeImage} = useHandleProfile();
+  const {updateProfile, updateSuccess} = useUpdateProfile();
+  const {deleteProfile} = useDeleteProfile();
+  const {signOut} = useSignOut();
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (image) {
-      handleFileUpload(image);
-    }
-  }, [image]);
-  const handleFileUpload = async (image) => {
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + image.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImagePercent(Math.round(progress));
-      },
-      (error) => {
-        setImageError(true);
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, profilePicture: downloadURL })
-        );
-      }
-    );
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
+  const currentUserId = currentUser._id;
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(updateUserFailure(data));
-        return;
-      }
-
-      dispatch(updateUserSuccess(data));
-      setUpdateSucess(true);
-    } catch (error) {
-      dispatch(updateUserFailure(error));
-    }
+    await updateProfile(formData, currentUserId);
   };
 
   const handleDeleteAccount = async () => {
-    try {
-      dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      dispatch(deleteUserSuccess(data));
-      if (data.success === false) {
-        return;
-      }
-    } catch (error) {
-      dispatch(deleteUserFailure(error));
-    }
+    await deleteProfile(currentUserId);
   };
 
-  const handleSignout = async () => {
-    try {
-      await fetch('/api/auth/signout');
-      dispatch(signOut());
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSignout = () => {
+    signOut();
   };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-bold my-7">Profile</h1>
       <form onSubmit={handleSubmit} action="" className="flex flex-col gap-4">
-        <input type="file" ref={fileRef} hidden accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+        <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChangeImage} />
         <div onClick={() => fileRef.current.click()} className="group relative mx-auto">
           <img
             className="h-24 w-24 group-hover:opacity-20 self-center cursor-pointer rounded-full object-cover"
@@ -141,17 +58,23 @@ function Profile() {
           type="text"
           placeholder="Username"
           defaultValue={currentUser.username}
-          onChange={handleChange}
+          onChange={handleDataChange}
         />
 
-        <Input id="email" type="email" placeholder="Email" defaultValue={currentUser.email} onChange={handleChange} />
+        <Input 
+          id="email" 
+          type="email" 
+          placeholder="Email" 
+          defaultValue={currentUser.email} 
+          onChange={handleDataChange} 
+        />
 
         <Input
           id="password"
           type="password"
           placeholder="Password"
           defaultValue={currentUser.password}
-          onChange={handleChange}
+          onChange={handleDataChange}
         />
 
         <Button variant="primary" loading={loading}>
