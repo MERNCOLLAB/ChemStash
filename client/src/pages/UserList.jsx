@@ -56,7 +56,7 @@ const UserList = () => {
               {searchUser.map((member) => (
                 <div className="card card-compact bg-base-100 shadow-md w-full" key={member._id}>
                   <figure>
-                    <img className="" src={member.profilePicture} />
+                    <img className="width-[200px] height-[250px]" src={member.profilePicture} />
                   </figure>
                   <div className="card-body">
                     <div className="grid">
