@@ -1,4 +1,8 @@
 import Hero from "./Hero";
-import Features from "./Features";
+import SectionLayout from "./SectionLayout";
+import { featuresContent } from "./PageContent";
+import { aboutContent } from "./PageContent";
+import { faqsContent } from "./PageContent";
+import { contactUsContent } from "./PageContent";
 
-export {Hero,Features}
+export {Hero, SectionLayout, featuresContent, aboutContent, faqsContent, contactUsContent};

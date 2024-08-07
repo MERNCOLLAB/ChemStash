@@ -50,7 +50,7 @@ const Hero = ({handleGetStarted}) => {
             filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
             >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
             <feColorMatrix
                 in="SourceAlpha"
@@ -73,7 +73,7 @@ const Hero = ({handleGetStarted}) => {
             filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
             >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
             <feColorMatrix
                 in="SourceAlpha"
@@ -95,8 +95,8 @@ const Hero = ({handleGetStarted}) => {
             y2="739"
             gradientUnits="userSpaceOnUse"
             >
-            <stop stop-color="#00D9FF" stop-opacity="0.2" />
-            <stop offset="1" stop-color="#03A8C6" />
+            <stop stopColor="#00D9FF" stopOpacity="0.2" />
+            <stop offset="1" stopColor="#03A8C6" />
             </linearGradient>
             <linearGradient
             id="paint1_linear_680_1487"
@@ -106,8 +106,8 @@ const Hero = ({handleGetStarted}) => {
             y2="845.5"
             gradientUnits="userSpaceOnUse"
             >
-            <stop stop-color="#00D9FF" stop-opacity="0.5" />
-            <stop offset="1" stop-color="#03A8C6" />
+            <stop stopColor="#00D9FF" stopOpacity="0.5" />
+            <stop offset="1" stopColor="#03A8C6" />
             </linearGradient>
         </defs>
         </svg>

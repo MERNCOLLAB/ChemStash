@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { Input, TextArea } from '../components';
+// import { Input, TextArea } from '../components';
 import { useSelector } from 'react-redux';
 import { Hero } from './landing-page';
-import features from '../assets/features.png';
-import about from '../assets/about.png';
-import faq from '../assets/faq.png';
-import contact from '../assets/contact.png';
+import featuresBg from '../assets/features.png';
+import aboutBg from '../assets/about.png';
+import faqBg from '../assets/faq.png';
+import contactBg from '../assets/contact.png';
 
 // import boxes from '../assets/boxes.png';
+import {SectionLayout} from './landing-page';
+import { featuresContent, aboutContent, faqsContent, contactUsContent } from './landing-page';
 const Home = () => {
   const navigate = useNavigate();
 
@@ -29,90 +31,23 @@ const Home = () => {
         <h1 className="my-auto pl-2">Wait for Design</h1>
       </div>
 
-      <div className=" grid grid-cols-1 md:grid-cols-2 items-center  z-20 overflow-hidden relative ">
+      <div className=" grid grid-cols-1 md:grid-cols-2 items-center z-20 overflow-hidden relative ">
         <Hero handleGetStarted={handleGetStarted} />
       </div>
-      <div className="w-full h-full mx-auto">
-        <div className=" flex relative w-full justify-end">
-          <div className="left-0 top-1/2 absolute">
-            <h1 className="font-bold">Key Features</h1>
-            <ul>
-              <li>Inventory management is crucial for good laboratory practices</li>
-              <li>Boost productivity by tracking chemicals with ease</li>
-              <li>Interactive dashboard to visualize the status of the chemical supply</li>
-              <li>Ensure safety by handling chemicals with the safety standards</li>
-            </ul>
-          </div>
-          <div className="mt-2">
-            <img src={features} alt="features-img"/>
-          </div>
-        </div>
-      </div>
 
-      <div className=" w-full h-full mx-auto   ">
-        <div className=" flex relative w-full justify-end">
-          <div className="left-0 top-1/2 absolute">
-            <h1 className="font-bold">About</h1>
-            <p className="max-w-2xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque dolores vitae maiores sit odit qui maxime
-              cum mollitia enim nihil, fuga distinctio accusamus harum pariatur alias dolorem blanditiis quaerat
-              impedit!
-            </p>
-          </div>
-          <div className="">
-            <img src={about} alt="" className="  " />
-          </div>
-        </div>
-      </div>
-      <div className=" w-full h-full mx-auto   ">
-        <div className=" flex relative w-full justify-end">
-          <div className="left-0 top-1/2 absolute grid grid-cols-2 gap-4">
-            <h1 className="font-bold col-span-2">FAQs</h1>
+      <SectionLayout title="Key Features" pageContent={featuresContent} imagePath={featuresBg} />
 
-            <div className="max-w-2xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque dolores vitae maiores sit odit qui maxime
-              cum mollitia enim nihil, fuga distinctio accusamus harum pariatur alias dolorem blanditiis quaerat
-              impedit!
-            </div>
+      <SectionLayout title="About Us" pageContent={aboutContent} imagePath={aboutBg} />
 
-            <div className="max-w-2xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque dolores vitae maiores sit odit qui maxime
-              cum mollitia enim nihil, fuga distinctio accusamus harum pariatur alias dolorem blanditiis quaerat
-              impedit!
-            </div>
-            <div className="max-w-2xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque dolores vitae maiores sit odit qui maxime
-              cum mollitia enim nihil, fuga distinctio accusamus harum pariatur alias dolorem blanditiis quaerat
-              impedit!
-            </div>
-            <div className="max-w-2xl">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque dolores vitae maiores sit odit qui maxime
-              cum mollitia enim nihil, fuga distinctio accusamus harum pariatur alias dolorem blanditiis quaerat
-              impedit!
-            </div>
-          </div>
-          <div className="">
-            <img src={faq} alt="" className="  " />
-          </div>
-        </div>
 
-        <div className=" w-full h-full mx-auto   ">
-          <div className=" flex relative w-full justify-end">
-            <div className="left-0 top-1/2 absolute">
-              <h1 className="font-bold">Contact</h1>
-              <Input label="Name" />
-              <Input label="Email" />
-              <TextArea className="make a prop change bg or something better" />
-            </div>
-            <div className="">
-              <img src={contact} alt="" className="  " />
-            </div>
-          </div>
-        </div>
+      <SectionLayout title="FAQs" pageContent={faqsContent} imagePath={faqBg} 
+                    gridClassName="grid grid-cols-2 gap-4" gridSpan="col-span-2" />
+
+      <SectionLayout title="Contact Us" pageContent={contactUsContent} imagePath={contactBg} />
 
         <h1>Implement Footer</h1>
-      </div>
     </div>
+
   );
 };
 
