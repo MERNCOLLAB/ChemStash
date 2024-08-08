@@ -28,9 +28,48 @@ const Home = () => {
 
   return (
     <div>
-      <div className="  bg-slate-300 flex item center justify-center">
-        <div className="max-w-7xl border w-full p-4">
-          <h1 className=" pl-2 ">Wait for Design</h1>
+      <div className="bg-white0 flex item center justify-center md:p-4">
+        <div className="navbar bg-base-100 md:hidden p-0">
+          <div className="navbar-start">
+            <div className="dropdown">
+              <div tabIndex="0" role="button" className="btn btn-ghost btn-circle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+              </div>
+              <ul
+                tabIndex="0"
+                className="menu menu-sm dropdown-content w-screen  z-[50] bg-gray2 mt-3  p-2 shadow text-white1"
+              >
+                <li>Home</li>
+                <li>Features</li>
+                <li>About</li>
+                <li>Faqs</li>
+                <li>Contact</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-7xl  w-full   grid-cols-2 px-4 hidden md:grid">
+          <div className="flex items-center font-semibold text-lg ">
+            <img src={Logo} alt="" className="h-10 w-10" />
+            <div>ChemStack</div>
+          </div>
+
+          <ul className="flex justify-end gap-4 items-center">
+            <li>Home</li>
+            <li>Features</li>
+            <li>About</li>
+            <li>Faqs</li>
+            <li>Contact</li>
+          </ul>
         </div>
       </div>
 
