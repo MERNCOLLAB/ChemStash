@@ -64,11 +64,11 @@ const Home = () => {
           </div>
 
           <ul className="flex justify-end gap-4 items-center">
-            <li>Home</li>
-            <li>Features</li>
-            <li>About</li>
-            <li>Faqs</li>
-            <li>Contact</li>
+            <li className="text-hover-link cursor-pointer">Home</li>
+            <li className="text-hover-link cursor-pointer">Features</li>
+            <li className="text-hover-link cursor-pointer">About</li>
+            <li className="text-hover-link cursor-pointer">FAQs</li>
+            <li className="text-hover-link cursor-pointer">Contact</li>
           </ul>
         </div>
       </div>
@@ -80,7 +80,7 @@ const Home = () => {
 
         <SectionLayout title="Key Features" pageContent={featuresContent} imagePath={featuresBg} />
 
-        <SectionLayout title="About Us" pageContent={aboutContent} imagePath={aboutBg} />
+        <SectionLayout title="About Chemstack" pageContent={aboutContent} imagePath={aboutBg} />
 
         <SectionLayout
           title="FAQs"
@@ -98,7 +98,7 @@ const Home = () => {
             <div className="col-span-2">
               <img src={Logo} alt="" className="h-14 w-14" />
               <strong className="text-2xl">Managing chemicals made easy</strong>
-              <p>Kevin, Bryan</p>
+              <p>ChemStack Inc.</p>
             </div>
             <div className="grid">
               <strong> Get involved</strong>
@@ -122,7 +122,7 @@ const Home = () => {
         </div>
         <div className="  bg-blue1 flex item center justify-center text-white0">
           <div className=" w-full grid md:grid-cols-2 p-2 md:p-4">
-            <div>&#169; Kevin, Bryan Inc, All rights reserved.</div>
+            <div>&#169; Chemstack Inc, All rights reserved.</div>
             <div className="flex md:justify-end gap-4">
               <p>Terms of Service </p>
               <p>Privacy </p>

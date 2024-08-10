@@ -1,47 +1,54 @@
-import { PiFlaskFill } from 'react-icons/pi';
-import { IoTimeSharp } from 'react-icons/io5';
-import { GoGraph } from 'react-icons/go';
-import { AiFillSafetyCertificate } from 'react-icons/ai';
-import { Input, Button, FeatureCards, TextArea } from '../../components';
+import { Input, Button, TextArea, FormSubHeader } from '../../components';
 
 const featuresContent = (
-  <div className="grid grid-cols-4 gap-x-2 gap-y-8 justify-evenly items-center">
-    <FeatureCards
-      icon={<PiFlaskFill />}
-      text="Inventory management is crucial for"
-      highlightText="good laboratory practices"
-    />
-    <FeatureCards icon={<IoTimeSharp />} text="Boost productivity by" highlightText="tracking chemicals with ease" />
-    <FeatureCards
-      icon={<GoGraph />}
-      text="Interactive dashboard to"
-      highlightText="visualize the status of the chemical supply"
-    />
-    <FeatureCards
-      icon={<AiFillSafetyCertificate />}
-      text="Ensure safety by handling chemicals with the "
-      highlightText="safety standards"
-    />
+  <div className="grid  gap-x-2 gap-y-8 justify-evenly items-center">
+    <ul className="p-4 list-disc space-y-2 text-lg">
+      <li>
+        Inventory management is crucial for <span className="text-gray2 font-semibold">good laboratory practices</span>
+      </li>
+      <li>
+        <span className="text-gray2 font-semibold">Boost productivity</span> by tracking chemicals with ease
+      </li>
+      <li>
+        <span className="text-gray2 font-semibold">Interactive dashboard</span> to visualize the status of the chemical
+        supply
+      </li>
+      <li>
+        Ensure safety by handling chemicals with the <span className="text-gray2 font-semibold">safety standards</span>
+      </li>
+    </ul>
   </div>
 );
 
 const aboutContent = (
-  <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-4 max-w-3xl mx-auto">
-    <div className="grid grid-cols-2 gap-0.5 items-center">
-      <img src="https://avatar.iran.liara.run/public/boy?username=Kevin" className="rounded-full size-40" alt="" />
-      <div className="p-4">
-        <h1 className="my-2 font-semibold">User Name 1</h1>
-        <p className="italic">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, facilis?</p>
-      </div>
+  <div className="max-w-3xl mx-auto">
+    <div className="mb-4">
+      <h1 className="text-lg tracking-wide font-semibold text-gray2">
+        Simplifying chemical tracking & enhancing lab productivity
+      </h1>
+      <p className="text-balance my-2">
+        ChemStack is a web application designed as a user-friendly and robust platform for the assistance in your
+        chemical inventory management
+      </p>
     </div>
+    <h1 className="my-4 font-semibold text-lg text-gray2">Founders</h1>
+    <section className="grid grid-cols-2 items-center">
+      <div className="flex flex-col gap-0.5 items-center">
+        <img src="https://avatar.iran.liara.run/public/boy?username=Bryan" className="rounded-full size-40" alt="" />
+        <div className="p-4">
+          <h1 className="my-1 font-semibold">Bryan Castillo</h1>
+          <p className="italic">Engineer & Chemist</p>
+        </div>
+      </div>
 
-    <div className="grid grid-cols-2 gap-0.5 items-center">
-      <img src="https://avatar.iran.liara.run/public/boy?username=Bryan" className="rounded-full size-40" alt="" />
-      <div className="p-4">
-        <h1 className="my-2 font-semibold">User Name 2</h1>
-        <p className="italic">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, facilis?</p>
+      <div className="flex flex-col gap-0.5 items-center">
+        <img src="https://avatar.iran.liara.run/public/boy?username=Kevin" className="rounded-full size-40" alt="" />
+        <div className="p-4">
+          <h1 className="my-1 font-semibold">Kevin Divinagracia</h1>
+          <p className="italic">UI/UX Designer & IT</p>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 );
 
@@ -83,6 +90,7 @@ const faqsContent = (
 
 const contactUsContent = (
   <form>
+    <FormSubHeader title="Reach out our team!" />
     <div className="grid md:grid-cols-2 gap-4 my-2">
       <Input label="Name" id="name" type="text" validation="Enter your name" />
       <Input label="Email" id="email" type="text" validation="Enter your email" />
