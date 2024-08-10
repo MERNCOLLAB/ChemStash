@@ -1,8 +1,10 @@
-import Hero from "./Hero";
-import SectionLayout from "./SectionLayout";
-import { featuresContent } from "./PageContent";
-import { aboutContent } from "./PageContent";
-import { faqsContent } from "./PageContent";
-import { contactUsContent } from "./PageContent";
+import Navbar from './Navbar';
+import Hero from './Hero';
+import Footer from './Footer';
+import SectionLayout from './SectionLayout';
+import { featuresContent } from './PageContent';
+import { aboutContent } from './PageContent';
+import { faqsContent } from './PageContent';
+import { contactUsContent } from './PageContent';
 
-export {Hero, SectionLayout, featuresContent, aboutContent, faqsContent, contactUsContent};
+export { Navbar, Hero, Footer, SectionLayout, featuresContent, aboutContent, faqsContent, contactUsContent };

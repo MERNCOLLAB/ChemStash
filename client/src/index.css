@@ -97,7 +97,7 @@ input[type='number'] {
 /* Navbar Hover Link */
 @layer utilities {
   .text-hover-link {
-    @apply text-gray2 leading-loose relative before:content-[''] 
+    @apply leading-loose relative before:content-[''] 
     before:w-0 before:h-0.5  before:absolute before:bottom-[-0.3rem] before:bg-blue1
     before:transition-[width] before:duration-[0.4s,left] before:delay-[0.4s] 
     before:rounded-sm before:left-[0.2] hover:before:w-full hover:before:left-0;
