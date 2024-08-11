@@ -14,7 +14,7 @@ import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 
 // UI
 import Drawer from '../ui/Drawer';
-import UpdateTask from '../ui/UpdateTask';
+import { UpdateTask, DeleteTask } from '../ui';
 
 // Column Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
@@ -26,7 +26,6 @@ import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 
 // Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
-import useDeleteTask from '../api/task/useDeleteTask';
 import useDrawer from '../hooks/board/useDrawer';
 import ToastProvider from '../configs/ToastProvider';
 import UpdateColumn from '../ui/UpdateColumn';
@@ -34,7 +33,8 @@ import UpdateColumn from '../ui/UpdateColumn';
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const { openDrawer, taskItem, openTask, handleDrawerClose, drawerType, columnItem, openColumn } = useDrawer();
+  const { openDrawer, taskItem, openTask, handleDrawerClose, handleDeleteTask, drawerType, columnItem, openColumn } =
+    useDrawer();
 
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
@@ -44,7 +44,6 @@ function Board() {
 
   // Tasks
   const { createTask, toastMessage, toastType, clearToast } = useCreateTask();
-  const { deleteTask } = useDeleteTask();
   const [activeTask, setActiveTask] = useState(null);
 
   const { currentUser } = useSelector((state) => state.user);
@@ -99,7 +98,7 @@ function Board() {
                     openTask={openTask}
                     open={openDrawer}
                     tasks={tasks.filter((task) => task.columnId === col.id)}
-                    deleteTask={deleteTask}
+                    handleDeleteTask={handleDeleteTask}
                   />
                 ))}
               </SortableContext>
@@ -128,20 +127,21 @@ function Board() {
                   deleteColumn={deleteColumn}
                   createTask={createTask}
                   currentUser={currentUser}
-                  deleteTask={deleteTask}
+                  handleDeleteTask={handleDeleteTask}
                   openColumn={openColumn}
                   openTask={openTask}
                   open={openDrawer}
                   tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
                 />
               )}
-              {activeTask && <TaskCard task={activeTask} deleteTask={deleteTask} />}
+              {activeTask && <TaskCard task={activeTask} handleDeleteTask={handleDeleteTask} />}
             </DragOverlay>,
             document.body
           )}
         </DndContext>
       </div>
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
+        {drawerType === 'deleteTask' && <DeleteTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />}
         {drawerType === 'updateTask' && <UpdateTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />}
         {drawerType === 'updateColumn' && (
           <UpdateColumn
