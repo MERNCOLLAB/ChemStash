@@ -6,8 +6,18 @@ import { IoAdd } from 'react-icons/io5';
 import TaskCard from '../ui/TaskCard';
 
 function ColumnContainer(props) {
-  const { openDrawer, openColumn, open, column, deleteColumn, createTask, tasks, deleteTask, currentUser, openTask } =
-    props;
+  const {
+    openDrawer,
+    openColumn,
+    open,
+    column,
+    deleteColumn,
+    createTask,
+    tasks,
+    handleDeleteTask,
+    currentUser,
+    openTask,
+  } = props;
   const [editMode, setEditMode] = useState(false);
 
   const tasksIds = useMemo(() => {
@@ -93,7 +103,7 @@ function ColumnContainer(props) {
             <TaskCard
               key={task.id}
               task={task}
-              deleteTask={deleteTask}
+              handleDeleteTask={handleDeleteTask}
               open={open}
               openTask={openTask}
               openDrawer={openDrawer}

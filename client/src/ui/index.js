@@ -15,6 +15,8 @@ import SupplyBarChart from './SupplyBarChart';
 import NotificationList from './NotificationList';
 import NotificationLayout from './NotificationLayout';
 import ConsumeChemicalForm from './ConsumeChemicalForm';
+import UpdateTask from './UpdateTask';
+import DeleteTask from './DeleteTask';
 
 export {
   AppLayout,
@@ -34,4 +36,6 @@ export {
   NotificationList,
   NotificationLayout,
   ConsumeChemicalForm,
+  UpdateTask,
+  DeleteTask,
 };
