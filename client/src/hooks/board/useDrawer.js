@@ -20,9 +20,14 @@ const useDrawer = () => {
     setTaskItem(task);
   };
 
-  const openColumn = (column) => {
+  const openColumn = (columnItem) => {
     handleDrawerOpen('updateColumn');
-    setColumnItem(column);
+    setColumnItem(columnItem);
+  };
+
+  const handleDeleteColumn = (columnItem) => {
+    handleDrawerOpen('deleteColumn');
+    setColumnItem(columnItem);
   };
 
   const handleDrawerOpen = (type) => {
@@ -45,8 +50,9 @@ const useDrawer = () => {
     setOpenDrawer,
     taskItem,
     openTask,
-    openColumn,
     handleDeleteTask,
+    openColumn,
+    handleDeleteColumn,
     columnItem,
     handleDrawerClose,
     drawerType,
