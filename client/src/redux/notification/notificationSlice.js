@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const initialState = {
   user: '',
-  socket: io('http://localhost:3000'),
+  socket: io('https://mern-with-auth-rba5.onrender.com/'),
 };
 
 const notificationSlice = createSlice({
