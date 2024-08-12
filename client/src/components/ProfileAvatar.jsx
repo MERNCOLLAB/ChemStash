@@ -6,7 +6,7 @@ const ProfileAvatar = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto md:mx-20">
       <input type="file" ref={fileRef} hidden accept="image/*" onChange={handleChangeImage} />
       <div onClick={() => fileRef.current.click()} className="group relative">
         <img

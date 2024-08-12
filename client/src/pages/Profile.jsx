@@ -30,11 +30,11 @@ function Profile() {
   return (
     <div className="p-3 max-w-full">
       <h1 className="text-3xl text-left font-bold my-7">ChemStack Profile</h1>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 items-center">
+      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-start">
         <ProfileAvatar />
         <ProfileForm handleDataChange={handleDataChange} />
       </form>
-      <div className="p-6 flex justify-end items-center gap-2">
+      <div className="p-6 flex justify-end items-center mt-4 md:mr-20 gap-2">
         <Button variant="secondary" onClick={handleDeleteAccount}>
           Delete Account
         </Button>
