@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 const ProfileForm = (handleDataChange) => {
   const { currentUser, loading } = useSelector((state) => state.user);
   return (
-    <div className="mt-4 md:mt-0 space-y-2 max-w-2xl mx-auto">
+    <div className="mt-8 md:mt-0 space-y-2 px-10">
       <FormHeader title="Account Information" />
       <Input
         id="username"
