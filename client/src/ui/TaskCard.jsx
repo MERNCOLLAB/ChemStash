@@ -72,7 +72,7 @@ function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
       <div
         ref={setNodeRef}
         style={style}
-        className="group opacity-50 relative p-2.5 h-[200px] min-h-[200px] items-center flex text-left border-2 border-indigo-500 cursor-grab"
+        className="group opacity-50 relative p-2.5 h-[200px] min-h-[200px] items-center flex text-left border-2 bg-gray2 cursor-grab"
       />
     );
   }

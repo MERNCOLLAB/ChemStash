@@ -8,13 +8,13 @@ import useGetChemical from '../api/chemical/useGetChemical';
 const CustomToolbar = ({ handleAdd }) => {
   const { currentUser } = useSelector((state) => state.user);
   return (
-  <>
-    {  currentUser.role === 'manager' || currentUser.role === 'tl' ?  
-    <Button variant="primary" onClick={handleAdd}>
-      Add chemical
-    </Button> 
-  : null}
-  </>
+    <>
+      {currentUser.role === 'manager' || currentUser.role === 'tl' ? (
+        <Button variant="primary" onClick={handleAdd}>
+          Add chemical
+        </Button>
+      ) : null}
+    </>
   );
 };
 
@@ -29,13 +29,13 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
         mode: 'light',
       },
       components: {
-        MuiTable:{
-          styleOverrides:{
-            root:{
-              width:'100vw',
-            }
-          }
-        },
+        // MuiTable: {
+        //   styleOverrides: {
+        //     root: {
+        //       width: '100vw',
+        //     },
+        //   },
+        // },
         MuiTableCell: {
           styleOverrides: {
             root: {
@@ -44,12 +44,12 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
 
             head: {
               color: '#F8FAFC',
+              padding: '4px 8px',
             },
             body: {
               textAlign: 'left',
               padding: '4px 8px',
               backgroundColor: '#F8FAFC',
-
               color: '#94A3B8',
               fontSize: '12px',
               // border: '1px solid #E3E7EF',
@@ -85,6 +85,7 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
               color: '#64748B',
               fontSize: '12px',
               fontFamily: 'Poppins',
+              padding: '4px 8px',
             },
           },
         },
@@ -152,7 +153,7 @@ const MTable = ({ data, columns, options, title, handleAdd }) => {
       <div className=" p-2 ">
         <h1 className="font-semibold text-xl pb-2">Chemical Inventory Table</h1>
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
-        <MUIDataTable title={title} data={data} columns={columns} options={customOptions} />
+        <MUIDataTable className="mtable" title={title} data={data} columns={columns} options={customOptions} />
       </div>
     </ThemeProvider>
   );

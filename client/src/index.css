@@ -103,3 +103,8 @@ input[type='number'] {
     before:rounded-sm before:left-[0.2] hover:before:w-full hover:before:left-0;
   }
 }
+
+/* MTable */
+.mtable {
+  width: calc(100vw-200px);
+}

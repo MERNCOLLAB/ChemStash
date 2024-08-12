@@ -1,4 +1,4 @@
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { CiEdit } from 'react-icons/ci';
 import { CiCircleMinus } from 'react-icons/ci';
 import { GoLink } from 'react-icons/go';
@@ -40,13 +40,14 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
     name: 'location',
     label: 'Location',
     options: {
-      customBodyRender: (value) => <p className={`px-1.5 py-[3px] rounded-lg ${getTagClass(value)}`}>{value}</p>,
+      customBodyRender: (value) => <p className={`px-1.5 py-[3px] w-fit rounded-lg ${getTagClass(value)}`}>{value}</p>,
     },
   },
   {
     name: 'brand',
     label: 'Brand',
     options: {
+      display: false,
       filter: false,
     },
   },
@@ -87,6 +88,9 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
   {
     name: 'hazardClassification',
     label: 'Hazards',
+    options: {
+      display: false,
+    },
   },
   {
     name: 'sds',
@@ -132,20 +136,20 @@ export const inventoryColumns = (currentUser, parseInput, handleConsume, handleU
               </p>
             </li>
             {currentUser.role === 'chemist' ? null : (
-            <>
-              <li className="flex gap-2 hover:bg-gray0">
-                <p
-                  onClick={() => {
-                    handleUpdate(value);
-                  }}
-                >
-                  <span>
-                    <CiEdit />
-                  </span>
-                  <span>Edit </span>
-                </p>
-              </li>
-              <li className="flex gap-2 hover:bg-gray0">
+              <>
+                <li className="flex gap-2 hover:bg-gray0">
+                  <p
+                    onClick={() => {
+                      handleUpdate(value);
+                    }}
+                  >
+                    <span>
+                      <CiEdit />
+                    </span>
+                    <span>Edit </span>
+                  </p>
+                </li>
+                <li className="flex gap-2 hover:bg-gray0">
                   <p
                     onClick={
                       currentUser.role === 'chemist'
