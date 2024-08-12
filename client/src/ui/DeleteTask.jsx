@@ -11,7 +11,7 @@ const DeleteTask = ({ taskitem, handleDrawerClose }) => {
   };
 
   return (
-    <div className="bg-white0 w-[49%] min-w-fit min-h-full p-7">
+    <div className="bg-white0 w-[50%] min-h-full p-7">
       <form onSubmit={handleConfirmDelete} className="flex flex-col gap-2">
         <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <FormHeader title="Delete Task" />
@@ -19,7 +19,7 @@ const DeleteTask = ({ taskitem, handleDrawerClose }) => {
           Are you sure you want to delete <span className="font-semibold">{taskitem.content}</span>?
         </h1>
         <div className="flex flex-col my-2">
-          <div className="m-2">
+          <div className="w-full min-w-xl m-2">
             <h1 className="font-semibold">Description</h1>
             <p className="text-sm">{taskitem.desc}</p>
           </div>

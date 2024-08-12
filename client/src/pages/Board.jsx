@@ -22,7 +22,6 @@ import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/board/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
-import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 
 // Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
@@ -46,7 +45,6 @@ function Board() {
 
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
-  const { updateColumnContent } = useUpdateColumnContent();
   const [activeColumn, setActiveColumn] = useState(null);
 
   // Tasks
@@ -154,11 +152,7 @@ function Board() {
           <DeleteColumn columnItem={columnItem} handleDrawerClose={handleDrawerClose} />
         )}
         {drawerType === 'updateColumn' && (
-          <UpdateColumn
-            columnItem={columnItem}
-            updateColumn={updateColumnContent}
-            handleDrawerClose={handleDrawerClose}
-          />
+          <UpdateColumn columnItem={columnItem} handleDrawerClose={handleDrawerClose} />
         )}
       </Drawer>
     </>

@@ -7,9 +7,8 @@ import { FormHeader, Input, CustomSelect, FormContainer, Button, TextArea } from
 import ToastProvider from '../configs/ToastProvider';
 import { selectStyle } from '../helpers/selectStyle';
 
-
-const UpdateTask = ({ taskitem,  handleDrawerClose }) => {
-  const { updateTask, toastMessage, toastType, clearToast } = useUpdateTask();  
+const UpdateTask = ({ taskitem, handleDrawerClose }) => {
+  const { updateTask, toastMessage, toastType, clearToast } = useUpdateTask();
   const onUpdate = (id, update, date, selectedMembers, priority, desc) => {
     updateTask(id, update, date, selectedMembers, priority, desc);
   };
@@ -70,19 +69,19 @@ const UpdateTask = ({ taskitem,  handleDrawerClose }) => {
   );
 
   return (
-    <div className="bg-white0 min-w-fit min-h-full p-7">
+    <div className="bg-white0 min-w-[50%] min-h-full p-7">
       <form onSubmit={handleUpdate} className="flex flex-col gap-2">
-        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
+        <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
         <FormHeader title="Update Task" />
         <FormContainer gridColsClass="grid-cols-3">{taskInfoFirstRow}</FormContainer>
         <FormContainer gridColsClass="grid-cols-1">{taskInfoSecondRow}</FormContainer>
         <hr className="bg-gray1 my-4" />
-        <TextArea 
-        label="Task Description"
-        id="desc"
-        value={update.desc}
-        onChange={handleChange}
-        validation="Please enter the task description. Max 200 characters."
+        <TextArea
+          label="Task Description"
+          id="desc"
+          value={update.desc}
+          onChange={handleChange}
+          validation="Please enter the task description. Max 200 characters."
         />
 
         <hr className="bg-gray1 my-5" />
