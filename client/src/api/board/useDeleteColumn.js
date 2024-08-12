@@ -7,6 +7,9 @@ const useDeleteColumn = () => {
   const { boardTaskList } = useBoardTaskList();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
+
   const deleteColumn = async (id) => {
     try {
       setLoading(true);
@@ -15,6 +18,8 @@ const useDeleteColumn = () => {
       });
 
       if (!res.ok) {
+        setToastMessage('Failed to delete the column');
+        setToastType('error');
         throw new Error(data.message || 'Failed to delete column');
       }
 
@@ -22,13 +27,20 @@ const useDeleteColumn = () => {
 
       boardTaskList();
       boardColumnList();
+      setToastMessage('Column has been deledated');
+      setToastType('success');
     } catch (error) {
       setError(error.message || 'Failed to delete column');
     } finally {
       setLoading(false);
     }
   };
-  return { loading, error, deleteColumn };
+
+  const clearToast = () => {
+    setToastMessage(null);
+    setToastType(null);
+  };
+  return { loading, error, deleteColumn, toastMessage, toastType, clearToast };
 };
 
 export default useDeleteColumn;

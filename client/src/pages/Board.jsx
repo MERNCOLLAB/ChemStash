@@ -15,30 +15,37 @@ import useOnDragEnd from '../hooks/dragevents/useOnDragEnd';
 // UI
 import Drawer from '../ui/Drawer';
 import { UpdateTask, DeleteTask } from '../ui';
+import { UpdateColumn, DeleteColumn } from '../ui';
 
 // Column Hooks
 import useBoardColumnList from '../api/board/useBoardColumnList';
 import useBoardTaskList from '../api/board/useBoardTaskList';
 import useBoardSocketListeners from '../hooks/board/useBoardSocketListeners';
 import useCreateNewColumn from '../api/board/useCreateNewColumn';
-import useDeleteColumn from '../api/board/useDeleteColumn';
 import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 
 // Task Hooks
 import useCreateTask from '../api/task/useCreateTask';
 import useDrawer from '../hooks/board/useDrawer';
 import ToastProvider from '../configs/ToastProvider';
-import UpdateColumn from '../ui/UpdateColumn';
 
 function Board() {
   const { columns, setColumns, columnsId, boardColumnList } = useBoardColumnList();
   const { tasks, setTasks, boardTaskList } = useBoardTaskList();
-  const { openDrawer, taskItem, openTask, handleDrawerClose, handleDeleteTask, drawerType, columnItem, openColumn } =
-    useDrawer();
+  const {
+    openDrawer,
+    taskItem,
+    openTask,
+    handleDrawerClose,
+    handleDeleteTask,
+    handleDeleteColumn,
+    drawerType,
+    columnItem,
+    openColumn,
+  } = useDrawer();
 
   // Column
   const { createNewColumn } = useCreateNewColumn(columns);
-  const { deleteColumn } = useDeleteColumn();
   const { updateColumnContent } = useUpdateColumnContent();
   const [activeColumn, setActiveColumn] = useState(null);
 
@@ -92,7 +99,7 @@ function Board() {
                     column={col}
                     openDrawer={openDrawer}
                     currentUser={currentUser}
-                    deleteColumn={deleteColumn}
+                    handleDeleteColumn={handleDeleteColumn}
                     createTask={createTask}
                     openColumn={openColumn}
                     openTask={openTask}
@@ -116,7 +123,7 @@ function Board() {
                 </button>
               </div>
             )}
-            <div className="w-[24px] min-w-[24px] h-full border  border-transparent   block"></div>
+            <div className="w-[24px] min-w-[24px] h-full border  border-transparent   block" />
           </div>
 
           {createPortal(
@@ -124,7 +131,7 @@ function Board() {
               {activeColumn && (
                 <ColumnContainer
                   column={activeColumn}
-                  deleteColumn={deleteColumn}
+                  handleDeleteColumn={handleDeleteColumn}
                   createTask={createTask}
                   currentUser={currentUser}
                   handleDeleteTask={handleDeleteTask}
@@ -143,6 +150,9 @@ function Board() {
       <Drawer isOpen={openDrawer} onClose={handleDrawerClose}>
         {drawerType === 'deleteTask' && <DeleteTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />}
         {drawerType === 'updateTask' && <UpdateTask taskitem={taskItem} handleDrawerClose={handleDrawerClose} />}
+        {drawerType === 'deleteColumn' && (
+          <DeleteColumn columnItem={columnItem} handleDrawerClose={handleDrawerClose} />
+        )}
         {drawerType === 'updateColumn' && (
           <UpdateColumn
             columnItem={columnItem}

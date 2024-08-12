@@ -17,6 +17,8 @@ import NotificationLayout from './NotificationLayout';
 import ConsumeChemicalForm from './ConsumeChemicalForm';
 import UpdateTask from './UpdateTask';
 import DeleteTask from './DeleteTask';
+import UpdateColumn from './UpdateColumn';
+import DeleteColumn from './DeleteColumn';
 
 export {
   AppLayout,
@@ -38,4 +40,6 @@ export {
   ConsumeChemicalForm,
   UpdateTask,
   DeleteTask,
+  UpdateColumn,
+  DeleteColumn,
 };

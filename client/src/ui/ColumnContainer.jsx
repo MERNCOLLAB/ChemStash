@@ -11,15 +11,15 @@ function ColumnContainer(props) {
     openColumn,
     open,
     column,
-    deleteColumn,
+    handleDeleteColumn,
     createTask,
     tasks,
     handleDeleteTask,
     currentUser,
     openTask,
   } = props;
-  const [editMode, setEditMode] = useState(false);
 
+  const [editMode, setEditMode] = useState(false);
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);
@@ -75,9 +75,7 @@ function ColumnContainer(props) {
           </div>
           {currentUser.role === 'chemist' ? null : (
             <button
-              onClick={() => {
-                deleteColumn(column.id);
-              }}
+              onClick={() => handleDeleteColumn(column)}
               className="  :px-1 py-2 group-hover:stroke-white0 hover:stroke-white rounded-full "
             >
               <TrashIcon />
