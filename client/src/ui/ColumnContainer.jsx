@@ -48,7 +48,7 @@ function ColumnContainer(props) {
       <div
         ref={setNodeRef}
         style={style}
-        className="bg-columnBackGroundColor opacity-20 border-2 border-indigo-700 w-[300px] h-[700px] min-h-[700px]"
+        className="bg-columnBackGroundColor opacity-20 border-2 border-blue1 w-[300px] h-[700px] min-h-[700px]"
       ></div>
     );
   }
