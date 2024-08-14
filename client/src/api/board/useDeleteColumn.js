@@ -27,7 +27,7 @@ const useDeleteColumn = () => {
 
       boardTaskList();
       boardColumnList();
-      setToastMessage('Column has been deledated');
+      setToastMessage('Column has been deleted');
       setToastType('success');
     } catch (error) {
       setError(error.message || 'Failed to delete column');

@@ -1,10 +1,20 @@
 import { Input, FormHeader, Button, FormContainer } from '../components';
 import { ChromePicker } from 'react-color';
+import useUpdateColumnContent from '../api/board/useUpdateColumnContent';
 import useHandleUpdateColumn from '../hooks/board/useHandleUpdateColumn';
+import ToastProvider from '../configs/ToastProvider';
 
-const UpdateColumn = ({ columnItem, updateColumn, handleDrawerClose }) => {
-  const {title, color, handleTitleChange, handleManualColorChange, handleColorChange, handleSubmitUpdate} = useHandleUpdateColumn(columnItem,updateColumn);
+const UpdateColumn = ({ columnItem,  handleDrawerClose }) => {
+  const {loading, updateColumnContent, toastType, toastMessage, clearToast} = useUpdateColumnContent();
 
+  const {
+    title,
+    color,
+    handleTitleChange,
+    handleManualColorChange,
+    handleColorChange,
+    handleSubmitUpdate
+  } = useHandleUpdateColumn(columnItem, updateColumnContent);
   const inputFieldRow = (
     <>
       <Input
@@ -30,6 +40,8 @@ const UpdateColumn = ({ columnItem, updateColumn, handleDrawerClose }) => {
   return (
     <div className="bg-white0 min-w-fit min-h-full p-7">
       <form onSubmit={handleSubmitUpdate}>
+      <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast} />
+      <FormHeader title="Delete Task" />
         <FormHeader title="Update Board Column" />
         <FormContainer gridColsClass="grid-cols-2">{inputFieldRow}</FormContainer>
       
@@ -42,7 +54,7 @@ const UpdateColumn = ({ columnItem, updateColumn, handleDrawerClose }) => {
           <Button type="button" variant="secondary" onClick={handleDrawerClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" loading={loading}>
             Update
           </Button>
         </div>
