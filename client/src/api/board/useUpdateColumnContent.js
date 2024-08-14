@@ -4,7 +4,9 @@ import useBoardColumnList from './useBoardColumnList';
 const useUpdateColumnContent = () => {
   const { boardColumnList } = useBoardColumnList();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+  const [toastMessage, setToastMessage] = useState(null);
+  const [toastType, setToastType] = useState(null);
 
   const updateColumnContent = async (id, title, color) => {
     try {
@@ -19,16 +21,26 @@ const useUpdateColumnContent = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to update column title');
+        throw new Error(data.message || 'Failed to update column content');
       }
-      boardColumnList();
+
+      await boardColumnList();
+      setToastMessage('Board Column has been updated');
+      setToastType('success');
     } catch (error) {
-      setError(error.message || 'Failed to update column title');
+      setError(error.message || 'Failed to update column content');
+      setToastMessage('Failed to update the board column content');
+      setToastType('error');
     } finally {
       setLoading(false);
     }
   };
-  return { loading, error, updateColumnContent };
+
+  const clearToast = () => {
+    setToastMessage(null);
+    setToastType(null);
+  };
+  return { loading, error, updateColumnContent, toastMessage, toastType, clearToast };
 };
 
 export default useUpdateColumnContent;

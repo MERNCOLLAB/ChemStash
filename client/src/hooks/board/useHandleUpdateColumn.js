@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useHandleUpdateColumn = (columnItem, updateColumn) => {
+const useHandleUpdateColumn = (columnItem, updateColumnContent) => {
   const [title, setTitle] = useState(columnItem.title);
   const [color, setColor] = useState(columnItem.color);
 
@@ -23,7 +23,7 @@ const useHandleUpdateColumn = (columnItem, updateColumn) => {
 
   const handleSubmitUpdate = (event) => {
     event.preventDefault();
-    updateColumn(columnItem.id, title, color);
+    updateColumnContent(columnItem.id, title, color);
   };
 
   return {title, color,setColor, handleTitleChange,handleManualColorChange, handleColorChange, handleSubmitUpdate}
