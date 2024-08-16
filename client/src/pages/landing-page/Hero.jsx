@@ -1,10 +1,10 @@
 import tests from '../../assets/tests.png';
 import { Button } from '../../components';
 
-const Hero = ({ handleGetStarted }) => {
+const Hero = ({ id,handleGetStarted }) => {
   return (
     <>
-      <div className=" flex flex-col justify-center h-full w-full bg-white1 space-y-4 md:order-2 order-1">
+      <div id={id} className=" flex flex-col justify-center h-full w-full bg-white1 space-y-4 md:order-2 order-1">
         <h1 className="text-6xl font-bold">Revolutionize your chemical inventory management with Chemstack!</h1>
         <p>
           Streamline your chemical inventory management process with ease. Bringing efficiency and quality assurance to

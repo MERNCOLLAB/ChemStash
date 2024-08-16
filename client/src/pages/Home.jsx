@@ -7,6 +7,7 @@ import faqBg from '../assets/faq.png';
 import contactBg from '../assets/contact.png';
 import { SectionLayout } from './landing-page';
 import { featuresContent, aboutContent, faqsContent, contactUsContent } from './landing-page';
+
 const Home = () => {
   const navigate = useNavigate();
 
@@ -27,22 +28,23 @@ const Home = () => {
       <Navbar />
       <div className=" w-full max-w-7xl mx-auto p-4">
         <div className=" grid grid-cols-1 md:grid-cols-2 items-center z-20 overflow-hidden relative ">
-          <Hero handleGetStarted={handleGetStarted} />
+          <Hero id="home" handleGetStarted={handleGetStarted} />
         </div>
 
-        <SectionLayout title="Key Features" pageContent={featuresContent} imagePath={featuresBg} />
+        <SectionLayout title="Key Features" id="features" pageContent={featuresContent} imagePath={featuresBg} />
 
-        <SectionLayout title="About Chemstack" pageContent={aboutContent} imagePath={aboutBg} />
+        <SectionLayout title="About Chemstack" id="about" pageContent={aboutContent} imagePath={aboutBg} />
 
         <SectionLayout
           title="FAQs"
+          id="faq"
           pageContent={faqsContent}
           imagePath={faqBg}
           gridClassName="grid grid-cols-2 gap-4"
           gridSpan="col-span-2"
         />
 
-        <SectionLayout title="Contact Us" pageContent={contactUsContent} imagePath={contactBg} />
+        <SectionLayout id="contacts" title="Contact Us" pageContent={contactUsContent} imagePath={contactBg} />
       </div>
       <Footer />
     </section>
