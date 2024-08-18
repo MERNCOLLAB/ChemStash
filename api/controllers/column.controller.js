@@ -87,7 +87,7 @@ export const updateColumnContent = async (req, res, next) => {
       return res.status(404).json({ message: 'Column not found' });
     }
 
-    io.emit('columnUpdated', updatedColumn);
+    io.emit('columnTitleUpdated', updatedColumn);
 
     res.status(200).json({ message: 'Column updated successfully', updatedColumn });
   } catch (error) {

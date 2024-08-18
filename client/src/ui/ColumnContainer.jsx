@@ -64,7 +64,7 @@ function ColumnContainer(props) {
           style={{ background: column.color }}
         >
           <div
-            className="flex gap-2 items-center"
+            className="flex gap-2 items-center py-2"
             onClick={currentUser.role === 'chemist' ? null : () => toggleEditMode()}
           >
             <div className="text-sm rounded-full px-[.75rem] py-[.3rem] bg-white0" style={{ color: column.color }}>
@@ -76,7 +76,7 @@ function ColumnContainer(props) {
           {currentUser.role === 'chemist' ? null : (
             <button
               onClick={() => handleDeleteColumn(column)}
-              className="  :px-1 py-2 group-hover:stroke-white0 hover:stroke-white rounded-full "
+              className="   py-2 group-hover:stroke-white0 hover:stroke-white rounded-full "
             >
               <TrashIcon />
             </button>
