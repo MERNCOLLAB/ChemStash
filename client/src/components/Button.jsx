@@ -2,11 +2,15 @@ function Button({ loading, children, type, variant, onClick, isFull }) {
   const getClassVariant = (variant) => {
     switch (variant) {
       case 'primary':
-        return 'text-white px-3 py-2 bg-blue1 hover:bg-blue0';
+        return 'rounded-xl text-white px-3 py-2 bg-blue1 hover:bg-blue0';
       case 'secondary':
-        return 'text-gray2 px-3 py-2 hover:bg-slate-100 border  border-gray1 bg-transparent';
+        return 'rounded-xl text-gray2 px-3 py-2 hover:bg-slate-100 border  border-gray1 bg-transparent';
+      case 'grayscale':
+        return 'rounded-lg text-gray2 py-2 w-[254px] bg-gray0 border-gray0 border hover:border-gray2 hover:bg-transparent'
+      case 'danger':
+        return 'rounded-lg text-white0 bg-[#DF5858] hover:bg-[#DF5858]/80  px-3 py-2'
       default:
-        return 'text-white px-3 py-2 bg-[#059669] hover:bg-[#A7F3D0]';
+        return 'rounded-lg text-white px-3 py-2 bg-[#059669] hover:bg-[#A7F3D0]';
     }
   };
 
@@ -15,7 +19,7 @@ function Button({ loading, children, type, variant, onClick, isFull }) {
       type={type}
       onClick={onClick}
       disabled={loading}
-      className={`rounded-xl font-semibold text-base ${getClassVariant(variant)} ${isFull ? 'w-full' : 'w-fit'}`}
+      className={`font-semibold text-base ${getClassVariant(variant)} ${isFull ? 'w-full' : 'w-fit'}`}
     >
       {loading && (
         <div className="flex items-center gap-0.5">
