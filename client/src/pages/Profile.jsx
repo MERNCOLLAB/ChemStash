@@ -7,13 +7,13 @@ import useSignOut from '../api/auth/useSignOut';
 import useHandleProfile from '../hooks/profile/useHandleProfile';
 
 function Profile() {
-  const { imagePercent, imageError, formData, handleDataChange } = useHandleProfile();
+  const { imagePercent, imageError, formData, handleDataChange, fileRef, handleChangeImage } = useHandleProfile();
   const { updateProfile, updateSuccess } = useUpdateProfile();
   const { deleteProfile } = useDeleteProfile();
   const { signOut } = useSignOut();
-
   const { currentUser, error } = useSelector((state) => state.user);
   const currentUserId = currentUser._id;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await updateProfile(formData, currentUserId);
@@ -31,7 +31,7 @@ function Profile() {
     <div className="p-3 max-w-full">
       <h1 className="text-3xl text-left font-bold my-7">ChemStack Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-start">
-        <ProfileAvatar />
+        <ProfileAvatar formData={formData} fileRef={fileRef} handleChangeImage={handleChangeImage} />
         <ProfileForm handleDataChange={handleDataChange} />
       </form>
       <div className="p-6 flex justify-end items-center mt-4 md:mr-20 gap-2">

@@ -1,8 +1,9 @@
 import { Input, Button, FormHeader } from '../components';
 import { useSelector } from 'react-redux';
 
-const ProfileForm = (handleDataChange) => {
+const ProfileForm = ({ handleDataChange }) => {
   const { currentUser, loading } = useSelector((state) => state.user);
+
   return (
     <div className="mt-8 md:mt-0 space-y-2 px-10">
       <FormHeader title="Account Information" />

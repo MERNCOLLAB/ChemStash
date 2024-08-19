@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux';
-import useHandleProfile from '../hooks/profile/useHandleProfile';
 
-const ProfileAvatar = () => {
-  const { fileRef, formData, handleChangeImage } = useHandleProfile();
+const ProfileAvatar = ({ handleChangeImage, fileRef, formData }) => {
   const { currentUser } = useSelector((state) => state.user);
 
   return (
