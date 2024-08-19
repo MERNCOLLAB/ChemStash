@@ -19,6 +19,7 @@ import UpdateTask from './UpdateTask';
 import DeleteTask from './DeleteTask';
 import UpdateColumn from './UpdateColumn';
 import DeleteColumn from './DeleteColumn';
+import ProfileDrawer from './ProfileDrawer';
 
 export {
   AppLayout,
@@ -42,4 +43,5 @@ export {
   DeleteTask,
   UpdateColumn,
   DeleteColumn,
+  ProfileDrawer
 };
