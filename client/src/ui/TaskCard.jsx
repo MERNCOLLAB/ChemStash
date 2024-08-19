@@ -6,19 +6,17 @@ import { CSS } from '@dnd-kit/utilities';
 import { IoCalendarClearOutline } from 'react-icons/io5';
 
 function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
-  const [editMode, setIsEditMode] = useState(false);
-  const [content, setContent] = useState(task.content);
-  const [au, setAu] = useState(task.assignedUsers);
-  const [priority, setPriority] = useState(task.priority);
-  const [desc, setDesc] = useState(task.desc);
-  const [dueDate, setDueDate] = useState('');
-  const [isOverdue, setIsOverdue] = useState(false);
-  useEffect(() => {
-    setContent(task.content);
-    setAu(task.assignedUsers);
-    setPriority(task.priority);
-    setDesc(task.desc);
+  const [taskState, setTaskState] = useState({
+    editMode: false,
+    content: task.content,
+    assignedUsers: task.assignedUsers,
+    priority: task.priority,
+    desc: task.desc,
+    dueDate: '',
+    isOverdue: false,
+  });
 
+  useEffect(() => {
     const now = moment().startOf('day');
     const dueDateMoment = moment(task.dueDate).startOf('day');
     const daysUntilDue = dueDateMoment.diff(now, 'days');
@@ -32,25 +30,37 @@ function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
       formattedDate = dueDateMoment.format('MMM D');
     }
 
-    setDueDate(formattedDate);
-    setIsOverdue(dueDateMoment.isBefore(now));
+    setTaskState((prevState) => ({
+      ...prevState,
+      content: task.content,
+      assignedUsers: task.assignedUsers,
+      priority: task.priority,
+      desc: task.desc,
+      dueDate: formattedDate,
+      isOverdue: dueDateMoment.isBefore(now),
+    }));
   }, [task]);
 
   const toggleEditMode = () => {
-    setIsEditMode(openDrawer);
+    setTaskState((prevState) => ({
+      ...prevState,
+      editMode: openDrawer,
+    }));
+
     const formattedTask = { ...task };
     if (task.dueDate) {
       formattedTask.dueDate = moment(task.dueDate).format('YYYY-MM-DD');
     }
     openTask(formattedTask);
   };
+
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: task.id,
     data: {
       type: 'Task',
       task,
     },
-    disabled: editMode,
+    disabled: taskState.editMode,
   });
 
   const style = {
@@ -67,6 +77,17 @@ function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
     }
   };
 
+  const status =
+    taskState.priority === 1
+      ? 'Urgent'
+      : taskState.priority === 2
+        ? 'High'
+        : taskState.priority === 3
+          ? 'Medium'
+          : taskState.priority === 4
+            ? 'Low'
+            : '';
+
   if (isDragging) {
     return (
       <div
@@ -76,9 +97,6 @@ function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
       />
     );
   }
-
-  const status =
-    priority === 1 ? 'Urgent' : priority === 2 ? 'High' : priority === 3 ? 'Medium' : priority === 4 ? 'Low' : '';
 
   return (
     <section>
@@ -94,27 +112,29 @@ function TaskCard({ task, handleDeleteTask, openTask, openDrawer }) {
           <small className={`${status} font-medium flex w-fit px-2 py-1 rounded-full`}>{status}</small>
         </div>
         <div>
-          <div className=" w-full pr-4 font-bold">{content}</div>
+          <div className=" w-full pr-4 font-bold">{taskState.content}</div>
           <div
             className="w-full pr-4 text-sm overflow-hidden text-gray1"
             style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3 }}
           >
-            {desc}
+            {taskState.desc}
           </div>
         </div>
 
         <div className="flex  justify-between w-full items-center h-[38px]">
-          {dueDate === 'Invalid date' ? (
+          {taskState.dueDate === 'Invalid date' ? (
             <IoCalendarClearOutline />
           ) : (
             <small
-              className={`bg-transparent due-date px-2 py-1 rounded-full font-semibold ${isOverdue ? 'text-rose-300' : ''}`}
+              className={`bg-transparent due-date px-2 py-1 rounded-full font-semibold ${
+                taskState.isOverdue ? 'text-rose-300' : ''
+              }`}
             >
-              {dueDate}
+              {taskState.dueDate}
             </small>
           )}
           <div className="flex items-start -space-x-4 ">
-            {au.map((au) => (
+            {taskState.assignedUsers.map((au) => (
               <div className="avatar" key={au.username}>
                 <div className="rounded-full size-8">
                   <img src={au.img} alt="" className="" />
