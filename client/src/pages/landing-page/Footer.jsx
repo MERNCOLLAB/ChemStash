@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="col-span-2">
             <img src={Logo} alt="" className="h-14 w-14" />
             <strong className="text-2xl">Managing chemicals made easy</strong>
-            <p>ChemStack Inc.</p>
+            <p>ChemStash Inc.</p>
           </div>
           <div className="grid">
             <strong> Get involved</strong>
@@ -33,7 +33,7 @@ const Footer = () => {
       </div>
       <div className="  bg-blue1 flex item center justify-center text-white0">
         <div className=" w-full grid md:grid-cols-2 p-2 md:p-4">
-          <div>&#169; Chemstack Inc, All rights reserved.</div>
+          <div>&#169; ChemStash Inc, All rights reserved.</div>
           <div className="flex md:justify-end gap-4">
             <p>Terms of Service </p>
             <p>Privacy </p>

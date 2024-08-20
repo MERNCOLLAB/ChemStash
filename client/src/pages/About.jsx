@@ -16,9 +16,9 @@ const About = () => {
           <img src={LabImg} alt="about-img" />
           </div>
           <div className="min-w-fit">
-            <h1 className="text-base">About ChemStack</h1>
+            <h1 className="text-base">About ChemStash</h1>
             <p className="font-semibold text-2xl uppercase tracking-wide text-blue1">Simplifying chemical tracking & enhancing lab productivity</p>
-            <p className="text-lg max-w-[90%] my-4">ChemStack is a web application designed as a user-friendly and robust platform for the assistance in your
+            <p className="text-lg max-w-[90%] my-4">ChemStash is a web application designed as a user-friendly and robust platform for the assistance in your
               chemical inventory management
             </p>
             <div className="max-w-[90%] mx-auto flex gap-8 mt-8">

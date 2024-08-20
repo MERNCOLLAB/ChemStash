@@ -1,6 +1,6 @@
 export const faqs = [
     {
-      title: 'How does ChemStack simplify chemical inventory management?',
+      title: 'How does ChemStash simplify chemical inventory management?',
       content: 'Users can record and oversee chemicals easily, analyze chemical usage patterns, and be notified for low or expired inventories.'
     },
     {
@@ -9,6 +9,6 @@ export const faqs = [
     },
     {
       title: 'What other features does the app offer?',
-      content: 'In ChemStack, managers and team leaders have the ability to assign tasks to anyone and get notified. This ensures a smooth and efficient laboratory operation.'
+      content: 'In ChemStash, managers and team leaders have the ability to assign tasks to anyone and get notified. This ensures a smooth and efficient laboratory operation.'
     }
   ];

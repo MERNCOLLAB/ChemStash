@@ -27,7 +27,7 @@ const aboutContent = (
         Simplifying chemical tracking & enhancing lab productivity
       </h1>
       <p className="text-balance my-2">
-        ChemStack is a web application designed as a user-friendly and robust platform for the assistance in your
+        ChemStash is a web application designed as a user-friendly and robust platform for the assistance in your
         chemical inventory management
       </p>
     </div>
@@ -55,7 +55,7 @@ const aboutContent = (
 const faqsContent = (
   <>
     <div className="max-w-2xl">
-      <h1 className="text-lg font-semibold mb-1">How does ChemStack simplify chemical inventory management?</h1>
+      <h1 className="text-lg font-semibold mb-1">How does ChemStash simplify chemical inventory management?</h1>
       <p className="max-w-[90%]">
         Users can record and oversee chemicals easily, analyze chemical usage patterns, and be notified for low or
         expired inventories.
@@ -81,7 +81,7 @@ const faqsContent = (
     <div className="max-w-2xl">
       <h1 className="text-lg font-semibold mb-1">What other features does the app offer?</h1>
       <p className="max-w-[95%]">
-        In ChemStack, managers and team leaders have the ability to assign tasks to anyone and get notified. This
+        In ChemStash, managers and team leaders have the ability to assign tasks to anyone and get notified. This
         ensures a smooth and efficient laboratory operation.
       </p>
     </div>

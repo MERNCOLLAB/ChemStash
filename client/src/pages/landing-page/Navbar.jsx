@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="max-w-7xl  w-full   grid-cols-2 px-4 hidden md:grid">
         <div className="flex items-center font-semibold text-lg ">
           <img src={Logo} alt="" className="h-10 w-10" />
-          <div>ChemStack</div>
+          <div>ChemStash</div>
         </div>
 
         <ul className="flex justify-end gap-4 items-center">

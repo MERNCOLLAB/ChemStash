@@ -40,7 +40,7 @@ function Header() {
           <Linker to="/">
             <img src={Logo} className="h-10" alt="app-logo" />
           </Linker>
-          <h1 className="font-semibold text-md">ChemStack</h1>
+          <h1 className="font-semibold text-md">ChemStash</h1>
         </div>
 
         <ul className="flex gap-4 items-end">

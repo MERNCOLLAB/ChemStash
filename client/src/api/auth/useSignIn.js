@@ -36,7 +36,7 @@ const useSignIn = () => {
               navigate(`/${data.role}/inventory`);
             } 
 
-            setToastMessage('Logged In. Welcome to Chemstack');
+            setToastMessage('Logged In. Welcome to ChemStash');
             setToastType('success');
     
           } catch (error) {
