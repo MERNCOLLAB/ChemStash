@@ -26,7 +26,7 @@ const useAddUser = () => {
               setError(true);
               return;
             }
-            setToastMessage('Chemstack user has been added');
+            setToastMessage('ChemStash user has been added');
             setToastType('success');
         }
         catch(error){

@@ -18,7 +18,7 @@ function SignIn() {
           <img className='size-[400px]' src={SignInPic} alt={`${SignInPic}-pic`} />
         </section>
         <section className='border border-gray2 shadow-md bg-gray-300/20 rounded-xl p-10'>
-        <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-blue0'>ChemStack</span></h1>
+        <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-blue0'>ChemStash</span></h1>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 place-items-center gap-4">        
           <Input id="email" type="email" placeholder="Enter your email" onChange={handleChange} />
           <Input id="password" type="password" placeholder="Enter password" onChange={handleChange} />

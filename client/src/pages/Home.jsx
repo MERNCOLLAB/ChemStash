@@ -33,7 +33,7 @@ const Home = () => {
 
         <SectionLayout title="Key Features" id="features" pageContent={featuresContent} imagePath={featuresBg} />
 
-        <SectionLayout title="About Chemstack" id="about" pageContent={aboutContent} imagePath={aboutBg} />
+        <SectionLayout title="About ChemStash" id="about" pageContent={aboutContent} imagePath={aboutBg} />
 
         <SectionLayout
           title="FAQs"
