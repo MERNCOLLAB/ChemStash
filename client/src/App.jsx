@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home, SignIn, SignUp, About, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
+import { Home, SignIn, SignUp, UserList, Profile, Inventory, PageNotFound, Dashboard } from './pages';
 import { PrivateRoute, AppLayout, Map } from './ui';
 import Board from './pages/Board';
 
@@ -8,7 +8,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
         {/* manager */}
         <Route element={<PrivateRoute role="manager" />}>

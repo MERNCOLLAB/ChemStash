@@ -3,7 +3,6 @@ import { Button, Input } from '../components';
 import useSignIn from '../api/auth/useSignIn';
 import ToastProvider from '../configs/ToastProvider';
 import useHandleSignIn from '../hooks/auth/useHandleSignIn';
-import SignInPic from '../assets/lab-home.png';
 
 function SignIn() {
   const { loading, error } = useSelector((state) => state.user);
@@ -14,9 +13,6 @@ function SignIn() {
     <div className="bg-white1 p-3 mt-10">
       <ToastProvider toastType={toastType} toastMessage={toastMessage} clearToast={clearToast}/>
       <div className="flex flex-col md:flex-row justify-center min-h-screen items-center gap-x-4 gap-y-2 min-w-2xl mx-auto">
-        <section>
-          <img className='size-[400px]' src={SignInPic} alt={`${SignInPic}-pic`} />
-        </section>
         <section className='border border-gray2 shadow-md bg-gray-300/20 rounded-xl p-10'>
         <h1 className="text-3xl text-center font-bold my-7">Sign In to <span className='text-blue0'>ChemStash</span></h1>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 place-items-center gap-4">        
